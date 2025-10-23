@@ -1,0 +1,160 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.6in]{geometry}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+% Modern color scheme
+\definecolor{primaryblue}{RGB}{0,102,204}
+\definecolor{darkgray}{RGB}{51,51,51}
+\definecolor{mediumgray}{RGB}{102,102,102}
+\definecolor{lightgray}{RGB}{230,230,230}
+
+% Modern fonts
+\setmainfont{Helvetica Neue}
+\newfontfamily\headingfont{Helvetica Neue}
+
+% Formatting
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\pagenumbering{gobble}
+\pagestyle{empty}
+
+% Custom commands
+\newcommand{\sectionheader}[1]{%
+    \vspace{12pt}
+    {\headingfont\Large\color{primaryblue}\textbf{#1}}
+    \vspace{3pt}
+    \par\noindent{\color{primaryblue}\rule{\textwidth}{1.5pt}}
+    \vspace{6pt}
+}
+
+\newcommand{\resumeItem}[1]{%
+    \item\small\color{darkgray}{#1}
+}
+
+\newcommand{\positionHeader}[2]{%
+    \textbf{\color{darkgray}#1} \hfill \textit{\color{mediumgray}#2}
+    \vspace{2pt}
+}
+
+\newcommand{\companyHeader}[1]{%
+    {\headingfont\large\color{primaryblue}\textbf{#1}}
+    \vspace{4pt}
+}
+
+% Custom itemize styling
+\renewcommand{\labelitemi}{$\circ$}
+\setlength{\leftmargini}{15pt}
+\setlength{\itemsep}{3pt}
+\setlength{\topsep}{0pt}
+\setlength{\parsep}{0pt}
+
+\begin{document}
+
+% Header with modern styling
+\begin{center}
+    {\headingfont\Huge\color{primaryblue}\textbf{Christian Okada}}
+    \vspace{4pt}
+
+    {\headingfont\large\color{darkgray}Software Architect}
+    \vspace{8pt}
+
+    {\color{mediumgray}
+    571-527-9694 \textbullet{} christian.okada@gmail.com \textbullet{} @OkadaChristian \textbullet{} San Diego, CA
+    }
+\end{center}
+
+\vspace{4pt}
+
+% Professional Summary
+\sectionheader{Professional Summary}
+\color{darkgray}
+Software Architect with over 7 years of experience designing and implementing cutting-edge solutions, specializing in Generative AI applications and cloud-native architectures. Currently leading technical development for Slalom's AI Value Platform, helping organizations realize Value and ROI from GenAI investments, prioritize use cases, and assess AI capabilities. Passionate about leveraging accelerated engineering methodologies to rapidly deliver high-impact solutions that solve complex business challenges.
+
+% Technical Expertise
+\sectionheader{Technical Expertise}
+\color{darkgray}\small
+AWS Solution Architect \textbullet{} GenAI Solution Development \textbullet{} RAG Architecture \textbullet{} Cloud Architecture (AWS) \textbullet{} CI/CD Pipelines \textbullet{} Python \textbullet{} Node.js \textbullet{} TypeScript/JavaScript \textbullet{} Angular/React \textbullet{} SQL/NoSQL Databases \textbullet{} Bash/Linux \textbullet{} API Design (REST/GraphQL) \textbullet{} IaC (Terraform/CDK) \textbullet{} Docker/Kubernetes \textbullet{} Agile/Accelerated Engineering
+
+% Leadership Skills
+\sectionheader{Leadership Skills}
+\color{darkgray}\small
+Technical Leadership \textbullet{} Team Mentorship \textbullet{} Strategic Planning \textbullet{} Solution Architecture \textbullet{} Client Consultation \textbullet{} Effective Communication \textbullet{} Problem Solving \textbullet{} Innovation Mindset \textbullet{} Cross-functional Collaboration
+
+% Professional Experience
+\sectionheader{Professional Experience}
+
+\companyHeader{Slalom}
+
+\positionHeader{Technical Lead - AI Value Platform}{2023--Present}
+\begin{itemize}
+    \resumeItem{Lead architect for Slalom's AI Value Platform, a comprehensive solution enabling clients to calculate ROI, prioritize GenAI use cases, assess organizational AI capabilities, and manage implementation roadmaps.}
+    \resumeItem{Spearhead the integration of advanced GenAI capabilities throughout the platform, creating intelligent assistants that provide contextual guidance and insights based on user activities.}
+    \resumeItem{Champion accelerated engineering practices, enabling rapid prototyping and deployment of new platform features while maintaining enterprise-grade quality and security.}
+    \resumeItem{Mentor cross-functional teams in GenAI best practices, fostering a culture of innovation and technical excellence.}
+    \resumeItem{Design and implement sophisticated RAG systems that power the platform's knowledge retrieval capabilities, ensuring accurate and contextually relevant information delivery.}
+\end{itemize}
+
+\vspace{6pt}
+
+\positionHeader{Senior Consultant - Solution Architect}{2022--2023}
+\begin{itemize}
+    \resumeItem{Architected and implemented production-grade generative AI solutions for utility and renewable energy sectors, optimizing regulatory compliance processes and enhancing financial due diligence efficiency by 40\%.}
+    \resumeItem{Pioneered the development of enterprise-scale Retrieval-Augmented Generation (RAG) systems on AWS, creating knowledge bases that reduced information retrieval time by 65\% while improving accuracy.}
+    \resumeItem{Led cross-functional teams in delivering multiple Single Page Applications (SPAs) with serverless AWS backends using accelerated engineering methodologies, reducing time-to-market by 30\%.}
+    \resumeItem{Established architectural patterns and frameworks for GenAI implementation, creating reusable components that accelerated subsequent AI projects by 50\%.}
+    \resumeItem{Collaborated with key stakeholders to align technical architecture with business objectives, resulting in solutions that delivered measurable ROI within the first quarter of deployment.}
+\end{itemize}
+
+\vspace{6pt}
+
+\positionHeader{Cloud Architect / DevOps Engineer}{2022}
+\begin{itemize}
+    \resumeItem{Served as Lead Cloud Architect, designing scalable Terraform modules for Apollo GraphQL federated graphs}
+    \resumeItem{Architected high-availability solutions for internal and external federated GraphQL APIs}
+    \resumeItem{Engineered robust CI/CD pipelines and comprehensive IaC modules for standardized deployments}
+\end{itemize}
+
+\vspace{6pt}
+
+\positionHeader{Full Stack Engineer}{2022}
+\begin{itemize}
+    \resumeItem{Built feature-rich web and mobile apps with Angular, React, and Ionic, focusing on responsive design}
+    \resumeItem{Developed serverless microservice backends with Node.js for scalability and cost-efficiency}
+    \resumeItem{Implemented accessibility features and Google Maps integration for real-time data visualization}
+\end{itemize}
+
+\vspace{8pt}
+
+\companyHeader{Triblio}
+
+\positionHeader{Software/DevOps Engineer}{2021--2022}
+\begin{itemize}
+    \resumeItem{Built CLI tools and deployment automation to boost security and app rollouts}
+    \resumeItem{Developed Node.js/Angular components for various applications}
+    \resumeItem{Managed AWS services and set up monitoring with CloudWatch/Grafana}
+    \resumeItem{Automated infrastructure configuration and code deployment processes}
+\end{itemize}
+
+\vspace{8pt}
+
+\companyHeader{Accenture Federal Services}
+
+\positionHeader{DevOps Engineer}{2018--2021}
+\begin{itemize}
+    \resumeItem{Maintained microservice architectures for Kubernetes and Docker Swarm}
+    \resumeItem{Created CI/CD pipelines for Java backends and Angular web apps}
+    \resumeItem{Implemented rolling updates enabling zero-downtime deployments}
+    \resumeItem{Managed Ansible Tower setup for hundreds of operations jobs}
+\end{itemize}
+
+% Education
+\sectionheader{Education}
+
+\textbf{\color{darkgray}James Madison University} \hfill \textit{\color{mediumgray}May 2018}
+
+\color{darkgray}Bachelor of Science in Computer Science, Minor in Music Industry
+
+\end{document}
