@@ -857,6 +857,213 @@
         html {
             scroll-behavior: smooth;
         }
+
+        /* Skill Modal */
+        .skill-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .skill-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .skill-modal-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            box-shadow: 0 30px 100px rgba(204, 147, 100, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .skill-modal.active .skill-modal-content {
+            transform: scale(1);
+        }
+
+        .skill-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .skill-modal-close:hover {
+            background: var(--accent);
+            color: #000000;
+            transform: rotate(90deg);
+        }
+
+        .skill-modal-title {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            letter-spacing: 0.05em;
+            padding-right: 60px;
+        }
+
+        .skill-modal-summary {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .skill-modal-examples h3 {
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-bottom: 25px;
+            letter-spacing: 0.05em;
+        }
+
+        .skill-modal-examples ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skill-modal-examples li {
+            padding: 20px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            transition: all 0.3s ease;
+        }
+
+        .skill-modal-examples li:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(10px);
+            border-left-width: 6px;
+        }
+
+        /* Make skill items clickable */
+        .skill-list li {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .skill-list li:hover {
+            color: var(--accent);
+        }
+
+        /* Mobile Modal Styles */
+        @media (max-width: 768px) {
+            .skill-modal {
+                padding: 10px;
+                align-items: flex-start;
+            }
+
+            .skill-modal-content {
+                padding: 30px 25px;
+                margin-top: 20px;
+                max-height: calc(100vh - 40px);
+            }
+
+            .skill-modal-close {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+                top: 15px;
+                right: 15px;
+            }
+
+            .skill-modal-title {
+                font-size: 1.8rem;
+                padding-right: 50px;
+                margin-bottom: 15px;
+            }
+
+            .skill-modal-summary {
+                font-size: 1.1rem;
+                margin-bottom: 30px;
+            }
+
+            .skill-modal-examples h3 {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
+
+            .skill-modal-examples li {
+                padding: 15px;
+                font-size: 0.95rem;
+                margin-bottom: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .skill-modal {
+                padding: 5px;
+            }
+
+            .skill-modal-content {
+                padding: 25px 20px;
+                border-radius: 15px;
+                margin-top: 10px;
+            }
+
+            .skill-modal-close {
+                width: 35px;
+                height: 35px;
+                font-size: 1.3rem;
+                top: 12px;
+                right: 12px;
+            }
+
+            .skill-modal-title {
+                font-size: 1.5rem;
+                padding-right: 45px;
+            }
+
+            .skill-modal-summary {
+                font-size: 1rem;
+                margin-bottom: 25px;
+            }
+
+            .skill-modal-examples h3 {
+                font-size: 1.3rem;
+            }
+
+            .skill-modal-examples li {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -937,12 +1144,72 @@
         <p>&copy; 2025 Christian Okada. All rights reserved.</p>
     </footer>
 
+    <!-- Skill Detail Modal -->
+    <div id="skill-modal" class="skill-modal">
+        <div class="skill-modal-content">
+            <button class="skill-modal-close" id="modal-close">&times;</button>
+            <h2 class="skill-modal-title" id="modal-skill-title"></h2>
+            <p class="skill-modal-summary" id="modal-skill-summary"></p>
+            <div class="skill-modal-examples">
+                <h3>Experience Highlights</h3>
+                <ul id="modal-skill-examples"></ul>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Global variable to store skill descriptions
+        let skillDescriptions = {};
+
+        // Modal functionality
+        function openSkillModal(skillName) {
+            const modal = document.getElementById('skill-modal');
+            const skillData = skillDescriptions[skillName];
+
+            if (!skillData) {
+                console.error('No description found for skill:', skillName);
+                return;
+            }
+
+            // Populate modal content
+            document.getElementById('modal-skill-title').textContent = skillData.title;
+            document.getElementById('modal-skill-summary').textContent = skillData.summary;
+
+            const examplesList = document.getElementById('modal-skill-examples');
+            examplesList.innerHTML = skillData.examples
+                .map(example => `<li>${example}</li>`)
+                .join('');
+
+            // Show modal with animation
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSkillModal() {
+            const modal = document.getElementById('skill-modal');
+            modal.classList.remove('active');
+
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }
+
         // Load and populate data from JSON
         async function loadData() {
             try {
                 const response = await fetch('data.json');
                 const data = await response.json();
+
+                // Store skill descriptions globally
+                skillDescriptions = data.skillDescriptions || {};
 
                 // Populate personal info
                 document.getElementById('hero-first-name').textContent = data.personal.firstName.toUpperCase();
@@ -1098,15 +1365,39 @@
                 item.style.animationDelay = `${index * 0.1}s`;
             });
 
-            // Add hover effect to skills
+            // Add click handlers to skill items
             const skillItems = document.querySelectorAll('.skill-list li');
             skillItems.forEach(item => {
+                // Add hover effect
                 item.addEventListener('mouseenter', function() {
                     this.style.transform = 'translateX(10px)';
                 });
                 item.addEventListener('mouseleave', function() {
                     this.style.transform = 'translateX(0)';
                 });
+
+                // Add click handler to open modal
+                item.addEventListener('click', function() {
+                    const skillName = this.textContent.trim();
+                    openSkillModal(skillName);
+                });
+            });
+
+            // Modal close handlers
+            document.getElementById('modal-close').addEventListener('click', closeSkillModal);
+
+            // Close modal when clicking outside content
+            document.getElementById('skill-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeSkillModal();
+                }
+            });
+
+            // Close modal on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeSkillModal();
+                }
             });
         });
 
