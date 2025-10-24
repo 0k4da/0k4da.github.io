@@ -76,25 +76,25 @@ def generate_latex_resume(data):
 
 % Custom commands
 \newcommand{\sidebarheader}[1]{%
-    \vspace{8pt}
+    \vspace{6pt}
     {\headingfont\small\textcolor{accent}{\MakeUppercase{\textbf{#1}}}}
-    \vspace{2pt}
+    \vspace{1pt}
     \par\noindent\textcolor{accent}{\rule{\linewidth}{1.5pt}}
-    \vspace{3pt}
+    \vspace{2pt}
 }
 
 \newcommand{\mainheader}[1]{%
-    \vspace{8pt}
+    \vspace{6pt}
     {\displayfont\Large\textcolor{accent}{\MakeUppercase{#1}}}
-    \vspace{2pt}
+    \vspace{1pt}
     \par\noindent\textcolor{accent}{\rule{4.7in}{2pt}}
-    \vspace{5pt}
+    \vspace{3pt}
 }
 
 \newcommand{\companyHeader}[2]{%
-    \vspace{5pt}
+    \vspace{3pt}
     \noindent\textcolor{#2}{\rule{3pt}{10pt}}\hspace{6pt}{\headingfont\normalsize\textbf{\textcolor{darkgray}{#1}}}
-    \vspace{2pt}
+    \vspace{1pt}
 }
 
 \newcommand{\positionHeader}[2]{%
@@ -109,9 +109,10 @@ def generate_latex_resume(data):
 \begin{document}
 
 % LEFT SIDEBAR WITH BACKGROUND COLOR
+\setlength{\voffset}{-.085in}
 \noindent\colorbox{sidebarBg}{%
-\begin{minipage}[t][10.5in][t]{2.7in}
-\vspace{0.4in}
+\begin{minipage}[t][10.885in][t]{2.7in}
+\vspace{0.3in}
 \hspace{0.3in}
 \begin{minipage}{2.1in}
 \raggedright
@@ -182,8 +183,10 @@ Minor: {edu['minor']}\\\\[3pt]}}
 % QR CODE
 \\begin{{center}}
 \\includegraphics[width=0.8in]{{qr_code.png}}\\\\[3pt]
-{{\\tiny\\textcolor{{mediumgray}}{{Scan for portfolio}}}}
+{{\\tiny\\textcolor{{mediumgray}}{{Digital Version}}}}
 \\end{{center}}
+
+\\vfill
 
 """
 
@@ -194,13 +197,14 @@ Minor: {edu['minor']}\\\\[3pt]}}
 % RIGHT MAIN CONTENT
 \hspace{0pt}%
 \begin{minipage}[t][10.5in][t]{5.3in}
-\vspace{0.4in}
+\vspace{0.3in}
 \hspace{0.3in}
 \begin{minipage}{4.7in}
 \raggedright
 
 % EXPERIENCE
 \mainheader{Experience}
+\vspace{-8pt}
 
 """
 
@@ -215,7 +219,7 @@ Minor: {edu['minor']}\\\\[3pt]}}
         for position in company_data['positions']:
             latex += f"\\positionHeader{{{position['dateRange']}}}{{{escape_latex(position['title'])}}}\n"
             latex += "\\begin{itemize}\n"
-            latex += "    \\setlength\\itemsep{1pt}\n"
+            latex += "    \\setlength\\itemsep{0.5pt}\n"
 
             for achievement in position['achievements']:
                 latex += f"    \\item\\small\\textcolor{{darkgray}}{{{escape_latex(achievement)}}}\n"
@@ -224,7 +228,7 @@ Minor: {edu['minor']}\\\\[3pt]}}
 
             # Add spacing between positions except the last one
             if position != company_data['positions'][-1]:
-                latex += "\\vspace{2pt}\n\n"
+                latex += "\\vspace{1pt}\n\n"
 
     # Close document
     latex += r"""\end{minipage}
@@ -237,6 +241,8 @@ Minor: {edu['minor']}\\\\[3pt]}}
 
 
 def main():
+    import subprocess
+
     # Load data from JSON
     with open('data.json', 'r') as f:
         data = json.load(f)
@@ -253,6 +259,14 @@ def main():
         f.write(latex_content)
 
     print("✓ Generated resume.tex from data.json")
+
+    # Build PDF using build.sh
+    print("Building PDF...")
+    try:
+        result = subprocess.run(['bash', 'build.sh'], capture_output=True, text=True, check=True)
+        print(result.stdout.strip())
+    except subprocess.CalledProcessError as e:
+        print(f"✗ PDF build failed: {e.stderr}")
 
 
 if __name__ == '__main__':
