@@ -173,6 +173,7 @@
             border-radius: 25px;
             opacity: 0.6;
             cursor: pointer;
+            z-index: 10;
         }
 
         .scroll-indicator::before {
@@ -515,20 +516,129 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            section {
+                padding: 60px 15px;
+            }
+
+            .about-content,
+            .education-card {
+                padding: 40px 30px;
+            }
+
+            .skill-category {
+                padding: 30px 25px;
+            }
+        }
+
         @media (max-width: 768px) {
+            .hero {
+                min-height: 80vh;
+                padding: 20px 15px;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.5rem, 10vw, 4rem);
+                margin-bottom: 15px;
+            }
+
+            .hero .title {
+                font-size: clamp(1.2rem, 4vw, 2rem);
+                margin-bottom: 20px;
+            }
+
+            .hero .tagline {
+                font-size: clamp(0.9rem, 3vw, 1.1rem);
+                padding: 0 10px;
+            }
+
+            .contact-links {
+                gap: 15px;
+                margin-top: 30px;
+            }
+
+            .contact-link {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
+            .scroll-indicator {
+                bottom: 30px;
+                opacity: 0.5;
+            }
+
+            section {
+                padding: 50px 10px;
+            }
+
+            .section-title {
+                font-size: clamp(2rem, 8vw, 3rem);
+                margin-bottom: 40px;
+            }
+
+            .about-content {
+                padding: 30px 20px;
+            }
+
+            .about-content p {
+                font-size: 1.1rem;
+                line-height: 1.7;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .skill-category {
+                padding: 30px 20px;
+            }
+
+            .skill-category h3 {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
+
+            .skill-list li {
+                font-size: 0.95rem;
+                padding: 10px 0;
+            }
+
+            /* Mobile Timeline */
+            .timeline {
+                padding: 20px 10px;
+            }
+
             .timeline::before {
-                left: 30px;
+                left: 15px;
             }
 
             .timeline-content {
-                width: calc(100% - 80px);
-                margin-left: 60px !important;
-                margin-right: 0 !important;
+                width: calc(100% - 45px) !important;
+                margin-left: 40px !important;
+                margin-right: 5px !important;
                 text-align: left !important;
+                padding: 25px 20px;
             }
 
             .timeline-dot {
-                left: 30px;
+                left: 15px;
+                top: 25px;
+                width: 16px;
+                height: 16px;
+            }
+
+            .timeline-item {
+                margin-bottom: 50px;
+            }
+
+            .timeline-item:hover .timeline-dot {
+                width: 24px;
+                height: 24px;
             }
 
             .timeline-item:nth-child(even) .achievement-list li {
@@ -541,17 +651,170 @@
                 right: auto;
             }
 
-            .hero h1 {
-                font-size: 3rem;
+            .company-name {
+                font-size: 1.6rem;
+                margin-bottom: 8px;
             }
 
-            .about-content,
+            .position-title {
+                font-size: 1.2rem;
+                margin-bottom: 6px;
+            }
+
+            .date-range {
+                font-size: 0.9rem;
+                margin-bottom: 15px;
+            }
+
+            .achievement-list li {
+                font-size: 0.95rem;
+                padding: 8px 0;
+                padding-left: 20px;
+            }
+
             .education-card {
-                padding: 30px;
+                padding: 40px 25px;
             }
 
-            .skills-grid {
-                grid-template-columns: 1fr;
+            .education-card h3 {
+                font-size: 2rem;
+            }
+
+            .education-card .degree {
+                font-size: 1.3rem;
+            }
+
+            .education-card .minor {
+                font-size: 1.1rem;
+            }
+
+            .education-card .grad-date {
+                font-size: 1rem;
+            }
+
+            footer {
+                padding: 40px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 70vh;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+                letter-spacing: 0.05em;
+            }
+
+            .hero .title {
+                font-size: 1.1rem;
+                letter-spacing: 0.03em;
+            }
+
+            .hero .tagline {
+                font-size: 0.85rem;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                padding: 0 20px;
+            }
+
+            .contact-link {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 15px;
+                font-size: 0.85rem;
+            }
+
+            .scroll-indicator {
+                display: none;
+            }
+
+            section {
+                padding: 40px 10px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 30px;
+            }
+
+            .about-content {
+                padding: 25px 15px;
+                border-radius: 15px;
+            }
+
+            .about-content p {
+                font-size: 1rem;
+            }
+
+            .skill-category {
+                padding: 25px 15px;
+                border-radius: 15px;
+            }
+
+            .skill-category h3 {
+                font-size: 1.3rem;
+            }
+
+            .skill-list li {
+                font-size: 0.9rem;
+                padding: 8px 0;
+            }
+
+            .timeline {
+                padding: 20px 5px;
+            }
+
+            .timeline::before {
+                left: 10px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 35px) !important;
+                margin-left: 30px !important;
+                margin-right: 5px !important;
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+
+            .timeline-dot {
+                left: 10px;
+            }
+
+            .company-name {
+                font-size: 1.4rem;
+            }
+
+            .position-title {
+                font-size: 1.1rem;
+            }
+
+            .achievement-list li {
+                font-size: 0.9rem;
+                line-height: 1.5;
+                padding-left: 15px;
+            }
+
+            .education-card {
+                padding: 30px 20px;
+                border-radius: 15px;
+            }
+
+            .education-card h3 {
+                font-size: 1.7rem;
+            }
+
+            .education-card .degree {
+                font-size: 1.2rem;
+            }
+
+            .education-card .minor {
+                font-size: 1rem;
             }
         }
 
@@ -768,9 +1031,11 @@
         }
 
         // Intersection Observer for scroll animations
+        // More aggressive settings for mobile to ensure sections appear
+        const isMobile = window.innerWidth <= 768;
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
+            threshold: isMobile ? 0.01 : 0.05,
+            rootMargin: isMobile ? '0px 0px 0px 0px' : '0px 0px -50px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {

@@ -178,15 +178,14 @@ def generate_latex_resume(data):
 Minor: {edu['minor']}\\\\[3pt]}}
 }}
 
-\\vspace{{10pt}}
+\\vfill
 
 % QR CODE
-\\begin{{center}}
+\\vspace{{110pt}}
+\\raggedright
 \\includegraphics[width=0.8in]{{qr_code.png}}\\\\[3pt]
-{{\\tiny\\textcolor{{mediumgray}}{{Digital Version}}}}
-\\end{{center}}
 
-\\vfill
+\\vspace{{10pt}}
 
 """
 
