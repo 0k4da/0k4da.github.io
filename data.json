@@ -1,0 +1,113 @@
+{
+  "personal": {
+    "firstName": "Christian",
+    "lastName": "Okada",
+    "title": "Software Architect",
+    "phone": "571.527.9694",
+    "email": "christian.okada@gmail.com",
+    "github": "OkadaChristian",
+    "location": "San Diego, CA",
+    "websiteUrl": "https://0k4da.github.io"
+  },
+  "about": "Seven years architecting AI-driven solutions where simplicity meets innovation. Leading Slalom's AI Value Platform—transforming how organizations measure, prioritize, and deploy generative AI.",
+  "tagline": "Seven years architecting AI-driven solutions where simplicity meets innovation.<br>Leading Slalom's AI Value Platform—transforming how organizations measure, prioritize, and deploy generative AI.",
+  "skills": {
+    "technical": [
+      "AWS Solution Architect",
+      "GenAI & RAG Architecture",
+      "Cloud-Native Systems",
+      "Python / Node.js / TypeScript",
+      "Angular / React / Ionic",
+      "Docker / Kubernetes",
+      "CI/CD & IaC (Terraform/CDK)",
+      "API Design (REST/GraphQL)",
+      "SQL / NoSQL Databases",
+      "Bash / Linux",
+      "Agile / Accelerated Engineering",
+      "System Architecture"
+    ],
+    "leadership": [
+      "Technical Direction",
+      "Team Mentorship",
+      "Strategic Planning",
+      "Solution Architecture",
+      "Client Partnership",
+      "Innovation & Vision"
+    ]
+  },
+  "experience": [
+    {
+      "company": "Slalom",
+      "positions": [
+        {
+          "title": "Technical Lead - AI Value Platform",
+          "dateRange": "2023 – Present",
+          "achievements": [
+            "Lead architect for comprehensive AI Value Platform—enabling ROI calculation, use case prioritization, capability assessment, and implementation roadmaps for enterprise GenAI adoption",
+            "Integrated contextual AI assistants throughout platform using advanced RAG systems, delivering intelligent guidance based on user activity patterns",
+            "Championed accelerated engineering methodology, achieving 40% reduction in feature deployment cycles while maintaining enterprise security standards"
+          ]
+        },
+        {
+          "title": "Senior Consultant - Solution Architect",
+          "dateRange": "2022 – 2023",
+          "achievements": [
+            "Architected production GenAI solutions for utility and renewable energy sectors: 40% improvement in regulatory compliance efficiency, 65% faster information retrieval with enterprise RAG systems",
+            "Led delivery of multiple serverless SPAs on AWS—30% faster time-to-market through accelerated engineering patterns",
+            "Created reusable GenAI architectural frameworks, accelerating subsequent AI projects by 50%"
+          ]
+        },
+        {
+          "title": "Cloud Architect / DevOps Engineer",
+          "dateRange": "2022",
+          "achievements": [
+            "Designed scalable Terraform modules for Apollo GraphQL federated architecture, ensuring high-availability for internal and external APIs",
+            "Engineered comprehensive CI/CD pipelines and IaC modules for standardized deployments"
+          ]
+        },
+        {
+          "title": "Full Stack Engineer",
+          "dateRange": "2022",
+          "achievements": [
+            "Developed responsive web and mobile applications using Angular, React, and Ionic with serverless Node.js backends"
+          ]
+        }
+      ],
+      "color": "company1"
+    },
+    {
+      "company": "Triblio",
+      "positions": [
+        {
+          "title": "Software/DevOps Engineer",
+          "dateRange": "2021 – 2022",
+          "achievements": [
+            "Built CLI automation tools enhancing security posture and deployment velocity for Node.js/Angular applications",
+            "Managed AWS infrastructure with CloudWatch/Grafana monitoring systems"
+          ]
+        }
+      ],
+      "color": "company2"
+    },
+    {
+      "company": "Accenture Federal Services",
+      "positions": [
+        {
+          "title": "DevOps Engineer",
+          "dateRange": "2018 – 2021",
+          "achievements": [
+            "Maintained microservice architectures across Kubernetes and Docker Swarm, enabling zero-downtime deployments",
+            "Created CI/CD pipelines for Java backends and Angular applications; managed Ansible Tower for hundreds of operations workflows"
+          ]
+        }
+      ],
+      "color": "company3"
+    }
+  ],
+  "education": {
+    "school": "James Madison University",
+    "degree": "BS Computer Science",
+    "minor": "Music Industry",
+    "graduationDate": "May 2018"
+  }
+}
