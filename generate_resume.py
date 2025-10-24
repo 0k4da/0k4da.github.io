@@ -87,7 +87,7 @@ def generate_latex_resume(data):
     \vspace{6pt}
     {\displayfont\Large\textcolor{accent}{\MakeUppercase{#1}}}
     \vspace{1pt}
-    \par\noindent\textcolor{accent}{\rule{4.7in}{2pt}}
+    \par\noindent\textcolor{accent}{\rule{5.0in}{2pt}}
     \vspace{3pt}
 }
 
@@ -136,7 +136,7 @@ def generate_latex_resume(data):
 {{\\footnotesize\\textcolor{{mediumgray}}{{\\\\[-6pt]
 {personal['phone']}\\\\[3pt]
 {personal['email']}\\\\[3pt]
-@{personal['github']}\\\\[3pt]
+@{personal['linkedin']}\\\\[3pt]
 {personal['location']}\\\\[3pt]
 }}}}
 
@@ -181,7 +181,7 @@ Minor: {edu['minor']}\\\\[3pt]}}
 \\vfill
 
 % QR CODE
-\\vspace{{110pt}}
+\\vspace{{80pt}}
 \\raggedright
 \\includegraphics[width=0.8in]{{qr_code.png}}\\\\[3pt]
 
@@ -195,10 +195,10 @@ Minor: {edu['minor']}\\\\[3pt]}}
 }%
 % RIGHT MAIN CONTENT
 \hspace{0pt}%
-\begin{minipage}[t][10.5in][t]{5.3in}
+\begin{minipage}[t][10.5in][t]{5.6in}
 \vspace{0.3in}
 \hspace{0.3in}
-\begin{minipage}{4.7in}
+\begin{minipage}{5.0in}
 \raggedright
 
 % EXPERIENCE
@@ -218,7 +218,7 @@ Minor: {edu['minor']}\\\\[3pt]}}
         for position in company_data['positions']:
             latex += f"\\positionHeader{{{position['dateRange']}}}{{{escape_latex(position['title'])}}}\n"
             latex += "\\begin{itemize}\n"
-            latex += "    \\setlength\\itemsep{0.5pt}\n"
+            latex += "    \\setlength\\itemsep{0.25pt}\n"
 
             for achievement in position['achievements']:
                 latex += f"    \\item\\small\\textcolor{{darkgray}}{{{escape_latex(achievement)}}}\n"

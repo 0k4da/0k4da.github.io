@@ -5,12 +5,12 @@
     "title": "Software Architect",
     "phone": "571.527.9694",
     "email": "christian.okada@gmail.com",
-    "github": "OkadaChristian",
+    "linkedin": "OkadaChristian",
     "location": "San Diego, CA",
     "websiteUrl": "https://0k4da.github.io"
   },
-  "about": "Seven years architecting AI-driven solutions where simplicity meets innovation. Leading Slalom's AI Value Platform—transforming how organizations measure, prioritize, and deploy generative AI.",
-  "tagline": "Seven years architecting AI-driven solutions where simplicity meets innovation.<br>Leading Slalom's AI Value Platform—transforming how organizations measure, prioritize, and deploy generative AI.",
+  "about": "Eight years architecting AI-driven solutions where simplicity meets innovation. Leading Slalom's AI Value Platform—transforming how organizations measure, prioritize, and deploy generative AI.",
+  "tagline": "Eight years architecting AI-driven solutions where simplicity meets innovation.<br>Leading Slalom's AI Value Platform—transforming how organizations measure, prioritize, and deploy generative AI.",
   "skills": {
     "technical": [
       "AWS Solution Architect",
@@ -22,14 +22,16 @@
       "CI/CD & IaC (Terraform/CDK)",
       "API Design (REST/GraphQL)",
       "SQL / NoSQL Databases",
+      "Event-Driven Architecture",
+      "Security & IAM Best Practices",
       "Bash / Linux",
-      "Agile / Accelerated Engineering",
+      "Agile / Test-Driven Development",
       "System Architecture"
     ],
     "leadership": [
-      "Technical Direction",
-      "Team Mentorship",
-      "Strategic Planning",
+      "Technical Direction & Team Leadership",
+      "Engineering Mentorship & Career Development",
+      "Strategic Planning & ROI Analysis",
       "Solution Architecture",
       "Client Partnership",
       "Innovation & Vision"
@@ -43,19 +45,19 @@
           "title": "Technical Lead - AI Value Platform",
           "dateRange": "2023 – Present",
           "achievements": [
-            "Lead technical development of Slalom's AI Value Platform serving hundreds of internal users and built company's first external client access, enabling organizations to make business decisions around AI investments with methodical approach prioritizing forecasted ROI while incorporating risk, effort, and value",
-            "Built proprietary AI Value Calculator to estimate and drive ROI with GenAI/ML pilots by comparing use cases and their potential return, providing directional estimates with GenAI models for TCO and KPI projections",
-            "Developed AI Capability Assessment to evaluate organizational readiness for AI use case execution, and built internal use case library to track Slalom's GenAI delivery patterns for benchmarking",
-            "Architected and built EnhanceIQ, a task analysis service evaluating GenAI opportunities from process and role perspectives—processing hundreds to thousands of tasks through GenAI Step Function pipelines running 12 different analytical prompts per task, using SQS, Lambda, and Step Functions to orchestrate complex LLM inference workflows",
-            "Served as primary architect and engineer building full-stack features with React frontend, TypeScript Node.js backend, serverless architecture with DynamoDB and Lambda behind API Gateway—championed AI-assisted coding adoption with tools like Claude Code and Windsurf, achieving high team velocity while maintaining enterprise standards"
+            "Lead development team of 6 engineers building Slalom's AI Value Platform serving hundreds of internal users and company's first external client access, enabling organizations to make data-driven decisions around AI investments with methodical approach prioritizing forecasted ROI while incorporating risk, effort, and value",
+            "Built proprietary AI Value Calculator with complex ROI forecasting models analyzing implementation time, time to benefit yield, adoption rates, and KPI impact—providing directional TCO estimates and value quantification for GenAI/ML use case prioritization",
+            "Developed AI Capability Assessment to evaluate organizational readiness for AI use case execution, and built internal use case library to track Slalom's GenAI delivery patterns—establishing thought leadership in GenAI investment strategy",
+            "Architected and built EnhanceIQ, an event-driven task analysis service evaluating GenAI opportunities from process and role perspectives—processing hundreds to thousands of tasks through GenAI Step Function pipelines running 12 different analytical prompts per task, using SQS, Lambda, and Step Functions to orchestrate complex LLM inference workflows",
+            "Served as primary architect and engineer building full-stack features with React frontend, TypeScript Node.js backend, serverless architecture with DynamoDB and Lambda behind API Gateway—implemented IAM best practices and test-driven development while championing AI-assisted coding adoption, achieving high team velocity while maintaining enterprise security standards"
           ]
         },
         {
           "title": "Senior Consultant - Solution Architect",
           "dateRange": "2022 – 2023",
           "achievements": [
-            "Built GenAI application for utilities to assist regulatory drafting using performant RAG architecture with AWS services (Textract, ECS, Bedrock, OpenSearch, RDS Postgres with pgvector) and multimodal LLM OCR, improving regulatory compliance efficiency",
-            "Developed full-stack Angular/Python solution with automated S3 static site deployments—established reusable framework for client GenAI applications"
+            "Built GenAI application for utilities to assist regulatory drafting using performant RAG architecture with AWS services (Textract, ECS, Bedrock, OpenSearch, RDS Postgres with pgvector) and multimodal LLM OCR, implementing security best practices and IAM policies for compliance-sensitive environment",
+            "Developed full-stack Angular/Python solution with automated S3 static site deployments—established reusable framework for client GenAI applications with security-first architecture"
           ]
         },
         {
@@ -63,7 +65,7 @@
           "dateRange": "2022",
           "achievements": [
             "Developed mobile application for Public Safety Power Shutoff system to warn customers of planned outages for wildfire prevention using Node.js/TypeScript and Angular, including custom IaC with CDK and CloudFormation",
-            "Built Terraform modules for Apollo GraphQL federated architecture for a national pet retailer's API infrastructure and developed custom CI/CD deployment automation with GitLab"
+            "Built Terraform modules for Apollo GraphQL federated architecture for national pet retailer's API infrastructure and developed custom CI/CD deployment automation with GitLab"
           ]
         }
       ],
