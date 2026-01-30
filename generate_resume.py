@@ -73,10 +73,10 @@ def generate_original_template(data):
 \definecolor{company2}{RGB}{100,149,237}
 \definecolor{company3}{RGB}{205,92,92}
 
-% Modern fonts
-\setmainfont{Helvetica Neue}
-\newfontfamily\displayfont[LetterSpace=15.0]{Helvetica Neue}
-\newfontfamily\headingfont{Helvetica Neue}
+% Modern fonts (TeX Gyre Heros is a Helvetica clone)
+\setmainfont{TeX Gyre Heros}
+\newfontfamily\displayfont[LetterSpace=15.0]{TeX Gyre Heros}
+\newfontfamily\headingfont{TeX Gyre Heros}
 
 % Eliminate spacing
 \setlength{\parindent}{0pt}
@@ -269,9 +269,9 @@ def generate_classic_template(data):
 \definecolor{lighttext}{RGB}{120,120,120}
 \definecolor{rulecolor}{RGB}{51,102,153}
 
-% Clean fonts
-\setmainfont{Helvetica Neue}
-\newfontfamily\headingfont{Helvetica Neue Bold}
+% Clean fonts (TeX Gyre Heros is a Helvetica clone)
+\setmainfont{TeX Gyre Heros}
+\newfontfamily\headingfont[BoldFont={TeX Gyre Heros Bold}]{TeX Gyre Heros}
 
 % Spacing
 \setlength{\parindent}{0pt}
@@ -411,10 +411,10 @@ def generate_modern_template(data):
 \definecolor{company2}{RGB}{0,200,130}
 \definecolor{company3}{RGB}{150,100,200}
 
-% Modern fonts
-\setmainfont{Helvetica Neue}
-\newfontfamily\displayfont[LetterSpace=12.0]{Helvetica Neue}
-\newfontfamily\headingfont{Helvetica Neue Bold}
+% Modern fonts (TeX Gyre Heros is a Helvetica clone)
+\setmainfont{TeX Gyre Heros}
+\newfontfamily\displayfont[LetterSpace=12.0]{TeX Gyre Heros}
+\newfontfamily\headingfont[BoldFont={TeX Gyre Heros Bold}]{TeX Gyre Heros}
 
 % Spacing
 \setlength{\parindent}{0pt}
