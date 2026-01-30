@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christian Okada - Software Architect | Minimal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sidebar-bg: #2c3e50;
+            --sidebar-light: #34495e;
+            --accent: #3498db;
+            --accent-light: #5dade2;
+            --text-dark: #2c3e50;
+            --text-medium: #5d6d7e;
+            --text-light: #95a5a6;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e9ecef;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .resume-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 40px auto;
+            background: var(--bg-white);
+            box-shadow: 0 10px 60px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px;
+            min-width: 320px;
+            background: var(--sidebar-bg);
+            color: #ffffff;
+            padding: 50px 30px;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-initials {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .profile-name {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-title {
+            color: var(--accent-light);
+            font-size: 1rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 35px;
+        }
+
+        .sidebar-section h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-light);
+            margin-bottom: 18px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.85);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .contact-list li:last-child {
+            border-bottom: none;
+        }
+
+        .contact-list .icon {
+            width: 18px;
+            text-align: center;
+            color: var(--accent-light);
+        }
+
+        .contact-list a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-list a:hover {
+            color: var(--accent-light);
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.85);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-list li::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .education-item {
+            margin-bottom: 15px;
+        }
+
+        .education-item .school {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .education-item .degree {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 2px;
+        }
+
+        .education-item .minor {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2px;
+        }
+
+        .education-item .date {
+            font-size: 0.8rem;
+            color: var(--accent-light);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 50px 45px;
+            background: var(--bg-white);
+        }
+
+        .main-section {
+            margin-bottom: 40px;
+        }
+
+        .main-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+        }
+
+        .about-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-medium);
+        }
+
+        /* Experience */
+        .experience-item {
+            margin-bottom: 35px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .experience-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .experience-company {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .experience-date {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .experience-title {
+            font-size: 1.05rem;
+            color: var(--text-medium);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .achievement-list {
+            list-style: none;
+        }
+
+        .achievement-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        .achievement-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        /* Leadership Skills in Main */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .skill-tag {
+            background: var(--bg-light);
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            border-left: 3px solid var(--accent);
+        }
+
+        /* Template Switcher */
+        .template-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .template-switch a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--sidebar-bg);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .template-switch a:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Print Styles */
+        @media print {
+            .template-switch {
+                display: none;
+            }
+
+            .resume-container {
+                margin: 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            body {
+                background: white;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .resume-container {
+                flex-direction: column;
+                margin: 20px;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-width: 100%;
+                padding: 40px 30px;
+            }
+
+            .profile-section {
+                margin-bottom: 30px;
+                padding-bottom: 25px;
+            }
+
+            .sidebar-sections {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 30px;
+            }
+
+            .sidebar-section {
+                margin-bottom: 0;
+            }
+
+            .main-content {
+                padding: 40px 30px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .resume-container {
+                margin: 10px;
+                border-radius: 0;
+            }
+
+            .sidebar {
+                padding: 30px 20px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .experience-header {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .template-switch {
+                top: 10px;
+                right: 10px;
+            }
+
+            .template-switch a {
+                padding: 8px 15px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="template-switch">
+        <a href="index.html">
+            <span>&larr;</span> All Templates
+        </a>
+    </div>
+
+    <div class="resume-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="profile-section">
+                <div class="profile-initials" id="initials">CO</div>
+                <h1 class="profile-name" id="profile-name">Christian Okada</h1>
+                <p class="profile-title" id="profile-title">Software Architect</p>
+            </div>
+
+            <div class="sidebar-sections">
+                <div class="sidebar-section">
+                    <h3>Contact</h3>
+                    <ul class="contact-list" id="contact-list">
+                        <li><span class="icon">P</span> <a href="tel:5715279694">571.527.9694</a></li>
+                        <li><span class="icon">E</span> <a href="mailto:christian.okada@gmail.com">christian.okada@gmail.com</a></li>
+                        <li><span class="icon">L</span> <a href="https://linkedin.com/in/OkadaChristian" target="_blank">linkedin.com/in/OkadaChristian</a></li>
+                        <li><span class="icon">W</span> San Diego, CA</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Technical Skills</h3>
+                    <ul class="skill-list" id="technical-skills">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Education</h3>
+                    <div class="education-item" id="education">
+                        <div class="school">James Madison University</div>
+                        <div class="degree">BS Computer Science</div>
+                        <div class="minor">Minor: Music Industry</div>
+                        <div class="date">May 2018</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <section class="main-section">
+                <div class="section-header">
+                    <h2>About</h2>
+                </div>
+                <p class="about-text" id="about-text">
+                    Eight years architecting AI-driven solutions where simplicity meets innovation. Leading Slalom's AI Value Platform—transforming how organizations measure, prioritize, and deploy generative AI. Passionate about building scalable, cloud-native systems that drive real business value.
+                </p>
+            </section>
+
+            <section class="main-section">
+                <div class="section-header">
+                    <h2>Experience</h2>
+                </div>
+                <div id="experience-container">
+                    <!-- Populated by JS -->
+                </div>
+            </section>
+
+            <section class="main-section">
+                <div class="section-header">
+                    <h2>Leadership</h2>
+                </div>
+                <div class="skills-grid" id="leadership-skills">
+                    <!-- Populated by JS -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        async function loadData() {
+            try {
+                const response = await fetch('../data.json');
+                const data = await response.json();
+
+                // Profile info
+                document.getElementById('profile-name').textContent = `${data.personal.firstName} ${data.personal.lastName}`;
+                document.getElementById('profile-title').textContent = data.personal.title;
+                document.getElementById('initials').textContent = data.personal.firstName[0] + data.personal.lastName[0];
+
+                // Contact
+                const contactList = document.getElementById('contact-list');
+                contactList.innerHTML = `
+                    <li><span class="icon">P</span> <a href="tel:${data.personal.phone.replace(/\D/g, '')}">${data.personal.phone}</a></li>
+                    <li><span class="icon">E</span> <a href="mailto:${data.personal.email}">${data.personal.email}</a></li>
+                    <li><span class="icon">L</span> <a href="https://linkedin.com/in/${data.personal.linkedin}" target="_blank">linkedin.com/in/${data.personal.linkedin}</a></li>
+                    <li><span class="icon">W</span> ${data.personal.location}</li>
+                `;
+
+                // About
+                document.getElementById('about-text').textContent = data.about + ' Passionate about building scalable, cloud-native systems that drive real business value.';
+
+                // Technical Skills
+                const techSkills = document.getElementById('technical-skills');
+                techSkills.innerHTML = data.skills.technical
+                    .map(skill => `<li>${skill}</li>`)
+                    .join('');
+
+                // Leadership Skills
+                const leadershipSkills = document.getElementById('leadership-skills');
+                leadershipSkills.innerHTML = data.skills.leadership
+                    .map(skill => `<div class="skill-tag">${skill}</div>`)
+                    .join('');
+
+                // Experience
+                const expContainer = document.getElementById('experience-container');
+                let expHTML = '';
+                data.experience.forEach(company => {
+                    company.positions.forEach(position => {
+                        expHTML += `
+                            <div class="experience-item">
+                                <div class="experience-header">
+                                    <span class="experience-company">${company.company}</span>
+                                    <span class="experience-date">${position.dateRange}</span>
+                                </div>
+                                <div class="experience-title">${position.title}</div>
+                                <ul class="achievement-list">
+                                    ${position.achievements.map(a => `<li>${a}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    });
+                });
+                expContainer.innerHTML = expHTML;
+
+                // Education
+                const edu = document.getElementById('education');
+                edu.innerHTML = `
+                    <div class="school">${data.education.school}</div>
+                    <div class="degree">${data.education.degree}</div>
+                    <div class="minor">Minor: ${data.education.minor}</div>
+                    <div class="date">${data.education.graduationDate}</div>
+                `;
+
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        window.addEventListener('load', loadData);
+    </script>
+</body>
+</html>

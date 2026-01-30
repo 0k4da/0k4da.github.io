@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Templates - Christian Okada</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #000000;
+            --accent: #CC9364;
+            --dark-bg: #0a0a0a;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            margin-bottom: 40px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #ffffff;
+            transform: translateX(-5px);
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .template-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(204, 147, 100, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .template-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 30px 80px rgba(204, 147, 100, 0.2);
+        }
+
+        .template-preview {
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .template-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            transition: transform 0.5s ease;
+        }
+
+        .template-card:hover .template-preview img {
+            transform: scale(1.05);
+        }
+
+        /* Preview placeholders with visual representations */
+        .preview-original {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .preview-minimal {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+        }
+
+        .preview-cyber {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        /* Original Preview Mock */
+        .preview-original .mock-hero {
+            text-align: center;
+        }
+
+        .preview-original .mock-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #CC9364 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .preview-original .mock-title {
+            color: #CC9364;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+        }
+
+        .preview-original .mock-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .preview-original .mock-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #CC9364;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        /* Minimal Preview Mock */
+        .preview-minimal .mock-sidebar {
+            width: 35%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #2c3e50;
+            padding: 20px;
+        }
+
+        .preview-minimal .mock-sidebar .mock-name {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .preview-minimal .mock-sidebar .mock-title {
+            color: #3498db;
+            font-size: 0.7rem;
+            margin-bottom: 15px;
+        }
+
+        .preview-minimal .mock-sidebar .mock-line {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            margin-bottom: 8px;
+        }
+
+        .preview-minimal .mock-sidebar .mock-line:nth-child(odd) {
+            width: 80%;
+        }
+
+        .preview-minimal .mock-main {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 65%;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .preview-minimal .mock-main .mock-section-title {
+            font-size: 0.8rem;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #3498db;
+            display: inline-block;
+        }
+
+        .preview-minimal .mock-main .mock-text-line {
+            height: 6px;
+            background: #dee2e6;
+            border-radius: 3px;
+            margin-bottom: 6px;
+        }
+
+        /* Cyber Preview Mock */
+        .preview-cyber .mock-glow-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d9ff 0%, #00ff88 100%);
+            margin-bottom: 15px;
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
+        }
+
+        .preview-cyber .mock-name {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 5px;
+        }
+
+        .preview-cyber .mock-title {
+            color: #00d9ff;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .preview-cyber .mock-grid {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .preview-cyber .mock-card {
+            width: 60px;
+            height: 40px;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 8px;
+        }
+
+        .template-info {
+            padding: 30px;
+        }
+
+        .template-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .template-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .template-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(204, 147, 100, 0.2);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .view-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: #000000;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .template-card:hover .view-btn {
+            background: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+            .templates-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .template-preview {
+                height: 220px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-link">
+            <span>&larr;</span> Back to Main Resume
+        </a>
+
+        <div class="header">
+            <h1>Resume Templates</h1>
+            <p>Choose from different visual styles. All templates pull from the same data source for consistency.</p>
+        </div>
+
+        <div class="templates-grid">
+            <!-- Original Template -->
+            <a href="../index.html" class="template-card">
+                <div class="template-preview preview-original">
+                    <div class="mock-particles">
+                        <div class="mock-particle" style="left: 20%; top: 30%;"></div>
+                        <div class="mock-particle" style="left: 70%; top: 20%;"></div>
+                        <div class="mock-particle" style="left: 45%; top: 60%;"></div>
+                        <div class="mock-particle" style="left: 80%; top: 70%;"></div>
+                        <div class="mock-particle" style="left: 15%; top: 80%;"></div>
+                    </div>
+                    <div class="mock-hero">
+                        <div class="mock-name">CHRISTIAN OKADA</div>
+                        <div class="mock-title">SOFTWARE ARCHITECT</div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Original Dark</h3>
+                    <p>Sleek dark theme with particle animations, glassmorphism cards, and copper accents. Interactive skill modals and timeline layout.</p>
+                    <div class="template-tags">
+                        <span class="tag">Dark Mode</span>
+                        <span class="tag">Animated</span>
+                        <span class="tag">Interactive</span>
+                    </div>
+                    <div class="view-btn">View Template &rarr;</div>
+                </div>
+            </a>
+
+            <!-- Minimal Light Template -->
+            <a href="minimal.html" class="template-card">
+                <div class="template-preview preview-minimal">
+                    <div class="mock-sidebar">
+                        <div class="mock-name">Christian Okada</div>
+                        <div class="mock-title">Software Architect</div>
+                        <div class="mock-line" style="width: 70%;"></div>
+                        <div class="mock-line" style="width: 90%;"></div>
+                        <div class="mock-line" style="width: 60%;"></div>
+                        <div class="mock-line" style="width: 85%;"></div>
+                    </div>
+                    <div class="mock-main">
+                        <div class="mock-section-title">Experience</div>
+                        <div class="mock-text-line" style="width: 95%;"></div>
+                        <div class="mock-text-line" style="width: 80%;"></div>
+                        <div class="mock-text-line" style="width: 90%;"></div>
+                        <div class="mock-text-line" style="width: 70%;"></div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Minimal Light</h3>
+                    <p>Clean, professional two-column layout with a slate sidebar. Perfect for traditional corporate environments and ATS systems.</p>
+                    <div class="template-tags">
+                        <span class="tag">Light Mode</span>
+                        <span class="tag">Professional</span>
+                        <span class="tag">Two-Column</span>
+                    </div>
+                    <div class="view-btn">View Template &rarr;</div>
+                </div>
+            </a>
+
+            <!-- Cyber Gradient Template -->
+            <a href="cyber.html" class="template-card">
+                <div class="template-preview preview-cyber">
+                    <div class="mock-glow-circle"></div>
+                    <div class="mock-name">CHRISTIAN OKADA</div>
+                    <div class="mock-title">SOFTWARE ARCHITECT</div>
+                    <div class="mock-grid">
+                        <div class="mock-card"></div>
+                        <div class="mock-card"></div>
+                        <div class="mock-card"></div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Cyber Gradient</h3>
+                    <p>Bold, futuristic design with vibrant gradients and neon accents. Features card-based layout with glowing effects.</p>
+                    <div class="template-tags">
+                        <span class="tag">Dark Mode</span>
+                        <span class="tag">Futuristic</span>
+                        <span class="tag">Bold Colors</span>
+                    </div>
+                    <div class="view-btn">View Template &rarr;</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
