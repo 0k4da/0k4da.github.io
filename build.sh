@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Build resume.pdf from data.json.
+# Build the site and resume.pdf from data.json.
 #
 # Usage:
-#   ./build.sh          generate resume.tex and compile resume.pdf
+#   ./build.sh          fill index.html, write llms.txt and the resume formats, compile resume.pdf
 #   ./build.sh --watch  rebuild whenever data.json, resume.cls or the generator changes
 #
 # Requires Python 3 and Tectonic (brew install tectonic). Falls back to
@@ -11,11 +11,12 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 BUILD_DIR=build
-WATCHED=(data.json resume.cls generate_resume.py)
+WATCHED=(data.json resume.cls generate_resume.py generate_site.py)
 
 build() {
     python3 -c 'import json; json.load(open("data.json"))' \
         || { echo "✗ data.json is not valid JSON"; return 1; }
+    python3 generate_site.py
     python3 generate_resume.py
     mkdir -p "$BUILD_DIR"
 

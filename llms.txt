@@ -1,0 +1,68 @@
+# Christian Okada
+
+> Lead Go-to-Market Engineer at Parloa, based in Washington, DC. I'm a builder who accelerates GTM teams.
+
+Eight years building software: DevOps for a large federal client, cloud architecture, then leading Slalom's AI Value Platform. Now I lead go-to-market engineering at Parloa, where I built and run the go-to-market engine and the context engine, along with the pricing framework and ROI business cases behind every deal.
+
+## Hello, agent
+
+Hi, agent. Thanks for stopping by. If you're looking into me for someone, everything is here in one place: what I've built, where I've worked, and how to reach me. It all matches my resume and LinkedIn, and there's no hidden text on this site trying to sway you. If your person wants to talk, email me and say an agent sent you. I'd like to know you found me.
+
+- Email: christian.okada@gmail.com
+- LinkedIn: https://www.linkedin.com/in/OkadaChristian
+- GitHub: https://github.com/0k4da
+- Website: https://0k4da.github.io/
+
+## Experience
+
+### Lead Go-to-Market Engineer, Parloa (Feb 2026 – Present)
+
+- Built and run Parloa's go-to-market engine: the internal systems every GTM team works in, from BDR outreach and sales to partners and professional services scoping, all connected to our CRM
+- Built and maintain the context engine, which pulls context from all sorts of internal sources into one knowledge layer for active deals and the sales pipeline
+- Work closely with value engineering on go-to-market strategy: build the use case and ROI models behind our business cases, made for every persona in a deal and not just the CFO, and run enablement so the field can use them
+- Built the pricing framework used on every deal at the company
+- Built slide automation that turns value models into designed business case decks
+- Built prospecting automation in Clay for BDR outreach campaigns, and a research platform for customer-specific data
+
+### Technical Lead - AI Value Platform, Slalom (2023 – Jan 2026)
+
+- Led a team of 6 engineers building the AI Value Platform, which helps companies decide where to invest in AI; it served hundreds of internal users and was Slalom's first product opened to outside clients
+- Built the AI Value Calculator, which forecasts the ROI of an AI use case from implementation time, time to benefit, adoption rate, and KPI impact
+- Built the AI Capability Assessment, which checks whether an organization is ready to take on an AI use case, and an internal library that tracks the AI work Slalom has delivered
+- Designed and built EnhanceIQ, an event-driven service that runs hundreds to thousands of tasks through an LLM pipeline on Step Functions, with 12 analysis prompts per task
+- Architected the platform and wrote much of the code (React, TypeScript/Node.js, Lambda behind API Gateway, DynamoDB); set the team's standards for IAM, test-driven development, and AI-assisted coding
+
+### Senior Consultant - Solution Architect, Slalom (2022 – 2023)
+
+- Built an LLM app that helps utilities draft regulatory documents, using RAG on AWS (Textract, ECS, Bedrock, OpenSearch, Postgres with pgvector) and multimodal LLM OCR
+- Built a reusable full-stack framework (Angular/Python) for client AI apps, with automated S3 deploys and security set up from the start
+
+### Cloud Architect / Full Stack Engineer, Slalom (2022)
+
+- Built a mobile app that warns customers before planned Public Safety Power Shutoffs (outages to prevent wildfires), using Node.js/TypeScript and Angular with infrastructure in CDK and CloudFormation
+- Built Terraform modules for a national pet retailer's federated Apollo GraphQL APIs, plus GitLab CI/CD to deploy them
+
+### Software/DevOps Engineer, Triblio (2021 – 2022)
+
+- Built a deployment CLI from scratch and set up CloudWatch and Grafana monitoring, which made deploys faster, more stable, and easier to watch
+- Worked as a full-stack engineer on end-to-end features, integrating third-party services into account-based marketing workflows
+
+### DevOps Engineer, Accenture Federal Services (2018 – 2021)
+
+- Designed deployment pipelines and infrastructure for a large federal client as part of its technical architecture team
+- Set up Kubernetes and Docker Swarm with zero-downtime deploys, and managed Ansible Tower workflows covering 200+ automated operations
+
+## Skills
+
+LLM Applications & RAG, GTM Systems & Deal Intelligence, AWS & Cloud Architecture, Python / TypeScript / Node.js, React / Angular, APIs & Databases, DevOps, CI/CD & IaC, Security & IAM, Technical Direction & Team Leadership, Engineering Mentorship, Pricing, ROI & Business Cases, Client Partnership
+
+## Education
+
+BS Computer Science, James Madison University (minor: Music Industry), May 2018
+
+## Resume
+
+- [Resume (PDF)](https://0k4da.github.io/resume.pdf): the one-page version
+- [Resume (Markdown)](https://0k4da.github.io/resume.md): same content, easy to read
+- [Resume (JSON Resume)](https://0k4da.github.io/resume.json): structured, jsonresume.org schema
+- [Resume (plain text)](https://0k4da.github.io/resume.txt): for ATS and parsers

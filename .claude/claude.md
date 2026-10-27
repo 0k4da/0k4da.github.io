@@ -9,8 +9,10 @@ This is a personal resume project that maintains both a web portfolio (`index.ht
 ### Single Source of Truth: `data.json`
 
 All content is stored in `data.json` with the following structure:
-- **personal**: Name, title, contact information (phone, email, GitHub, location)
+- **personal**: Name, title, contact information (phone, email, LinkedIn, GitHub, location, websiteUrl)
 - **about**: Professional summary paragraph
+- **intro**: One line under the hero greeting
+- **agentNote**: The "hello, agent" note in llms.txt and resume.json
 - **tagline**: Extended tagline for the website hero section
 - **skills**:
   - `technical`: Array of technical skills
@@ -30,7 +32,8 @@ All content is stored in `data.json` with the following structure:
 ```
 .
 ├── data.json              # Single source of truth for all content
-├── index.html             # Website portfolio (loads from data.json)
+├── index.html             # Website; <!-- gen:name --> regions are filled at build
+├── generate_site.py       # data.json → index.html regions, llms.txt, resume.md/.txt/.json, robots.txt, sitemap.xml
 ├── generate_resume.py     # data.json → resume.tex (content only, stdlib)
 ├── resume.cls             # PDF layout, typography, colors
 ├── build.sh               # Generate + compile + one-page check (--watch supported)
@@ -48,15 +51,13 @@ All content is stored in `data.json` with the following structure:
 ### 1. Edit Content
 Edit `data.json` to update any content (contact info, experience, skills, etc.)
 
-### 2. Update Website
-The website automatically loads from `data.json` - no additional steps needed. Just refresh the page.
-
-### 3. Update Resume
+### 2. Build
 ```bash
 ./build.sh
 ```
-This validates `data.json`, generates `resume.tex`, compiles with Tectonic, copies the PDF to
-`resume.pdf`, and fails if the resume runs past one page. Logs land in `build/resume.log`.
+This validates `data.json`, fills the generated regions of `index.html`, writes `llms.txt`, the
+resume formats, `robots.txt` and `sitemap.xml`, generates `resume.tex`, compiles with Tectonic,
+copies the PDF to `resume.pdf`, and fails if the resume runs past one page. Logs land in `build/resume.log`.
 
 ## Development Workflow
 
@@ -72,15 +73,15 @@ python3 -m http.server 8000
 ./build.sh --watch   # rebuild on changes (needs fswatch)
 ```
 Requires `brew install tectonic`. Falls back to `latexmk -xelatex` if Tectonic is missing.
-CI (`.github/workflows/build-resume.yml`) rebuilds and commits `resume.pdf` on pushes to main.
+CI (`.github/workflows/build-resume.yml`) runs `./build.sh` and commits any changed outputs on pushes to main.
 
 ## Key Implementation Details
 
 ### Website (`index.html`)
-- Uses vanilla JavaScript with async/await to fetch `data.json`
-- Dynamically populates all content on page load via `loadData()` function
-- Maintains all existing animations, styling, and interactivity
-- All dynamic content elements have IDs for DOM manipulation
+- Content (head meta + JSON-LD, bio, links, jobs, skills, footer) is written into `index.html` by
+  `generate_site.py` between `<!-- gen:name -->` markers, so crawlers and AI agents can read it without JavaScript
+- Never hand-edit inside the markers; edit `data.json` or the generator and rebuild
+- JavaScript only handles animation and interaction (cranes, quotes, nav, email copy, folding guide)
 
 ### LaTeX Generator (`generate_resume.py`) and class (`resume.cls`)
 - The generator only emits content using macros from `resume.cls`
@@ -95,12 +96,12 @@ CI (`.github/workflows/build-resume.yml`) rebuilds and commits `resume.pdf` on p
 
 ### When Updating Content:
 1. **ALWAYS** edit `data.json` first
-2. Test the website by loading it in a browser
-3. Run `./build.sh` and check the PDF
+2. Run `./build.sh` (the website won't change until you do)
+3. Check the website in a browser and the PDF
 
 ### When Making Structural Changes:
 - If adding new fields to `data.json`, update both:
-  - The `loadData()` function in `index.html`
+  - `generate_site.py` (website regions and agent files)
   - The `generate_latex_resume()` function in `generate_resume.py` (and a macro in `resume.cls` if it needs new styling)
 - Adding a company color: define `companyN` in `resume.cls`, add `--companyN` + a class in `index.html`
 - Keep the JSON structure flat and simple for easy maintenance

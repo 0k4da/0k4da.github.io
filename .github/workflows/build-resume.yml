@@ -1,9 +1,9 @@
-name: Build resume PDF
+name: Build resume and site
 
 on:
   push:
     branches: [main]
-    paths: [data.json, resume.cls, generate_resume.py, build.sh]
+    paths: [data.json, resume.cls, generate_resume.py, generate_site.py, build.sh]
   workflow_dispatch:
 
 permissions:
@@ -19,17 +19,17 @@ jobs:
       - name: Install Tectonic
         run: brew install tectonic
 
-      - name: Build resume.pdf
+      - name: Build resume.pdf and site files
         run: ./build.sh
 
-      - name: Commit updated PDF
+      - name: Commit updated files
         run: |
-          if git diff --quiet resume.pdf; then
-            echo "resume.pdf unchanged"
+          git add resume.pdf index.html llms.txt resume.md resume.txt resume.json robots.txt sitemap.xml
+          if git diff --cached --quiet; then
+            echo "Nothing changed"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add resume.pdf
-          git commit -m "Rebuild resume.pdf"
+          git commit -m "Rebuild resume and site files"
           git push
