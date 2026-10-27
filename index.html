@@ -227,9 +227,10 @@
 <canvas id="sea" aria-hidden="true"></canvas>
 
 <nav>
-  <a href="#top" class="on">fold</a>
+  <a href="#top" class="on" aria-current="true">home</a>
   <a href="#resume">resume</a>
   <a href="#work">work</a>
+  <a href="#crane">origami</a>
   <button id="theme" type="button">light</button>
 </nav>
 
@@ -307,8 +308,8 @@ const QUOTES = [
     who: 'Steve Jobs', src: '', sig: 'jobs', ar: 3.59, off: true },
   { text: "It's not the notes you play, it's the notes you don't play.",
     who: 'Miles Davis', src: 'attributed', sig: 'davis', ar: 1.54, h: 44, off: true },
-  { text: "It don't matter if you win by an inch or a mile. Winning's winning.",
-    who: 'Vin Diesel', src: 'as Dom Toretto, The Fast and the Furious, 2001', sig: 'diesel', ar: 1.61, h: 42 },
+  { text: 'Developers, developers, developers.',
+    who: 'Steve Ballmer', src: 'Microsoft developer event, 2000', sig: 'ballmer', ar: 2.27, h: 38 },
 ];
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -464,6 +465,27 @@ themeBtn.addEventListener('click', () => {
   try { localStorage.setItem('theme', t); } catch (e) {}
   syncThemeBtn();
 });
+
+/* ---------- nav: highlight the section you're in ---------- */
+
+const tabs = [...document.querySelectorAll('nav a[href^="#"]')];
+function spy() {
+  const line = 100;                                          // just under the nav, where a jump lands a section
+  const atEnd = innerHeight + scrollY >= document.documentElement.scrollHeight - 2;
+  let cur = tabs[0];
+  for (const a of tabs) {
+    const el = document.getElementById(a.hash.slice(1));
+    if (el && el.getBoundingClientRect().top <= line) cur = a;
+  }
+  if (atEnd) cur = tabs[tabs.length - 1];
+  for (const a of tabs) {
+    a.classList.toggle('on', a === cur);
+    if (a === cur) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+  }
+}
+addEventListener('scroll', spy, { passive: true });
+addEventListener('resize', spy);
+spy();
 
 /* ---------- the sky: loose paper and folded cranes, rendered through a cell grid ---------- */
 
