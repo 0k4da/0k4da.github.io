@@ -17,7 +17,8 @@ All content is stored in `data.json` with the following structure:
   - `leadership`: Array of leadership skills
 - **experience**: Array of companies, each with:
   - `company`: Company name
-  - `color`: CSS color class (company1, company2, company3)
+  - `tagline`: Optional one-line company descriptor (shown next to the name in the PDF)
+  - `color`: Color class (company1–company4)
   - `positions`: Array of positions at that company, each with:
     - `title`: Job title
     - `dateRange`: Employment dates
@@ -30,9 +31,13 @@ All content is stored in `data.json` with the following structure:
 .
 ├── data.json              # Single source of truth for all content
 ├── index.html             # Website portfolio (loads from data.json)
-├── resume.tex             # LaTeX resume (generated from data.json)
+├── generate_resume.py     # data.json → resume.tex (content only, stdlib)
+├── resume.cls             # PDF layout, typography, colors
+├── build.sh               # Generate + compile + one-page check (--watch supported)
+├── resume.tex             # Generated, gitignored
+├── build/                 # Tectonic output + logs, gitignored
 ├── resume.pdf             # Compiled PDF resume
-├── generate_resume.py     # Python script to generate resume.tex from data.json
+├── .github/workflows/build-resume.yml  # CI rebuilds resume.pdf on push
 └── .claude/
     ├── claude.md          # This file
     └── settings.local.json # Claude Code permissions
@@ -47,15 +52,11 @@ Edit `data.json` to update any content (contact info, experience, skills, etc.)
 The website automatically loads from `data.json` - no additional steps needed. Just refresh the page.
 
 ### 3. Update Resume
-Run the generator script to rebuild `resume.tex`:
 ```bash
-python3 generate_resume.py
+./build.sh
 ```
-
-Then compile the LaTeX to PDF (if needed):
-```bash
-pdflatex resume.tex
-```
+This validates `data.json`, generates `resume.tex`, compiles with Tectonic, copies the PDF to
+`resume.pdf`, and fails if the resume runs past one page. Logs land in `build/resume.log`.
 
 ## Development Workflow
 
@@ -67,12 +68,11 @@ python3 -m http.server 8000
 
 ### Build PDF Resume
 ```bash
-python3 generate_resume.py  # Generate .tex from data.json
-pdflatex resume.tex         # Compile to PDF
+./build.sh           # one-shot build
+./build.sh --watch   # rebuild on changes (needs fswatch)
 ```
-
-### Build Script
-There's a `build.sh` script that handles the full build process (approved in Claude Code permissions).
+Requires `brew install tectonic`. Falls back to `latexmk -xelatex` if Tectonic is missing.
+CI (`.github/workflows/build-resume.yml`) rebuilds and commits `resume.pdf` on pushes to main.
 
 ## Key Implementation Details
 
@@ -82,33 +82,37 @@ There's a `build.sh` script that handles the full build process (approved in Cla
 - Maintains all existing animations, styling, and interactivity
 - All dynamic content elements have IDs for DOM manipulation
 
-### LaTeX Generator (`generate_resume.py`)
-- Reads `data.json` and generates formatted LaTeX
-- Properly escapes special LaTeX characters (&, %, $, #, _, {, }, ~, ^)
-- Maintains consistent styling with color scheme:
-  - Primary: Black (#000000)
-  - Accent: Gold (#CC9364)
-  - Company colors: Blue shades for Slalom/Triblio, Red for Accenture
-- Two-column layout: sidebar (personal info, skills, education) + main content (experience)
+### LaTeX Generator (`generate_resume.py`) and class (`resume.cls`)
+- The generator only emits content using macros from `resume.cls`
+  (`\name`, `\contact`, `\sidebarsection`, `\skill`, `\company`, `\position`, `\achievement`, `\websiteqr`)
+- All styling (fonts, colors, spacing, layout) lives in `resume.cls`; change look there, not in Python
+- Escapes special LaTeX characters (\, &, %, $, #, _, {, }, ~, ^) in a single pass
+- QR code (`qrcode`), sidebar dot grid and experience timeline (`tikz`) render inside LaTeX; no Python deps
+- Two-column layout: sidebar (personal info, skills, education, QR) + main column (experience)
+- Size macros put `\par` inside their font-size group so line spacing matches the font size
 
 ## Important Notes for Claude Code
 
 ### When Updating Content:
 1. **ALWAYS** edit `data.json` first
 2. Test the website by loading it in a browser
-3. Run `generate_resume.py` to update the LaTeX
-4. Verify the generated `resume.tex` compiles correctly
+3. Run `./build.sh` and check the PDF
 
 ### When Making Structural Changes:
 - If adding new fields to `data.json`, update both:
   - The `loadData()` function in `index.html`
-  - The `generate_latex_resume()` function in `generate_resume.py`
+  - The `generate_latex_resume()` function in `generate_resume.py` (and a macro in `resume.cls` if it needs new styling)
+- Adding a company color: define `companyN` in `resume.cls`, add `--companyN` + a class in `index.html`
 - Keep the JSON structure flat and simple for easy maintenance
 
 ### LaTeX Considerations:
-- The resume uses `fontspec` and requires XeLaTeX or LuaLaTeX (uses Helvetica Neue font)
+- Type: Didot (name, company names), Avenir Next (body, About), Menlo (labels, dates). All macOS system fonts; build on macOS
 - Special characters in `data.json` will be automatically escaped by `generate_resume.py`
-- Color classes (company1, company2, company3) map to specific companies
+- The resume must stay one page; `build.sh` enforces this
+
+### Writing Style:
+- Keep Christian's own voice: direct, plain verbs ("Built", "Developed", "Architected"), concrete specifics
+- Avoid polished marketing phrasing; when trimming for space, cut clauses rather than rewording
 
 ### Design Philosophy:
 - **DRY Principle**: Don't Repeat Yourself - maintain content in one place
@@ -118,15 +122,19 @@ There's a `build.sh` script that handles the full build process (approved in Cla
 ## Color Scheme
 
 ```
-Primary Black:    #000000
-Accent Gold:      #CC9364
-Sidebar BG:       #F5FAFA
-Dark Gray:        #282828
-Medium Gray:      #646464
-Light Gray:       #F0F0F0
-Company Blue 1:   #4682B4 (Slalom)
-Company Blue 2:   #6495ED (Triblio)
-Company Red:      #CD5C5C (Accenture)
+PDF (resume.cls)          Website (index.html)
+Ink:       #1C1B1A        #000000
+Accent:    #A8673A        #CC9364
+Paper:     #F7F5F1  (sidebar)
+Grid dots: #DDD7CE
+Rule:      #D8D2C9
+Dark Gray: #2E2C2A
+Mid Gray:  #77716A
+The PDF uses only the accent; company colors below are for the website.
+company1:  #4682B4 (Slalom)
+company2:  #6495ED (Triblio)
+company3:  #CD5C5C (Accenture)
+company4:  #3D9A8B (Parloa)
 ```
 
 ## Testing Checklist
@@ -134,8 +142,7 @@ Company Red:      #CD5C5C (Accenture)
 Before considering changes complete:
 - [ ] `data.json` is valid JSON (no syntax errors)
 - [ ] Website loads and displays all content correctly
-- [ ] `generate_resume.py` runs without errors
-- [ ] Generated `resume.tex` compiles to PDF successfully
+- [ ] `./build.sh` succeeds and reports 1 page
 - [ ] PDF resume matches expected formatting and content
 - [ ] All contact links work (phone, email, GitHub)
 - [ ] No LaTeX special characters appear unescaped in PDF
@@ -146,17 +153,17 @@ Before considering changes complete:
 1. Edit `data.json` → find the appropriate company in `experience` array
 2. Add new position object to that company's `positions` array
 3. Refresh website to verify
-4. Run `python3 generate_resume.py` to update LaTeX
+4. Run `./build.sh` to rebuild the PDF
 
 ### Update Skills
 1. Edit `data.json` → modify `skills.technical` or `skills.leadership` arrays
 2. Changes automatically appear on website refresh
-3. Run `python3 generate_resume.py` to update LaTeX
+3. Run `./build.sh` to rebuild the PDF
 
 ### Change Contact Information
 1. Edit `data.json` → modify `personal` object
 2. Refresh website to verify
-3. Run `python3 generate_resume.py` to update LaTeX
+3. Run `./build.sh` to rebuild the PDF
 
 ## Dependencies
 
@@ -165,10 +172,9 @@ Before considering changes complete:
 - HTTP server for local testing (Python's `http.server` is sufficient)
 
 ### Resume Generator
-- Python 3.x
-- Standard library only (no external dependencies)
+- Python 3.x, standard library only
 
 ### PDF Compilation
-- LaTeX distribution with XeLaTeX or LuaLaTeX
-- Helvetica Neue font installed on system
-- Required LaTeX packages: fontspec, xcolor, geometry, inputenc
+- Tectonic (`brew install tectonic`), or a TeX distribution with latexmk + XeLaTeX
+- Didot, Avenir Next and Menlo (bundled with macOS)
+- Packages (fetched automatically by Tectonic): fontspec, xcolor, geometry, tikz, eso-pic, enumitem, qrcode, microtype, hyperref
