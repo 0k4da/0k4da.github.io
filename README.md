@@ -12,7 +12,7 @@
 ## 👋 About Me
 
 **Christian Okada** - Lead Go-to-Market Engineer @ Parloa
-📍 San Diego, CA
+📍 Washington, DC
 📧 christian.okada@gmail.com
 💼 [LinkedIn: OkadaChristian](https://linkedin.com/in/OkadaChristian)
 
@@ -35,7 +35,7 @@ This repository treats my resume like infrastructure—maintaining a **single so
 ### Architecture
 
 ```
-data.json  ─┬─→ index.html (live website)
+data.json  ─┬─→ generate_site.py → index.html content, llms.txt, resume.md/.txt/.json, robots.txt, sitemap.xml
             └─→ generate_resume.py → resume.tex ─(resume.cls + Tectonic)→ resume.pdf
 ```
 
@@ -46,19 +46,23 @@ All content lives in [`data.json`](data.json):
 - Work experience with achievements
 - Education
 
-The website dynamically loads from JSON. The PDF resume is generated via Python script and compiled with LaTeX. All PDF styling lives in `resume.cls`; the generator only emits content.
+The website's content is written into `index.html` at build time, so it reads fully without JavaScript (for crawlers and AI agents); JavaScript only runs the animations. The PDF resume is generated via Python script and compiled with LaTeX. All PDF styling lives in `resume.cls`; the generator only emits content.
 
 ### Project Structure
 
 ```
 ├── data.json              # Single source of truth for all content
-├── index.html             # Interactive portfolio website
+├── index.html             # Interactive portfolio website (content regions filled at build)
+├── generate_site.py       # data.json → index.html content + files for agents and crawlers
 ├── generate_resume.py     # data.json → resume.tex (content only)
+├── llms.txt               # Generated: summary for AI agents, with a hello
+├── resume.md / .txt / .json   # Generated: resume formats (JSON Resume schema)
+├── robots.txt, sitemap.xml    # Generated: crawler access, AI crawlers welcome
 ├── resume.cls             # PDF layout, typography, colors
 ├── build.sh               # Generate + compile + one-page check
 ├── resume.pdf             # Generated PDF resume
 ├── sig/                   # Public-domain signatures for the site's rotating quotes
-├── .github/workflows/     # CI: rebuilds resume.pdf on push
+├── .github/workflows/     # CI: rebuilds the PDF and site files on push
 └── .claude/
     └── claude.md          # Developer documentation
 ```
@@ -88,7 +92,7 @@ brew install fswatch    # optional, for --watch
 # 1. Edit the data
 vim data.json
 
-# 2. Build the PDF (validates JSON, generates resume.tex, compiles, fails if > 1 page)
+# 2. Build (validates JSON, fills index.html, writes llms.txt and resume formats, compiles the PDF, fails if > 1 page)
 ./build.sh
 
 #    ...or rebuild automatically on every save
@@ -100,14 +104,14 @@ python3 -m http.server 8000
 
 **Deploy:**
 ```bash
-git add data.json resume.pdf
+git add -A
 git commit -m "Update resume"
 git push
 ```
 
-The website auto-updates via GitHub Pages. No build step needed—it loads `data.json` directly.
+The website auto-updates via GitHub Pages.
 
-Pushing changes to `data.json`, `resume.cls`, `generate_resume.py` or `build.sh` also triggers the **Build resume PDF** GitHub Action, which rebuilds `resume.pdf` on a macOS runner and commits it back. Committing the PDF yourself is optional.
+Pushing changes to `data.json`, `resume.cls`, `generate_resume.py`, `generate_site.py` or `build.sh` also triggers the **Build resume and site** GitHub Action, which runs `./build.sh` on a macOS runner and commits any changed outputs back. Committing them yourself is optional.
 
 ---
 
@@ -124,8 +128,9 @@ Pushing changes to `data.json`, `resume.cls`, `generate_resume.py` or `build.sh`
 ## 📝 Technical Details
 
 **Website:**
-- Vanilla JavaScript with async/await
-- Dynamically populates from `data.json`
+- Content baked in from `data.json` at build time; readable without JavaScript
+- `llms.txt`, schema.org JSON-LD and JSON Resume for AI agents and crawlers
+- Vanilla JavaScript for the animations
 - Responsive design with smooth animations
 - No build tools or frameworks required
 
