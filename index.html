@@ -1,1431 +1,1416 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christian Okada - Software Architect</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #000000;
-            --accent: #CC9364;
-            --company1: #4682B4;
-            --company2: #6495ED;
-            --company3: #CD5C5C;
-            --dark-gray: #282828;
-            --medium-gray: #646464;
-            --light-gray: #f0f0f0;
-            --sidebar-bg: #F5FAFA;
-            --card-bg: #ffffff;
-        }
-
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            color: #ffffff;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* Particle Background */
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: float linear infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.3;
-            }
-            90% {
-                opacity: 0.3;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(50px);
-                opacity: 0;
-            }
-        }
-
-        /* Main Container */
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            padding: 40px 20px;
-        }
-
-        .hero-content {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero .accent-name {
-            color: var(--accent);
-            display: block;
-        }
-
-        .hero .title {
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
-            color: var(--accent);
-            font-weight: 300;
-            letter-spacing: 0.05em;
-            margin-bottom: 30px;
-        }
-
-        .hero .tagline {
-            font-size: clamp(1rem, 2vw, 1.3rem);
-            color: rgba(255, 255, 255, 0.7);
-            max-width: 800px;
-            margin: 0 auto 40px;
-            font-style: italic;
-        }
-
-        .contact-links {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 40px;
-        }
-
-        .contact-link {
-            color: #ffffff;
-            text-decoration: none;
-            padding: 15px 30px;
-            border: 2px solid var(--accent);
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1rem;
-        }
-
-        .contact-link:hover {
-            background: var(--accent);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(204, 147, 100, 0.3);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 50px;
-            border: 2px solid var(--accent);
-            border-radius: 25px;
-            opacity: 0.6;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        .scroll-indicator::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            height: 6px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: scrollDown 2s infinite;
-        }
-
-        @keyframes scrollDown {
-            0%, 100% {
-                transform: translateX(-50%) translateY(0);
-                opacity: 0;
-            }
-            50% {
-                transform: translateX(-50%) translateY(15px);
-                opacity: 1;
-            }
-        }
-
-        /* Section Styling */
-        section {
-            padding: 100px 20px;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            text-align: center;
-            margin-bottom: 60px;
-            letter-spacing: 0.1em;
-            position: relative;
-            color: #ffffff;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            margin: 20px auto 0;
-        }
-
-        /* About Section */
-        .about-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 60px;
-            border-radius: 20px;
-            border: 1px solid rgba(204, 147, 100, 0.2);
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .about-content:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(204, 147, 100, 0.4);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .about-content p {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .skill-category {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(204, 147, 100, 0.2);
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-
-        .skill-category:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--accent);
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-        }
-
-        .skill-category h3 {
-            color: var(--accent);
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            letter-spacing: 0.05em;
-        }
-
-        .skill-list {
-            list-style: none;
-        }
-
-        .skill-list li {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.8);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .skill-list li:last-child {
-            border-bottom: none;
-        }
-
-        .skill-list li:hover {
-            color: #ffffff;
-            padding-left: 10px;
-        }
-
-        .skill-list li::before {
-            content: '▹';
-            color: var(--accent);
-            font-size: 1.2rem;
-        }
-
-        /* Experience Timeline */
-        .timeline {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            padding: 40px 0;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(180deg, var(--accent), var(--company1), var(--company2), var(--company3));
-            border-radius: 2px;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 80px;
-            width: 100%;
-        }
-
-        .timeline-item:nth-child(odd) .timeline-content {
-            margin-left: auto;
-            margin-right: 0;
-            text-align: left;
-        }
-
-        .timeline-item:nth-child(even) .timeline-content {
-            margin-left: 0;
-            margin-right: auto;
-            text-align: right;
-        }
-
-        .timeline-content {
-            width: calc(50% - 60px);
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 20px;
-            border: 2px solid rgba(204, 147, 100, 0.2);
-            transition: all 0.4s ease;
-            position: relative;
-        }
-
-        .timeline-content:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: scale(1.03);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            border-color: var(--accent);
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: 50%;
-            top: 40px;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--accent);
-            border: 4px solid #1a1a1a;
-            z-index: 2;
-            transition: all 0.3s ease;
-        }
-
-        .timeline-item:hover .timeline-dot {
-            width: 30px;
-            height: 30px;
-            box-shadow: 0 0 30px var(--accent);
-        }
-
-        .company-name {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            letter-spacing: 0.05em;
-        }
-
-        .company-slalom {
-            color: var(--company1);
-        }
-
-        .company-triblio {
-            color: var(--company2);
-        }
-
-        .company-accenture {
-            color: var(--company3);
-        }
-
-        .position-title {
-            font-size: 1.4rem;
-            color: var(--accent);
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .date-range {
-            font-size: 1rem;
-            color: var(--medium-gray);
-            margin-bottom: 20px;
-            font-style: italic;
-        }
-
-        .achievement-list {
-            list-style: none;
-            margin-top: 20px;
-        }
-
-        .achievement-list li {
-            padding: 10px 0;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-            position: relative;
-            padding-left: 25px;
-        }
-
-        .timeline-item:nth-child(even) .achievement-list li {
-            padding-left: 0;
-            padding-right: 25px;
-        }
-
-        .achievement-list li::before {
-            content: '—';
-            color: var(--accent);
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
-
-        .timeline-item:nth-child(even) .achievement-list li::before {
-            left: auto;
-            right: 0;
-        }
-
-        /* Education Section */
-        .education-card {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 60px;
-            border-radius: 20px;
-            border: 2px solid rgba(204, 147, 100, 0.2);
-            text-align: center;
-            transition: all 0.4s ease;
-        }
-
-        .education-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-10px);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
-            border-color: var(--accent);
-        }
-
-        .education-card h3 {
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-bottom: 15px;
-        }
-
-        .education-card .degree {
-            font-size: 1.5rem;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-
-        .education-card .minor {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 15px;
-        }
-
-        .education-card .grad-date {
-            font-size: 1.1rem;
-            color: var(--medium-gray);
-            font-style: italic;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 60px 20px;
-            background: rgba(0, 0, 0, 0.5);
-            border-top: 2px solid var(--accent);
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .container {
-                padding: 20px 15px;
-            }
-
-            section {
-                padding: 60px 15px;
-            }
-
-            .about-content,
-            .education-card {
-                padding: 40px 30px;
-            }
-
-            .skill-category {
-                padding: 30px 25px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                min-height: 80vh;
-                padding: 20px 15px;
-            }
-
-            .hero h1 {
-                font-size: clamp(2.5rem, 10vw, 4rem);
-                margin-bottom: 15px;
-            }
-
-            .hero .title {
-                font-size: clamp(1.2rem, 4vw, 2rem);
-                margin-bottom: 20px;
-            }
-
-            .hero .tagline {
-                font-size: clamp(0.9rem, 3vw, 1.1rem);
-                padding: 0 10px;
-            }
-
-            .contact-links {
-                gap: 15px;
-                margin-top: 30px;
-            }
-
-            .contact-link {
-                padding: 12px 20px;
-                font-size: 0.9rem;
-            }
-
-            .scroll-indicator {
-                bottom: 30px;
-                opacity: 0.5;
-            }
-
-            section {
-                padding: 50px 10px;
-            }
-
-            .section-title {
-                font-size: clamp(2rem, 8vw, 3rem);
-                margin-bottom: 40px;
-            }
-
-            .about-content {
-                padding: 30px 20px;
-            }
-
-            .about-content p {
-                font-size: 1.1rem;
-                line-height: 1.7;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .skill-category {
-                padding: 30px 20px;
-            }
-
-            .skill-category h3 {
-                font-size: 1.5rem;
-                margin-bottom: 20px;
-            }
-
-            .skill-list li {
-                font-size: 0.95rem;
-                padding: 10px 0;
-            }
-
-            /* Mobile Timeline */
-            .timeline {
-                padding: 20px 10px;
-            }
-
-            .timeline::before {
-                left: 15px;
-            }
-
-            .timeline-content {
-                width: calc(100% - 45px) !important;
-                margin-left: 40px !important;
-                margin-right: 5px !important;
-                text-align: left !important;
-                padding: 25px 20px;
-            }
-
-            .timeline-dot {
-                left: 15px;
-                top: 25px;
-                width: 16px;
-                height: 16px;
-            }
-
-            .timeline-item {
-                margin-bottom: 50px;
-            }
-
-            .timeline-item:hover .timeline-dot {
-                width: 24px;
-                height: 24px;
-            }
-
-            .timeline-item:nth-child(even) .achievement-list li {
-                padding-left: 25px;
-                padding-right: 0;
-            }
-
-            .timeline-item:nth-child(even) .achievement-list li::before {
-                left: 0;
-                right: auto;
-            }
-
-            .company-name {
-                font-size: 1.6rem;
-                margin-bottom: 8px;
-            }
-
-            .position-title {
-                font-size: 1.2rem;
-                margin-bottom: 6px;
-            }
-
-            .date-range {
-                font-size: 0.9rem;
-                margin-bottom: 15px;
-            }
-
-            .achievement-list li {
-                font-size: 0.95rem;
-                padding: 8px 0;
-                padding-left: 20px;
-            }
-
-            .education-card {
-                padding: 40px 25px;
-            }
-
-            .education-card h3 {
-                font-size: 2rem;
-            }
-
-            .education-card .degree {
-                font-size: 1.3rem;
-            }
-
-            .education-card .minor {
-                font-size: 1.1rem;
-            }
-
-            .education-card .grad-date {
-                font-size: 1rem;
-            }
-
-            footer {
-                padding: 40px 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero {
-                min-height: 70vh;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-                letter-spacing: 0.05em;
-            }
-
-            .hero .title {
-                font-size: 1.1rem;
-                letter-spacing: 0.03em;
-            }
-
-            .hero .tagline {
-                font-size: 0.85rem;
-            }
-
-            .contact-links {
-                flex-direction: column;
-                gap: 10px;
-                width: 100%;
-                padding: 0 20px;
-            }
-
-            .contact-link {
-                width: 100%;
-                justify-content: center;
-                padding: 12px 15px;
-                font-size: 0.85rem;
-            }
-
-            .scroll-indicator {
-                display: none;
-            }
-
-            section {
-                padding: 40px 10px;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-                margin-bottom: 30px;
-            }
-
-            .about-content {
-                padding: 25px 15px;
-                border-radius: 15px;
-            }
-
-            .about-content p {
-                font-size: 1rem;
-            }
-
-            .skill-category {
-                padding: 25px 15px;
-                border-radius: 15px;
-            }
-
-            .skill-category h3 {
-                font-size: 1.3rem;
-            }
-
-            .skill-list li {
-                font-size: 0.9rem;
-                padding: 8px 0;
-            }
-
-            .timeline {
-                padding: 20px 5px;
-            }
-
-            .timeline::before {
-                left: 10px;
-            }
-
-            .timeline-content {
-                width: calc(100% - 35px) !important;
-                margin-left: 30px !important;
-                margin-right: 5px !important;
-                padding: 20px 15px;
-                border-radius: 15px;
-            }
-
-            .timeline-dot {
-                left: 10px;
-            }
-
-            .company-name {
-                font-size: 1.4rem;
-            }
-
-            .position-title {
-                font-size: 1.1rem;
-            }
-
-            .achievement-list li {
-                font-size: 0.9rem;
-                line-height: 1.5;
-                padding-left: 15px;
-            }
-
-            .education-card {
-                padding: 30px 20px;
-                border-radius: 15px;
-            }
-
-            .education-card h3 {
-                font-size: 1.7rem;
-            }
-
-            .education-card .degree {
-                font-size: 1.2rem;
-            }
-
-            .education-card .minor {
-                font-size: 1rem;
-            }
-        }
-
-        /* Loading Animation */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0a0a0a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
-
-        .loading.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(204, 147, 100, 0.2);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* Smooth Scroll */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Skill Modal */
-        .skill-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            z-index: 10000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .skill-modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 1;
-        }
-
-        .skill-modal-content {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border: 2px solid var(--accent);
-            border-radius: 20px;
-            padding: 50px;
-            max-width: 800px;
-            width: 100%;
-            position: relative;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-            box-shadow: 0 30px 100px rgba(204, 147, 100, 0.3);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .skill-modal.active .skill-modal-content {
-            transform: scale(1);
-        }
-
-        .skill-modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: transparent;
-            border: 2px solid var(--accent);
-            color: var(--accent);
-            font-size: 2rem;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            line-height: 1;
-            padding: 0;
-        }
-
-        .skill-modal-close:hover {
-            background: var(--accent);
-            color: #000000;
-            transform: rotate(90deg);
-        }
-
-        .skill-modal-title {
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-bottom: 20px;
-            letter-spacing: 0.05em;
-            padding-right: 60px;
-        }
-
-        .skill-modal-summary {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 40px;
-            line-height: 1.8;
-            font-style: italic;
-        }
-
-        .skill-modal-examples h3 {
-            font-size: 1.8rem;
-            color: #ffffff;
-            margin-bottom: 25px;
-            letter-spacing: 0.05em;
-        }
-
-        .skill-modal-examples ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .skill-modal-examples li {
-            padding: 20px;
-            margin-bottom: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-left: 4px solid var(--accent);
-            border-radius: 8px;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.7;
-            transition: all 0.3s ease;
-        }
-
-        .skill-modal-examples li:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateX(10px);
-            border-left-width: 6px;
-        }
-
-        /* Make skill items clickable */
-        .skill-list li {
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .skill-list li:hover {
-            color: var(--accent);
-        }
-
-        /* Mobile Modal Styles */
-        @media (max-width: 768px) {
-            .skill-modal {
-                padding: 10px;
-                align-items: flex-start;
-            }
-
-            .skill-modal-content {
-                padding: 30px 25px;
-                margin-top: 20px;
-                max-height: calc(100vh - 40px);
-            }
-
-            .skill-modal-close {
-                width: 40px;
-                height: 40px;
-                font-size: 1.5rem;
-                top: 15px;
-                right: 15px;
-            }
-
-            .skill-modal-title {
-                font-size: 1.8rem;
-                padding-right: 50px;
-                margin-bottom: 15px;
-            }
-
-            .skill-modal-summary {
-                font-size: 1.1rem;
-                margin-bottom: 30px;
-            }
-
-            .skill-modal-examples h3 {
-                font-size: 1.5rem;
-                margin-bottom: 20px;
-            }
-
-            .skill-modal-examples li {
-                padding: 15px;
-                font-size: 0.95rem;
-                margin-bottom: 12px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .skill-modal {
-                padding: 5px;
-            }
-
-            .skill-modal-content {
-                padding: 25px 20px;
-                border-radius: 15px;
-                margin-top: 10px;
-            }
-
-            .skill-modal-close {
-                width: 35px;
-                height: 35px;
-                font-size: 1.3rem;
-                top: 12px;
-                right: 12px;
-            }
-
-            .skill-modal-title {
-                font-size: 1.5rem;
-                padding-right: 45px;
-            }
-
-            .skill-modal-summary {
-                font-size: 1rem;
-                margin-bottom: 25px;
-            }
-
-            .skill-modal-examples h3 {
-                font-size: 1.3rem;
-            }
-
-            .skill-modal-examples li {
-                padding: 12px;
-                font-size: 0.9rem;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Christian Okada</title>
+<meta name="description" content="Christian Okada — Lead Go-to-Market Engineer. Resume and links.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  // Set theme before first paint to avoid a flash.
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    document.documentElement.dataset.theme = t;
+  })();
+</script>
+<style>
+  :root, :root[data-theme="dark"] {
+    --bg: #0f0f0e;
+    --fg: #d9d6cf;
+    --dim: #77746d;
+    --line: #3b3a36;
+    --accent: #e9a35f;
+    --shadow: rgba(0, 0, 0, .55);
+  }
+  :root[data-theme="light"] {
+    --bg: #f1efea;
+    --fg: #26251f;
+    --dim: #8b877e;
+    --line: #cfcbc2;
+    --accent: #c25a24;
+    --shadow: rgba(60, 50, 30, .22);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 12px/1.95 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  section { scroll-margin-top: 64px; }
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  #sea { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; z-index: 0; }
+
+  nav {
+    position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 22px; z-index: 5; font-size: 11px;
+    padding: 2px 12px; background: color-mix(in srgb, var(--bg) 78%, transparent);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  }
+  nav a, nav button {
+    color: var(--dim); text-decoration: none; background: none; border: 0;
+    font: inherit; padding: 2px 0; cursor: pointer;
+  }
+  nav a:hover, nav button:hover, nav a.on { color: var(--fg); }
+  nav a.on { font-weight: 500; }
+
+  .hero { position: relative; height: 100vh; height: 100svh; z-index: 2; pointer-events: none; }
+  .intro {
+    position: absolute; left: max(16px, 16vw); bottom: 32vh;
+    max-width: 600px; padding-right: 16px; pointer-events: auto;
+  }
+  .quote {
+    position: absolute; right: max(16px, 7vw); bottom: 13vh; margin: 0;
+    width: min(40ch, 34vw); font-size: 11px; pointer-events: auto;
+  }
+  .tagline { color: var(--fg); opacity: .72; min-height: 5.9em; margin: 0; }
+  #bio p:first-child { margin-bottom: .5em; }
+  .sig {
+    display: flex; align-items: center; gap: 12px; height: 46px; margin-top: .3em;
+    color: var(--dim); font-size: 10px;
+  }
+  .sig i {
+    display: block; flex: none; max-width: 55%; height: 30px; background: var(--fg);
+    -webkit-mask: var(--sig) left center / contain no-repeat; mask: var(--sig) left center / contain no-repeat;
+    clip-path: inset(0 100% 0 0); opacity: 0;
+    transition: opacity .35s, clip-path 0s .35s;
+  }
+  .sig small { display: flex; flex-direction: column; font-size: inherit; line-height: 1.55; opacity: 0; transition: opacity .35s; }
+  .sig b { font-weight: 400; font-size: 11px; color: var(--fg); }
+  .sig.on i {
+    clip-path: inset(0 0 0 0); opacity: .9;
+    transition: clip-path 1.4s cubic-bezier(.55, .1, .35, 1), opacity .1s;
+  }
+  .sig.on small { opacity: 1; transition: opacity .6s .9s; }
+  .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .caret {
+    display: inline-block; width: .6em; height: 1.05em; vertical-align: -.15em;
+    background: var(--fg); animation: blink 1.05s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .intro p { margin: 0; }
+  .intro .links { margin-top: 1.6em; color: var(--dim); }
+  .u { text-decoration: none; border-bottom: 1px dotted var(--dim); }
+  .u:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  .links a { text-decoration: none; }
+  .links a:hover { color: var(--fg); }
+
+  .hint {
+    position: absolute; right: 16px; bottom: 14px; color: var(--dim);
+    font-size: 10px; opacity: .6; pointer-events: none;
+  }
+  .hint a { pointer-events: auto; text-decoration: none; }
+  .hint a:hover { color: var(--fg); }
+
+  .lede { color: var(--dim); margin: -8px 0 18px; }
+  .paper { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 30px; }
+  .paper button {
+    font: inherit; color: var(--dim); background: none; border: 1px solid var(--line);
+    padding: 6px 14px; cursor: pointer; transition: border-color .15s, color .15s;
+  }
+  .paper button:hover { color: var(--fg); }
+  .paper button[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
+  .steps {
+    list-style: none; margin: 0; padding: 0; counter-reset: step;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 30px 28px;
+  }
+  .steps li { counter-increment: step; }
+  #crane { max-width: 1040px; }
+  .fold { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 32px; align-items: start; }
+  .viewer { position: sticky; top: 56px; z-index: 3; border: 1px solid var(--line); padding: 14px 14px 12px; background: var(--bg); }
+  .viewer canvas { display: block; width: 100%; height: 280px; touch-action: none; cursor: grab; }
+  .viewer canvas:active { cursor: grabbing; }
+  .vbar { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+  .vbar button {
+    font: inherit; font-size: 15px; color: var(--fg); background: none; border: 1px solid var(--line);
+    width: 34px; height: 30px; cursor: pointer;
+  }
+  .vbar button:hover { border-color: var(--accent); color: var(--accent); }
+  .vbar span { color: var(--dim); }
+  #vtext { margin: 10px 0 4px; min-height: 3.9em; }
+  .viewer small { color: var(--dim); font-size: 10px; }
+  .steps li { cursor: pointer; padding: 8px; border: 1px solid transparent; }
+  .steps li.on { border-color: var(--accent); }
+  @media (max-width: 860px) {
+    .fold { grid-template-columns: 1fr; }
+    .viewer { top: 40px; }
+    .viewer canvas { height: 200px; }
+    #vtext { min-height: 0; }
+  }
+  .pair { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .pair span { color: var(--line); }
+  .steps svg {
+    display: block; width: 84px; height: 84px; overflow: visible;
+    transform: perspective(260px) rotateX(38deg); transform-origin: 50% 75%;
+    filter: drop-shadow(0 7px 5px var(--shadow)); transition: transform .4s;
+  }
+  .steps svg.up { transform: none; filter: drop-shadow(0 5px 6px var(--shadow)); }
+  .steps li:hover svg { transform: none; }
+  .steps .s { fill: var(--fg); fill-opacity: .24; stroke: var(--fg); stroke-width: 1.2; stroke-linejoin: round; }
+  .steps .t { fill: var(--dim); font: 8px 'JetBrains Mono', ui-monospace, monospace; }
+  .steps p { margin: 0; color: var(--dim); line-height: 1.75; }
+  .steps p::before { content: counter(step) '. '; color: var(--accent); }
+  .steps .p { fill: var(--fg); fill-opacity: .12; stroke: var(--fg); stroke-width: 1.2; stroke-linejoin: round; }
+  .steps .f { fill: var(--fg); fill-opacity: .02; stroke: var(--line); stroke-width: 1; }
+  .steps .v { fill: none; stroke: var(--accent); stroke-width: 1.1; stroke-dasharray: 3 3; }
+  .steps .m { fill: none; stroke: var(--dim); stroke-width: .7; }
+  .steps .a { fill: none; stroke: var(--dim); stroke-width: 1; }
+  .steps .ah { fill: var(--dim); }
+
+  main {
+    position: relative; z-index: 2;
+    background: linear-gradient(to bottom, transparent, var(--bg) 160px);
+    padding: 160px max(16px, 16vw) 120px;
+  }
+  section { max-width: 680px; margin-bottom: 72px; }
+  h2 {
+    font-size: 11px; font-weight: 500; color: var(--dim); text-transform: lowercase;
+    letter-spacing: .04em; margin: 0 0 22px;
+  }
+  h2::before { content: '// '; color: var(--line); }
+
+  .job { margin-bottom: 30px; }
+  .job-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .job-co { font-weight: 500; }
+  .job-tag { color: var(--dim); }
+  .role { margin-top: 6px; }
+  .role summary {
+    list-style: none; cursor: pointer; display: flex; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .role summary::-webkit-details-marker { display: none; }
+  .role summary::before { content: '+ '; color: var(--dim); }
+  .role[open] summary::before { content: '− '; }
+  .role summary:hover .role-title { color: var(--accent); }
+  .role-title { flex: 1; }
+  .date { color: var(--dim); white-space: nowrap; }
+  .role ul { margin: 6px 0 10px; padding-left: 2.2em; color: var(--dim); }
+  .role li { margin-bottom: 4px; line-height: 1.75; }
+  .role li::marker { content: '· '; }
+
+  .formats { display: flex; flex-wrap: wrap; gap: 10px; }
+  .formats a {
+    text-decoration: none; border: 1px solid var(--line); padding: 6px 14px;
+    transition: border-color .15s, color .15s;
+  }
+  .formats a:hover { border-color: var(--accent); color: var(--accent); }
+  .formats small { color: var(--dim); margin-left: 8px; }
+
+  .skills { color: var(--dim); line-height: 2.1; }
+  .skills span { color: var(--fg); white-space: nowrap; }
+  .skills i { font-style: normal; color: var(--line); margin: 0 .15em; }
+
+  footer { color: var(--dim); font-size: 10px; }
+
+  @media (max-width: 1100px) {
+    .quote { top: 64px; bottom: auto; width: min(44ch, 46vw); }
+  }
+  @media (max-width: 640px) {
+    nav { gap: 16px; }
+    .quote { left: 20px; right: 20px; width: auto; }
+    .intro { bottom: 22vh; left: 20px; right: 20px; padding-right: 0; }
+    main { padding-left: 16px; padding-right: 16px; }
+    .hint { display: none; }
+  }
+</style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading" id="loading">
-        <div class="loading-spinner"></div>
+<canvas id="sea" aria-hidden="true"></canvas>
+
+<nav>
+  <a href="#top" class="on">fold</a>
+  <a href="#resume">resume</a>
+  <a href="#work">work</a>
+  <button id="theme" type="button">light</button>
+</nav>
+
+<div class="hero" id="top">
+  <div class="intro" id="intro">
+    <div id="bio">
+      <p>Hi, I'm Christian.</p>
     </div>
+    <p class="links" id="links"></p>
+  </div>
+  <figure class="quote" id="quote">
+    <blockquote class="tagline"><span id="typed" aria-hidden="true"></span><span class="caret"></span><span class="vh" id="quote-text" aria-live="polite"></span></blockquote>
+    <figcaption class="sig" id="sig"><i role="img"></i><small><b></b><span></span></small></figcaption>
+  </figure>
+  <div class="hint">move to stir · click to fold · <a href="#crane">fold your own ↓</a></div>
+</div>
 
-    <!-- Particle Background -->
-    <div id="particles"></div>
+<main>
+  <section id="resume">
+    <h2>resume</h2>
+    <div class="formats">
+      <a href="resume.pdf" download="Christian-Okada-Resume.pdf">pdf<small>print-ready</small></a>
+      <a href="#" data-format="md">markdown<small>.md</small></a>
+      <a href="#" data-format="txt">plain text<small>.txt · ATS</small></a>
+      <a href="data.json" download="christian-okada.json">json<small>source</small></a>
+    </div>
+  </section>
 
-    <!-- Hero Section -->
-    <div class="hero">
-        <div class="hero-content">
-            <h1>
-                <span id="hero-first-name">CHRISTIAN</span><br>
-                <span class="accent-name" id="hero-last-name">OKADA</span>
-            </h1>
-            <p class="title" id="hero-title">SOFTWARE ARCHITECT</p>
-            <p class="tagline" id="hero-tagline">
-                Seven years architecting AI-driven solutions where simplicity meets innovation.<br>
-                Leading Slalom's AI Value Platform—transforming how organizations measure, prioritize, and deploy generative AI.
-            </p>
-            <div class="contact-links" id="contact-links">
-                <a href="tel:5715279694" class="contact-link">📞 571.527.9694</a>
-                <a href="mailto:christian.okada@gmail.com" class="contact-link">✉️ Email</a>
-                <a href="https://github.com/OkadaChristian" class="contact-link" target="_blank">🐙 @OkadaChristian</a>
-                <a class="contact-link">📍 San Diego, CA</a>
-            </div>
+  <section id="work">
+    <h2>work</h2>
+    <div id="jobs"></div>
+  </section>
+
+  <section id="skills-section">
+    <h2>toolkit</h2>
+    <p class="skills" id="skills"></p>
+  </section>
+
+  <section id="crane">
+    <h2>fold a crane</h2>
+    <p class="lede" id="lede">One square of paper. No cuts, no glue.</p>
+    <div class="paper" role="group" aria-label="Paper you have">
+      <button type="button" data-paper="square" aria-pressed="true">square paper</button>
+      <button type="button" data-paper="rect" aria-pressed="false">printer / notebook paper</button>
+    </div>
+    <div class="fold">
+      <div class="viewer">
+        <canvas id="model" aria-label="3D model of the current step. Drag to spin it."></canvas>
+        <div class="vbar">
+          <button type="button" id="vprev" aria-label="Previous step">‹</button>
+          <span id="vstep"></span>
+          <button type="button" id="vnext" aria-label="Next step">›</button>
         </div>
-        <div class="scroll-indicator" onclick="document.querySelector('#about').scrollIntoView()"></div>
+        <p id="vtext"></p>
+        <small>drag to spin · click any step</small>
+      </div>
+      <ol class="steps" id="steps"></ol>
     </div>
+  </section>
 
-    <div class="container">
-        <!-- About Section -->
-        <section id="about">
-            <h2 class="section-title">ABOUT</h2>
-            <div class="about-content">
-                <p id="about-text">
-                    Seven years architecting AI-driven solutions where simplicity meets innovation.
-                    Leading Slalom's AI Value Platform—transforming how organizations measure, prioritize,
-                    and deploy generative AI. Passionate about building scalable, cloud-native systems that
-                    drive real business value.
-                </p>
-            </div>
-        </section>
+  <footer id="foot"></footer>
+</main>
 
-        <!-- Skills Section -->
-        <section id="skills">
-            <h2 class="section-title">EXPERTISE</h2>
-            <div class="skills-grid" id="skills-grid">
-                <!-- Skills will be populated from data.json -->
-            </div>
-        </section>
+<script>
+/* ---------- content (from data.json, the same source as the PDF) ---------- */
 
-        <!-- Experience Section -->
-        <section id="experience">
-            <h2 class="section-title">EXPERIENCE</h2>
-            <div class="timeline" id="timeline">
-                <!-- Experience will be populated from data.json -->
-            </div>
-        </section>
+// Each quote is signed with the author's real signature (public domain scans from Wikimedia Commons, in sig/).
+// ar is the signature's width / height, so the ink reveal knows how wide to draw. off: true skips a quote.
+const QUOTES = [
+  { text: 'Simple can be harder than complex. You have to work hard to get your thinking clean to make it simple.',
+    who: 'Steve Jobs', src: 'BusinessWeek, 1998', sig: 'jobs', ar: 3.59 },
+  { text: 'Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away.',
+    who: 'Antoine de Saint-Exupéry', src: 'Wind, Sand and Stars, 1939', sig: 'saint-exupery', ar: 8.21, h: 26 },
+  { text: "I'm as proud of what we don't do as I am of what we do.",
+    who: 'Steve Jobs', src: '', sig: 'jobs', ar: 3.59, off: true },
+  { text: "It's not the notes you play, it's the notes you don't play.",
+    who: 'Miles Davis', src: 'attributed', sig: 'davis', ar: 1.54, h: 44, off: true },
+  { text: "It don't matter if you win by an inch or a mile. Winning's winning.",
+    who: 'Vin Diesel', src: 'as Dom Toretto, The Fast and the Furious, 2001', sig: 'diesel', ar: 1.61, h: 42 },
+];
 
-        <!-- Education Section -->
-        <section id="education">
-            <h2 class="section-title">EDUCATION</h2>
-            <div class="education-card" id="education-card">
-                <h3 id="edu-school">James Madison University</h3>
-                <p class="degree" id="edu-degree">BS Computer Science</p>
-                <p class="minor" id="edu-minor">Minor: Music Industry</p>
-                <p class="grad-date" id="edu-date">May 2018</p>
-            </div>
-        </section>
-    </div>
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Christian Okada. All rights reserved.</p>
-    </footer>
+async function rotateQuotes() {
+  const typed = document.getElementById('typed'), said = document.getElementById('quote-text');
+  const sig = document.getElementById('sig'), ink = sig.querySelector('i');
+  const who = sig.querySelector('b'), from = sig.querySelector('small span');
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const list = QUOTES.filter(q => !q.off);
+  for (let k = 0; ; k = (k + 1) % list.length) {
+    const q = list[k], h = q.h || 30;
+    ink.style.cssText = `--sig:url(sig/${q.sig}.svg);height:${h}px;width:${Math.round(h * q.ar)}px`;
+    ink.setAttribute('aria-label', `Signature of ${q.who}`);
+    who.textContent = q.who;
+    from.textContent = q.src;
+    said.textContent = `${q.text} — ${q.who}`;
 
-    <!-- Skill Detail Modal -->
-    <div id="skill-modal" class="skill-modal">
-        <div class="skill-modal-content">
-            <button class="skill-modal-close" id="modal-close">&times;</button>
-            <h2 class="skill-modal-title" id="modal-skill-title"></h2>
-            <p class="skill-modal-summary" id="modal-skill-summary"></p>
-            <div class="skill-modal-examples">
-                <h3>Experience Highlights</h3>
-                <ul id="modal-skill-examples"></ul>
-            </div>
-        </div>
-    </div>
+    if (still) { typed.textContent = q.text; sig.classList.add('on'); await sleep(12000); sig.classList.remove('on'); continue; }
 
-    <script>
-        // Global variable to store skill descriptions
-        let skillDescriptions = {};
+    for (let i = 1; i <= q.text.length; i++) {
+      typed.textContent = q.text.slice(0, i);
+      await sleep(26 + Math.random() * 38 + (/[.,]/.test(q.text[i - 1]) ? 240 : 0));
+    }
+    await sleep(300);
+    sig.classList.add('on');
+    await sleep(Math.max(5200, q.text.length * 55));
+    sig.classList.remove('on');
+    await sleep(350);
+    for (let i = q.text.length; i >= 0; i -= 3) { typed.textContent = q.text.slice(0, i); await sleep(12); }
+    typed.textContent = '';
+    await sleep(600);
+  }
+}
 
-        // Modal functionality
-        function openSkillModal(skillName) {
-            const modal = document.getElementById('skill-modal');
-            const skillData = skillDescriptions[skillName];
+const strip = s => String(s || '').replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '');
+const esc = s => strip(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+let DATA = null;
 
-            if (!skillData) {
-                console.error('No description found for skill:', skillName);
-                return;
-            }
+function render(d) {
+  DATA = d;
+  const p = d.personal;
+  const [now] = d.experience;
+  const link = (href, text) => `<a class="u" href="${href}" target="_blank" rel="noopener">${esc(text)}</a>`;
 
-            // Populate modal content
-            document.getElementById('modal-skill-title').textContent = skillData.title;
-            document.getElementById('modal-skill-summary').textContent = skillData.summary;
+  document.getElementById('bio').innerHTML = `
+    <p>Hi, I'm ${esc(p.firstName)}.</p>
+    <p>${esc(now.positions[0].title)} @ ${esc(now.company)}${now.tagline ? `, ${esc(now.tagline)}` : ''}.</p>
+    <p>${esc(d.intro)}</p>
+    <p>Based in ${esc(p.location)}.</p>`;
 
-            const examplesList = document.getElementById('modal-skill-examples');
-            examplesList.innerHTML = skillData.examples
-                .map(example => `<li>${example}</li>`)
-                .join('');
+  document.getElementById('links').innerHTML = [
+    `<a href="https://github.com/0k4da" target="_blank" rel="noopener">github</a>`,
+    `<a href="https://linkedin.com/in/${esc(p.linkedin)}" target="_blank" rel="noopener">linkedin</a>`,
+    `<a href="mailto:${esc(p.email)}" data-copy="${esc(p.email)}" title="copy ${esc(p.email)}">email</a>`,
+    `<a href="#resume">resume ↓</a>`,
+  ].join(' / ');
 
-            // Show modal with animation
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.classList.add('active');
-            }, 10);
+  document.getElementById('jobs').innerHTML = d.experience.map(e => `
+    <div class="job">
+      <div class="job-head">
+        <span class="job-co">${esc(e.company)}</span>
+        ${e.tagline ? `<span class="job-tag">${esc(e.tagline)}</span>` : ''}
+      </div>
+      ${e.positions.map((r, i) => `
+        <details class="role"${e === now && i === 0 ? ' open' : ''}>
+          <summary><span class="role-title">${esc(r.title)}</span><span class="date">${esc(r.dateRange)}</span></summary>
+          <ul>${(r.achievements || []).map(a => `<li>${esc(a)}</li>`).join('')}</ul>
+        </details>`).join('')}
+    </div>`).join('');
 
-            // Prevent body scroll
-            document.body.style.overflow = 'hidden';
+  const skills = [...(d.skills.technical || []), ...(d.skills.leadership || [])];
+  document.getElementById('skills').innerHTML = skills.map(s => `<span>${esc(s)}</span>`).join(' <i>/</i> ');
+
+  const ed = d.education;
+  document.getElementById('foot').textContent =
+    `${ed.degree}, ${ed.school}${ed.minor ? ` (minor: ${ed.minor})` : ''} · ${ed.graduationDate} — © ${new Date().getFullYear()} ${p.firstName} ${p.lastName}`;
+
+  // The work history above the anchors just loaded, so re-aim a #link from the URL.
+  const target = location.hash && document.getElementById(location.hash.slice(1));
+  if (target) target.scrollIntoView();
+  measureObstacles();
+}
+
+/* ---------- email copies to the clipboard instead of opening a mail app ---------- */
+
+document.addEventListener('click', async ev => {
+  const a = ev.target.closest('[data-copy]');
+  if (!a) return;
+  ev.preventDefault();
+  const label = a.dataset.label || (a.dataset.label = a.textContent);
+  let ok = true;
+  try { await navigator.clipboard.writeText(a.dataset.copy); } catch (e) { ok = false; }
+  a.textContent = ok ? 'copied ✓' : a.dataset.copy;           // if copying is blocked, show the address to select
+  clearTimeout(a._reset);
+  a._reset = setTimeout(() => { a.textContent = label; }, ok ? 1800 : 6000);
+});
+
+/* ---------- alternate resume formats, generated client-side ---------- */
+
+function asMarkdown(d) {
+  const p = d.personal, out = [];
+  out.push(`# ${p.firstName} ${p.lastName}`, '', `**${p.title}** · ${p.location}`, '',
+    `${p.email} · ${p.phone} · linkedin.com/in/${p.linkedin} · ${p.websiteUrl}`, '', strip(d.about), '', '## Experience', '');
+  for (const e of d.experience) {
+    out.push(`### ${e.company}${e.tagline ? ` — ${strip(e.tagline)}` : ''}`, '');
+    for (const r of e.positions) {
+      out.push(`**${strip(r.title)}** · ${r.dateRange}`, '');
+      for (const a of r.achievements || []) out.push(`- ${strip(a)}`);
+      out.push('');
+    }
+  }
+  out.push('## Skills', '', `**Technical:** ${d.skills.technical.join(', ')}`, '',
+    `**Leadership:** ${d.skills.leadership.join(', ')}`, '', '## Education', '',
+    `${d.education.degree}${d.education.minor ? `, minor in ${d.education.minor}` : ''} — ${d.education.school}, ${d.education.graduationDate}`, '');
+  return out.join('\n');
+}
+
+function asText(d) {
+  const p = d.personal, out = [], rule = s => s.toUpperCase() + '\n' + '-'.repeat(s.length);
+  out.push(`${p.firstName} ${p.lastName}`.toUpperCase(), p.title, `${p.location} | ${p.email} | ${p.phone}`,
+    `linkedin.com/in/${p.linkedin} | ${p.websiteUrl}`, '', rule('Summary'), strip(d.about), '', rule('Experience'));
+  for (const e of d.experience) {
+    for (const r of e.positions) {
+      out.push('', `${strip(r.title)}, ${e.company}`, r.dateRange);
+      for (const a of r.achievements || []) out.push(`  * ${strip(a)}`);
+    }
+  }
+  out.push('', rule('Skills'), d.skills.technical.join(', '), d.skills.leadership.join(', '), '',
+    rule('Education'), `${d.education.degree}, ${d.education.school}, ${d.education.graduationDate}`, '');
+  return out.join('\n');
+}
+
+document.querySelectorAll('[data-format]').forEach(a => a.addEventListener('click', ev => {
+  ev.preventDefault();
+  if (!DATA) return;
+  const md = a.dataset.format === 'md';
+  const blob = new Blob([md ? asMarkdown(DATA) : asText(DATA)], { type: md ? 'text/markdown' : 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const dl = Object.assign(document.createElement('a'), { href: url, download: `Christian-Okada-Resume.${a.dataset.format}` });
+  document.body.appendChild(dl); dl.click(); dl.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}));
+
+/* ---------- theme ---------- */
+
+const themeBtn = document.getElementById('theme');
+const syncThemeBtn = () => { themeBtn.textContent = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; };
+syncThemeBtn();
+themeBtn.addEventListener('click', () => {
+  const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = t;
+  try { localStorage.setItem('theme', t); } catch (e) {}
+  syncThemeBtn();
+});
+
+/* ---------- the sky: loose paper and folded cranes, rendered through a cell grid ---------- */
+
+const cv = document.getElementById('sea');
+const ctx = cv.getContext('2d');
+const field = document.createElement('canvas');            // one pixel per grid cell
+const fctx = field.getContext('2d', { willReadFrequently: true });
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let W, H, dpr, CELL, cols, rows;
+let obstacles = [];                                         // text blocks cranes fly around, in cell units
+const mouse = { x: -1e3, y: -1e3, px: -1e3, py: -1e3, vx: 0, vy: 0, on: false };
+
+const rand = (a, b) => a + Math.random() * (b - a);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const smooth = t => t * t * (3 - 2 * t);
+const lerp = (a, b, t) => a + (b - a) * t;
+
+// Washi colors: mostly white, some vermilion, a little kraft.
+const PAPER = [[238, 234, 225], [238, 234, 225], [238, 234, 225], [238, 234, 225], [236, 112, 58], [236, 112, 58], [212, 192, 160]];
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const FOLD_TIME = 1.7;
+
+function angDiff(from, to) {
+  let d = to - from;
+  while (d > Math.PI) d -= Math.PI * 2;
+  while (d < -Math.PI) d += Math.PI * 2;
+  return d;
+}
+
+function poly(g, pts, style) {
+  g.fillStyle = style;
+  g.beginPath();
+  g.moveTo(pts[0][0], pts[0][1]);
+  for (let i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]);
+  g.closePath();
+  g.fill();
+}
+
+/* A loose square of paper, tumbling. This is the noise everyone has. */
+class Scrap {
+  constructor(x, y) {
+    this.x = x; this.y = y;
+    this.s = rand(1.2, 3.4);
+    this.rot = rand(0, Math.PI);
+    this.spin = rand(-0.8, 0.8);
+    this.tum = rand(0, Math.PI * 2);
+    this.tumRate = rand(0.6, 1.8);
+    this.fall = rand(0.5, 1.6);
+    this.wob = rand(0, 100);
+    this.vx = 0; this.vy = 0;
+    this.a = rand(0.12, 0.42);
+    this.goal = null;                                       // set when a click gathers it into a crane
+  }
+
+  update(dt, t) {
+    if (this.goal) {
+      const gl = this.goal;
+      gl.t += dt / 0.45;
+      const k = smooth(Math.min(1, gl.t));
+      this.x = lerp(gl.x0, gl.x, k); this.y = lerp(gl.y0, gl.y, k);
+      this.rot += dt * 6;
+      if (gl.t >= 1) { this.goal = null; this.x = rand(0, cols); this.y = -4; this.vx = this.vy = 0; }
+      return;
+    }
+    this.tum += dt * this.tumRate;
+    this.rot += dt * this.spin;
+    // Wind from the cursor.
+    if (mouse.on) {
+      const dx = this.x - mouse.x, dy = this.y - mouse.y, d2 = dx * dx + dy * dy;
+      if (d2 < 100) { const f = (1 - d2 / 100) * 0.9; this.vx += mouse.vx * f * dt; this.vy += mouse.vy * f * dt; this.spin += (Math.random() - 0.5) * f; }
+    }
+    const drag = Math.pow(0.4, dt);
+    this.vx *= drag; this.vy *= drag;
+    this.spin = clamp(this.spin, -4, 4) * Math.pow(0.9, dt);
+    this.x += (this.vx + 0.6 + Math.sin(t * 0.5 + this.wob) * 0.8) * dt;
+    this.y += (this.vy + this.fall * (0.6 + 0.4 * Math.abs(Math.cos(this.tum)))) * dt;
+    if (this.y > rows + 4) { this.y = -4; this.x = rand(-10, cols); }
+    if (this.x > cols + 4) this.x = -4;
+    if (this.x < -4) this.x = cols + 4;
+    if (this.y < -6) this.y = rows + 3;
+  }
+
+  draw(g) {
+    const flat = Math.abs(Math.cos(this.tum));
+    const shade = 0.55 + 0.45 * flat;
+    const sz = this.goal ? this.s * (1 - smooth(Math.min(1, this.goal.t)) * 0.6) : this.s;
+    g.save();
+    g.translate(this.x, this.y);
+    g.rotate(this.rot);
+    g.scale(1, 0.15 + 0.85 * flat);
+    g.fillStyle = `rgba(${236 * shade | 0},${232 * shade | 0},${222 * shade | 0},${this.goal ? 0.6 : this.a})`;
+    g.fillRect(-sz / 2, -sz / 2, sz, sz);
+    g.restore();
+  }
+}
+
+/* An origami crane, drawn side-on in faceted polygons. Units are crane radii; +x is forward. */
+class Crane {
+  constructor(x, y, r, folding) {
+    this.x = x; this.y = y; this.r = r;
+    this.color = pick(PAPER);
+    this.near = clamp((r / scale - 8) / 11, 0, 1);         // 0 small, far and faint; 1 big, near and bright
+    this.th = Math.random() < 0.65 ? rand(-0.25, 0.2) : Math.PI + rand(-0.2, 0.25);   // heading; 0 is right, -PI/2 is up
+    this.omega = 0; this.omegaT = 0;                        // turn rate, and the rate it's easing toward
+    this.plan = rand(1, 3);                                 // seconds until the next maneuver
+    this.speed = r * rand(0.5, 0.68);
+    this.phase = rand(0, Math.PI * 2);
+    this.rate = rand(1.0, 1.4);
+    this.amp = 1;
+    this.lift = 1;
+    this.gliding = false;
+    this.timer = rand(1.5, 3.5);
+    this.vx = 0; this.vy = 0;
+    this.fold = folding ? -0.3 : 1;                         // <0 gathering paper, 0..1 folding, 1 flying
+    this.spinIn = rand(-2.5, 2.5);
+    this.wrap = true;                                       // false once it's leaving for good
+  }
+
+  // Hold a line, bank into an arc, turn back, or (rarely) loop.
+  maneuver() {
+    const k = Math.random(), s = Math.random() < 0.5 ? -1 : 1;
+    if (k < 0.42) { this.omegaT = rand(-0.06, 0.06); this.plan = rand(3, 6); }
+    else if (k < 0.8) { this.omegaT = s * rand(0.22, 0.42); this.plan = rand(1.5, 4); }
+    else if (k < 0.95) { this.omegaT = s * rand(0.55, 0.8); this.plan = Math.PI / Math.abs(this.omegaT); }
+    else { this.omegaT = s * rand(0.9, 1.2); this.plan = Math.PI * 2 / Math.abs(this.omegaT); }
+  }
+
+  update(dt, t) {
+    this.fold = Math.min(1, this.fold + dt / FOLD_TIME);
+    if (this.fold < 1) {
+      this.lift = 0.55;
+      this.y += Math.sin(t * 3) * 0.3 * dt;
+      return;
+    }
+
+    // Flap for a while, then glide with wings held a little high. Climbing means flapping harder.
+    const climb = -Math.sin(this.th);                       // 1 straight up, -1 straight down
+    this.timer -= dt;
+    if (this.timer < 0) {
+      this.gliding = !this.gliding;
+      this.timer = this.gliding ? rand(1.0, 2.4) : rand(1.6, 3.6);
+    }
+    const glide = this.gliding && climb < 0.3;
+    this.amp += ((glide ? 0.12 : 1) - this.amp) * Math.min(1, dt * 2.2);
+    this.phase += dt * this.rate * Math.PI * 2 * (glide ? 0.45 : 1 + Math.max(0, climb) * 0.5);
+    this.lift = 0.35 * (1 - this.amp) + this.amp * Math.cos(this.phase);
+
+    this.plan -= dt;
+    if (this.plan < 0) this.maneuver();
+    this.omega += (this.omegaT - this.omega) * Math.min(1, dt * 1.5);
+    this.th += this.omega * dt;
+
+    const m = this.r * 1.2;
+    if (this.wrap && (this.x < -m || this.x > cols + m || this.y < -m || this.y > rows + m)) {
+      // Off screen: bank back toward the middle rather than wrapping around.
+      const home = Math.atan2(rows * 0.4 - this.y, cols * 0.5 - this.x);
+      this.th += clamp(angDiff(this.th, home), -1, 1) * 1.1 * dt;
+      this.omegaT *= Math.pow(0.5, dt);
+    } else {
+      // On screen: ease back to level flight between maneuvers, and nose away from the top and bottom edges.
+      const level = Math.cos(this.th) >= 0 ? 0 : Math.PI;
+      let want = level, pull = Math.abs(this.omegaT) < 0.1 ? 0.3 : 0;
+      if (this.y < rows * 0.14) { want = level ? Math.PI - 0.45 : 0.45; pull = 0.9; }
+      else if (this.y > rows * 0.84) { want = level ? 0.45 - Math.PI : -0.45; pull = 0.9; }
+      this.th += angDiff(this.th, want) * pull * dt;
+    }
+    this.th = angDiff(0, this.th);
+
+    const flee = (fx, fy, radius, k) => {
+      const dx = this.x - fx, dy = this.y - fy, d = Math.hypot(dx, dy);
+      if (d < radius && d > 0.01) {
+        const f = (1 - d / radius) ** 2 * k;
+        this.vx += dx / d * f * dt; this.vy += dy / d * f * dt;
+        this.th += angDiff(this.th, Math.atan2(dy, dx)) * f * 0.015 * dt;
+      }
+    };
+    if (mouse.on) flee(mouse.x, mouse.y, this.r * 1.6 + 8, 60);
+    for (const o of obstacles) flee(clamp(this.x, o.x0, o.x1), clamp(this.y, o.y0, o.y1), this.r * 1.2 + 4, 36);
+
+    const drag = Math.pow(0.3, dt);
+    this.vx *= drag; this.vy *= drag;
+    const sp = this.speed * (1 + 0.18 * Math.sin(this.phase) * this.amp) * (1 - 0.3 * climb);   // slow up, fast down
+    this.x += (Math.cos(this.th) * sp + this.vx) * dt;
+    this.y += (Math.sin(this.th) * sp + this.vy - Math.sin(this.phase) * this.amp * this.r * 0.08) * dt;
+  }
+
+  get gone() {
+    const m = this.r * 1.4;
+    return !this.wrap && (this.x < -m || this.x > cols + m || this.y < -m || this.y > rows + m);
+  }
+
+  draw(g) {
+    const c = this.color, dim = 0.6 + 0.4 * this.near;
+    const ink = (k, a = 1) => `rgba(${c[0] * k * dim | 0},${c[1] * k * dim | 0},${c[2] * k * dim | 0},${a})`;
+    // Side-on, facing its direction of travel, pitched at most ~45°, and narrowing as it turns toward or away from us.
+    const cx = Math.cos(this.th), face = cx >= 0 ? 1 : -1;
+    const pitch = clamp(Math.atan2(Math.sin(this.th), Math.abs(cx)), -0.75, 0.75);
+    const turn = 0.3 + 0.7 * Math.min(1, Math.abs(cx) * 1.5);
+    g.save();
+    g.translate(this.x, this.y);
+    g.rotate(face * pitch);
+    g.scale(this.r * face * turn, this.r);
+
+    // The square of paper it starts as, turning into place as it folds.
+    const f = clamp(this.fold, 0, 1);
+    const sq = this.fold < 0 ? 1 + this.fold / 0.3 : 1 - smooth(clamp(f / 0.45, 0, 1));
+    if (sq > 0) {
+      const s = this.fold < 0 ? 0.2 + 0.28 * sq : 0.48;
+      g.save();
+      g.rotate(Math.PI / 4 + this.spinIn * (1 - f));
+      g.fillStyle = ink(0.92, sq);
+      g.fillRect(-s, -s, s * 2, s * 2);
+      g.restore();
+    }
+    if (f <= 0) { g.restore(); return; }
+
+    const kb = smooth(clamp(f / 0.4, 0, 1));
+    const kn = smooth(clamp((f - 0.15) / 0.55, 0, 1));
+    const kw = smooth(clamp((f - 0.35) / 0.65, 0, 1));
+    const L = this.lift > 0 ? this.lift : this.lift * 0.45;   // short downstroke, tall upstroke
+    const sc = (x, y, k) => [x * k, y * k];
+
+    // Broad wings swept back, split along the center crease into a lit and a shaded facet.
+    const wing = (front, back, mid, dx, depth, dark) => {
+      const tip = [lerp(mid[0], -0.34 + 0.08 * L + dx, kw), lerp(mid[1], -0.98 * L * depth, kw)];
+      const lit = clamp(0.62 + 0.34 * L, 0.38, 1) * dark;
+      const under = clamp(0.86 + 0.14 * L, 0.45, 1) * dark;
+      poly(g, [front, tip, mid], ink(lit));
+      poly(g, [back, tip, mid], ink(under));
+    };
+
+    // far wing, behind everything
+    wing(sc(0.24, -0.05, kb), sc(-0.24, -0.05, kb), sc(0.0, -0.04, kb), 0.14, 0.86, 0.6);
+
+    // tail: a long thin point rising behind
+    const T = [lerp(-0.3, -1.02, kn), lerp(0.02, -0.6, kn)];
+    poly(g, [sc(-0.06, 0.1, kb), sc(-0.32, 0.02, kb), T], ink(0.82));
+    poly(g, [sc(-0.06, 0.1, kb), sc(-0.16, 0.07, kb), T], ink(0.55));
+
+    // neck, with the head folded down at the tip
+    const Hd = [lerp(0.3, 1.0, kn), lerp(0.02, -0.64, kn)];
+    poly(g, [sc(0.06, 0.1, kb), sc(0.3, 0.02, kb), Hd], ink(0.88));
+    poly(g, [sc(0.06, 0.1, kb), sc(0.16, 0.07, kb), Hd], ink(0.6));
+    poly(g, [Hd, [Hd[0] + 0.17 * kn, Hd[1] + 0.1 * kn], [Hd[0] + 0.02 * kn, Hd[1] + 0.07 * kn]], ink(0.74));
+
+    // body
+    poly(g, [sc(-0.32, 0.02, kb), sc(0, -0.08, kb), sc(0.3, 0.02, kb)], ink(0.95));
+    poly(g, [sc(-0.32, 0.02, kb), sc(0.3, 0.02, kb), sc(0, 0.16, kb)], ink(0.66));
+
+    // near wing, in front
+    wing(sc(0.22, -0.02, kb), sc(-0.28, -0.02, kb), sc(-0.03, -0.01, kb), 0, 1, 1);
+
+    g.restore();
+  }
+}
+
+let cranes = [];
+let scraps = [];
+let scale = 1;
+const MAX_CRANES = 9;
+
+function sortCranes() { cranes.sort((a, b) => a.r - b.r); }   // small (far) behind, big (near) in front
+
+function populate() {
+  const area = cols * rows;
+  scale = clamp(cols / 160, 0.55, 1.15);
+  const n = clamp(Math.round(cols / 55), 2, 4);
+  cranes = [];
+  for (let i = 0; i < n; i++) {
+    // Keep the bottom-left text area clear at start.
+    let x, y, tries = 0;
+    do { x = rand(6, cols - 6); y = rand(rows * 0.1, rows * 0.75); } while (tries++ < 30 && x < cols * 0.55 && y > rows * 0.5);
+    cranes.push(new Crane(x, y, lerp(19, 8, n > 1 ? i / (n - 1) : 0) * rand(0.9, 1.1) * scale, false));
+  }
+  sortCranes();
+  scraps = [];
+  for (let i = 0; i < area / 190; i++) scraps.push(new Scrap(rand(0, cols), rand(0, rows)));
+}
+
+function foldAt(x, y) {
+  // Pull the nearest loose paper in, then fold a crane where it lands.
+  const near = scraps.filter(s => !s.goal)
+    .map(s => [Math.hypot(s.x - x, s.y - y), s])
+    .sort((a, b) => a[0] - b[0]).slice(0, 7).filter(([d]) => d < 45);
+  for (const [, s] of near) s.goal = { x0: s.x, y0: s.y, x, y, t: rand(-0.25, 0) };
+  cranes.push(new Crane(x, y, rand(12, 17) * scale, true));
+  const live = cranes.filter(c => c.wrap);
+  if (live.length > MAX_CRANES) live.find(c => c.fold >= 1).wrap = false;   // the oldest flier leaves for good
+  sortCranes();
+}
+
+let veil = null;                                            // per-cell fade, so paper passes behind text without covering it
+
+function measureObstacles() {
+  if (!CELL) return;
+  obstacles = [...document.querySelectorAll('.intro p, .quote blockquote, .quote figcaption')].map(el => {
+    const r = el.getBoundingClientRect();
+    return { x0: r.left / CELL, x1: r.right / CELL, y0: r.top / CELL, y1: r.bottom / CELL };
+  }).filter(o => o.x1 > o.x0);
+
+  veil = new Float32Array(cols * rows).fill(1);
+  const pad = 1, soft = 4;
+  for (const o of obstacles) {
+    const x0 = Math.max(0, Math.floor(o.x0 - pad - soft)), x1 = Math.min(cols - 1, Math.ceil(o.x1 + pad + soft));
+    const y0 = Math.max(0, Math.floor(o.y0 - pad - soft)), y1 = Math.min(rows - 1, Math.ceil(o.y1 + pad + soft));
+    for (let y = y0; y <= y1; y++) {
+      for (let x = x0; x <= x1; x++) {
+        const dx = Math.max(o.x0 - pad - x - 0.5, 0, x + 0.5 - o.x1 - pad);
+        const dy = Math.max(o.y0 - pad - y - 0.5, 0, y + 0.5 - o.y1 - pad);
+        const v = 0.1 + 0.9 * smooth(clamp(Math.hypot(dx, dy) / soft, 0, 1));
+        const i = y * cols + x;
+        if (v < veil[i]) veil[i] = v;
+      }
+    }
+  }
+}
+
+function resize() {
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  W = innerWidth; H = innerHeight;
+  CELL = W < 640 ? 7 : 9;
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const oc = cols, or = rows;
+  cols = Math.ceil(W / CELL); rows = Math.ceil(H / CELL);
+  field.width = cols; field.height = rows;
+  if (!cranes.length || Math.abs(cols * rows - oc * or) > oc * or * 0.4) populate();
+  measureObstacles();
+}
+
+/* Read the low-res field back and redraw each cell as a square, dot, or nothing. */
+const LEVELS = 6;
+const q = v => Math.round(v / 255 * (LEVELS - 1)) / (LEVELS - 1);
+
+function paint(t) {
+  const light = document.documentElement.dataset.theme === 'light';
+  const bg = light ? [241, 239, 234] : [15, 15, 14];
+  ctx.fillStyle = `rgb(${bg})`;
+  ctx.fillRect(0, 0, W, H);
+
+  const px = fctx.getImageData(0, 0, cols, rows).data;
+  const gap = CELL > 8 ? 1.5 : 1.2, sq = CELL - gap;
+  const scroll = Math.min(1, window.scrollY / (H * 0.9));
+  const fade = 1 - scroll * 0.75;
+
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < cols; x++) {
+      const i = (y * cols + x) * 4;
+      let r = px[i], g = px[i + 1], b = px[i + 2];
+      const mx = Math.max(r, g, b);
+      const v = (veil ? veil[y * cols + x] : 1) * fade;
+
+      // Faint grid that the cursor reveals, like squared folding paper.
+      if (mx < 9) {
+        if (mouse.on) {
+          const d = Math.hypot(x + 0.5 - mouse.x, y + 0.5 - mouse.y);
+          if (d < 9) {
+            const a = (1 - d / 9) * 0.22 * v;
+            ctx.strokeStyle = light ? `rgba(60,58,52,${a})` : `rgba(210,205,195,${a})`;
+            ctx.lineWidth = 0.6;
+            ctx.strokeRect(x * CELL + gap, y * CELL + gap, sq - gap, sq - gap);
+          }
         }
+        continue;
+      }
 
-        function closeSkillModal() {
-            const modal = document.getElementById('skill-modal');
-            modal.classList.remove('active');
+      const L = mx / 255;
+      let cr, cg, cb, alpha;
+      if (light) {
+        // Desaturated light -> graphite; saturated -> keep its hue, deepened.
+        const sat = mx ? (mx - Math.min(r, g, b)) / mx : 0;
+        const k = Math.min(1, sat * 1.8);
+        cr = (85 * (1 - k) + r / mx * 220 * k) | 0;
+        cg = (84 * (1 - k) + g / mx * 200 * k) | 0;
+        cb = (80 * (1 - k) + b / mx * 190 * k) | 0;
+        alpha = q(mx) * v;
+      } else {
+        // Quantize brightness but keep the hue, so cream paper stays cream.
+        const k = q(mx) * 255 / mx;
+        cr = r * k | 0; cg = g * k | 0; cb = b * k | 0;
+        alpha = v;
+      }
 
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300);
+      if (L < 0.2) {
+        // Dim regions dither into small dots.
+        const dot = L < 0.1 ? 1.4 : 2.2;
+        ctx.fillStyle = `rgba(${light ? '85,84,80' : `${r + 60},${g + 60},${b + 60}`},${Math.min(1, L * 4) * v})`;
+        ctx.fillRect(x * CELL + (CELL - dot) / 2, y * CELL + (CELL - dot) / 2, dot, dot);
+      } else {
+        ctx.fillStyle = `rgba(${cr},${cg},${cb},${alpha})`;
+        ctx.fillRect(x * CELL + gap / 2, y * CELL + gap / 2, sq, sq);
+      }
+    }
+  }
+}
 
-            // Restore body scroll
-            document.body.style.overflow = 'auto';
+function step(dt, t) {
+  for (const s of scraps) s.update(dt, t);
+  for (const c of cranes) c.update(dt, t);
+  cranes = cranes.filter(c => !c.gone);
+}
+
+let last = performance.now(), measured = 0;
+function frame(now) {
+  const dt = Math.min(0.05, (now - last) / 1000);
+  last = now;
+  const t = now / 1000;
+
+  mouse.vx = (mouse.x - mouse.px) / Math.max(dt, 0.001);
+  mouse.vy = (mouse.y - mouse.py) / Math.max(dt, 0.001);
+  mouse.vx = clamp(mouse.vx, -60, 60); mouse.vy = clamp(mouse.vy, -60, 60);
+  mouse.px = mouse.x; mouse.py = mouse.y;
+
+  if (now - measured > 500) { measureObstacles(); measured = now; }
+  if (!reduced) step(dt, t);
+  // Opaque black underneath, so translucent paper reads as dimmer cells.
+  fctx.fillStyle = '#000';
+  fctx.fillRect(0, 0, cols, rows);
+  for (const s of scraps) s.draw(fctx);
+  for (const c of cranes) c.draw(fctx);
+
+  paint(t);
+  if (!reduced) requestAnimationFrame(frame);
+}
+
+addEventListener('pointermove', e => {
+  mouse.x = e.clientX / CELL; mouse.y = e.clientY / CELL;
+  if (!mouse.on) { mouse.px = mouse.x; mouse.py = mouse.y; }
+  mouse.on = true;
+});
+document.addEventListener('pointerleave', () => { mouse.on = false; });
+addEventListener('pointerdown', e => {
+  if (e.target.closest('a, button, summary, .intro p, .quote, main')) return;
+  foldAt(e.clientX / CELL, e.clientY / CELL);
+  if (reduced) {
+    // No animation: settle the new crane fully folded and draw once.
+    const c = cranes.find(k => k.fold < 1); if (c) c.fold = 1;
+    requestAnimationFrame(frame);
+  }
+});
+addEventListener('resize', resize);
+addEventListener('scroll', () => { measured = 0; if (reduced) requestAnimationFrame(frame); }, { passive: true });
+themeBtn.addEventListener('click', () => { if (reduced) requestAnimationFrame(frame); });
+
+resize();
+if (reduced) {
+  // Settle the simulation, then draw a single still frame.
+  for (let k = 0; k < 90; k++) step(1 / 30, k / 30);
+}
+requestAnimationFrame(frame);
+
+/* ---------- fold a crane: step diagrams ---------- */
+
+const P = (pts, c = 'p') => `<polygon class="${c}" points="${pts}"/>`;
+const L = (x1, y1, x2, y2, c = 'v') => `<line class="${c}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
+function arrow(x1, y1, x2, y2, bend = 0.25) {
+  const mx = (x1 + x2) / 2 - (y2 - y1) * bend, my = (y1 + y2) / 2 + (x2 - x1) * bend;
+  const a = Math.atan2(y2 - my, x2 - mx), h = 5;
+  const tip = d => `${(x2 - h * Math.cos(a + d)).toFixed(1)},${(y2 - h * Math.sin(a + d)).toFixed(1)}`;
+  return `<path class="a" d="M${x1},${y1} Q${mx.toFixed(1)},${my.toFixed(1)} ${x2},${y2}"/><polygon class="ah" points="${x2},${y2} ${tip(0.45)} ${tip(-0.45)}"/>`;
+}
+// Shapes, in a 100×100 box. Each step pairs the paper now (fold marked) with what you should end up with.
+// Flat paper is drawn lying on the table; shapes starting with UP stand upright.
+const UP = '<!--up-->';
+const SQ = P('18,18 82,18 82,82 18,82');
+const X = L(18, 18, 82, 82, 'm') + L(82, 18, 18, 82, 'm');
+const PLUS = L(50, 18, 50, 82, 'm') + L(18, 50, 82, 50, 'm');
+const STAR = UP + P('50,88 20,42 38,10', 's') + P('50,88 80,42 62,10', 's')    // half collapsed: corners rising together
+  + P('50,88 30,52 50,16') + P('50,88 70,52 50,16') + L(50, 16, 50, 88, 'm');
+const OPEN = '<text class="t" x="50" y="98" text-anchor="middle">open end</text>';
+const DIA = P('50,14 78,50 50,86 22,50') + L(50, 14, 50, 86, 'm') + OPEN;
+const DIA_CREASED = DIA + L(50, 86, 67, 36, 'm') + L(50, 86, 33, 36, 'm') + L(33, 36, 67, 36, 'm');
+const FLAPS = P('67,36 50,40 50,86', 's') + P('33,36 50,40 50,86', 's');
+const KITE = P('50,14 67,36 50,86 33,36') + FLAPS;
+const KITE_DOWN = P('33,36 67,36 50,86') + FLAPS + P('33,36 67,36 50,58', 's');
+const LONG = P('50,6 64,50 50,94 36,50') + L(50, 6, 50, 94, 'm') + L(36, 50, 64, 50, 'm');
+const NARROW = P('50,6 64,50 54,54 51,94 49,94 46,54 36,50') + L(50, 50, 50, 94, 'm');
+const WING = P('40,61 50,8 60,61'), BODY = P('36,62 50,57 64,62 50,70');
+const NECK = P('57,64 63,60 90,26'), TAIL = P('43,64 37,60 10,26'), HEAD = P('90,26 97,35 88,31');
+const NO_HEAD = UP + WING + NECK + TAIL + BODY;
+const WITH_HEAD = NO_HEAD + HEAD;
+const DONE = UP + P('42,60 55,36 58,60', 's') + NECK + TAIL + HEAD + BODY + P('38,62 30,92 62,62');
+
+const STEPS = [
+  ['Colored side down. Fold in half, corner to corner.',
+    SQ + L(18, 18, 82, 82) + arrow(24, 76, 76, 24, 0.3), P('18,18 82,18 82,82')],
+  ['Unfold. Fold the other two corners together, then unfold.',
+    SQ + L(18, 18, 82, 82, 'm') + L(82, 18, 18, 82) + arrow(24, 24, 76, 76, -0.3), SQ + X],
+  ['Turn it over. Fold in half edge to edge and unfold, both ways.',
+    SQ + X + L(50, 18, 50, 82) + L(18, 50, 82, 50) + arrow(56, 78, 56, 22, -0.35), SQ + X + PLUS],
+  ['Lift all four corners up toward each other. The middle of each edge folds in.',
+    SQ + X + PLUS + arrow(20, 20, 38, 38, 0.3) + arrow(80, 20, 62, 38, -0.3) + arrow(80, 80, 62, 62, 0.3) + arrow(20, 80, 38, 62, -0.3), STAR],
+  ['Bring the corners together and press it flat into a small diamond, open end down.',
+    STAR + arrow(8, 50, 34, 50, 0.25) + arrow(92, 50, 66, 50, -0.25), DIA],
+  ['Top layer only: fold the lower edges in to the center line.',
+    DIA + L(50, 86, 67, 36) + L(50, 86, 33, 36) + arrow(80, 52, 56, 58, 0.3) + arrow(20, 52, 44, 58, -0.3), KITE],
+  ['Fold the top triangle down over them.',
+    KITE + L(33, 36, 67, 36) + arrow(56, 16, 56, 54, -0.4), KITE_DOWN],
+  ['Unfold the last three folds.',
+    KITE_DOWN + arrow(44, 54, 44, 18, -0.4), DIA_CREASED],
+  ['Top layer only: lift the bottom corner up along the crease. The sides fold in. Press flat.',
+    DIA_CREASED + arrow(56, 84, 56, 8, -0.45), LONG],
+  ['Turn it over. Do the last four steps again on this side.',
+    LONG + arrow(80, 72, 80, 28, 0.6), LONG],
+  ['Top layer: fold the lower edges in to the center line. Turn over and do the same.',
+    LONG + L(50, 94, 57, 50) + L(50, 94, 43, 50) + arrow(72, 62, 55, 70, 0.3) + arrow(28, 62, 45, 70, -0.3), NARROW],
+  ['Push each thin bottom point up between the layers so it sticks out at an angle. Folding it up on the outside first gives you a crease to follow.',
+    NARROW + arrow(53, 90, 86, 36, 0.3) + arrow(47, 90, 14, 36, -0.3), NO_HEAD],
+  ['Do the same with one tip, bending it down to make the head.',
+    NO_HEAD + L(82, 32, 88, 24) + arrow(91, 22, 97, 34, -0.5), WITH_HEAD],
+  ['Fold the wings down. Pull them apart gently to puff out the body.',
+    WITH_HEAD + arrow(58, 14, 62, 84, -0.45), DONE],
+];
+
+// Regular printer or notebook paper: square it up first. The fold leaves you at the end of step 1.
+const MAKE_SQUARE = [
+  ['Fold the top corner down so the short edge lines up with the long side. (Notebook paper: tear off the ragged edge first.)',
+    P('18,6 82,6 82,92 18,92') + L(18, 6, 82, 70) + L(18, 70, 82, 70, 'm') + arrow(78, 10, 24, 64, 0.3),
+    P('18,6 82,70 18,70') + P('18,70 82,70 82,92 18,92', 'f')],
+  ['Crease along the bottom of the triangle and tear the strip off.',
+    P('18,6 82,70 18,70') + P('18,70 82,70 82,92 18,92', 'f') + L(18, 70, 82, 70) + arrow(90, 74, 90, 96, 0.3),
+    P('18,6 82,70 18,70')],
+];
+const LEDE = {
+  square: 'One square of paper. No cuts, no glue.',
+  rect: 'Any printer or notebook paper works. Make a square first.',
+};
+
+function renderSteps(paper) {
+  const steps = paper === 'rect' ? [...MAKE_SQUARE, ...STEPS.slice(1)] : STEPS;
+  const pic = svg => `<svg${svg.startsWith(UP) ? ' class="up"' : ''} viewBox="0 0 100 100" aria-hidden="true">${svg}</svg>`;
+  document.getElementById('steps').innerHTML = steps.map(([text, now, next]) =>
+    `<li><div class="pair">${pic(now)}<span>→</span>${pic(next)}</div><p>${text}</p></li>`).join('');
+  document.getElementById('lede').textContent = LEDE[paper];
+  document.querySelectorAll('[data-paper]').forEach(b => b.setAttribute('aria-pressed', b.dataset.paper === paper));
+  fold3d.load(paper, steps.map(([text]) => text));
+}
+
+document.querySelectorAll('[data-paper]').forEach(b => b.addEventListener('click', () => {
+  renderSteps(b.dataset.paper);
+  try { localStorage.setItem('paper', b.dataset.paper); } catch (e) {}
+}));
+
+function savedPaper() {
+  try { return localStorage.getItem('paper') === 'rect' ? 'rect' : 'square'; } catch (e) { return 'square'; }
+}
+
+/* ---------- fold a crane in 3D: a small paper-folding model you can spin ---------- */
+
+// The paper is a list of flat polygons. Each fold splits them along a crease and swings one side
+// around it. Every step is a function of t (0..1), so the viewer can play it and you can spin it.
+const fold3d = (() => {
+  const PI = Math.PI, E = .04, KK = Math.SQRT2 - 1, R2 = Math.SQRT2;
+  const Z = [0, 0, 1], NZ = [0, 0, -1], O3 = [0, 0, 0], CB = [0, -R2, 0], H0 = [0, -KK, 0];
+  const FRONT = '-1,1', BACK = '1,-1';
+
+  const add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+  const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+  const mul = (a, s) => [a[0] * s, a[1] * s, a[2] * s];
+  const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const unit = a => mul(a, 1 / Math.hypot(a[0], a[1], a[2]));
+  const seg = (t, a, b) => smooth(clamp((t - a) / (b - a), 0, 1));
+  const bump = (t, a, b) => Math.sin(PI * seg(t, a, b));
+  const memo = fn => { let v; return () => v || (v = fn()); };
+
+  function rot(p, o, k, a) {
+    const v = sub(p, o), c = Math.cos(a), s = Math.sin(a);
+    return add(o, add(add(mul(v, c), mul(cross(k, v), s)), mul(k, dot(k, v) * (1 - c))));
+  }
+  const centroid = f => mul(f.p.reduce(add, [0, 0, 0]), 1 / f.p.length);
+  const move = (fs, pick, fn) => fs.map(f => pick(f) ? { ...f, p: f.p.map(fn) } : f);
+  const turnAll = (fs, o, k, a, lift = 0) => fs.map(f => ({ ...f, p: f.p.map(q => add(rot(q, o, k, a), [0, 0, lift])) }));
+
+  // Cut polygons by the plane through o with normal n (only those `only` picks).
+  function split(fs, o, n, only = () => true) {
+    const out = [];
+    for (const f of fs) {
+      const d = f.p.map(q => dot(sub(q, o), n));
+      if (!only(f) || d.every(x => x > -1e-6) || d.every(x => x < 1e-6)) { out.push(f); continue; }
+      const A = { ...f, p: [], uv: [] }, B = { ...f, p: [], uv: [] };
+      f.p.forEach((q, i) => {
+        const j = (i + 1) % f.p.length, di = d[i], dj = d[j];
+        if (di > -1e-6) { A.p.push(q); A.uv.push(f.uv[i]); }
+        if (di < 1e-6) { B.p.push(q); B.uv.push(f.uv[i]); }
+        if ((di > 1e-6 && dj < -1e-6) || (di < -1e-6 && dj > 1e-6)) {
+          const s = di / (di - dj), w = f.uv[i], x = f.uv[j];
+          const q2 = add(q, mul(sub(f.p[j], q), s)), uv = [w[0] + (x[0] - w[0]) * s, w[1] + (x[1] - w[1]) * s];
+          A.p.push(q2); A.uv.push(uv); B.p.push(q2); B.uv.push(uv);
         }
+      });
+      if (A.p.length > 2) out.push(A);
+      if (B.p.length > 2) out.push(B);
+    }
+    return out;
+  }
 
-        // Load and populate data from JSON
-        async function loadData() {
-            try {
-                const response = await fetch('data.json');
-                const data = await response.json();
+  // Lift a hinge just above the faces it folds, so the folded flap lands on top instead of inside.
+  const hinge = (fs, o, up, only) => {
+    const top = Math.max(...fs.filter(only).flatMap(f => f.p.map(q => dot(q, up))));
+    return add(o, mul(up, top - dot(o, up) + .006));
+  };
+  const swing = (o, k, side, up) => dot(cross(k, sub(side, o)), up) >= 0 ? 1 : -1;
 
-                // Store skill descriptions globally
-                skillDescriptions = data.skillDescriptions || {};
+  // Valley-fold whatever of `only` lies on `side`'s side of the line (o, k), swinging it toward `up`.
+  function foldLine(fs, o, k, side, up, a, only = () => true) {
+    let n = cross(k, up);
+    if (dot(n, sub(side, o)) < 0) n = mul(n, -1);
+    n = unit(n);
+    fs = split(fs, o, n, only);
+    const h = hinge(fs, o, up, only), sg = swing(o, k, side, up);
+    return move(fs, f => only(f) && dot(sub(centroid(f), o), n) > 1e-6, q => rot(q, h, k, sg * a));
+  }
 
-                // Populate personal info
-                document.getElementById('hero-first-name').textContent = data.personal.firstName.toUpperCase();
-                document.getElementById('hero-last-name').textContent = data.personal.lastName.toUpperCase();
-                document.getElementById('hero-title').textContent = data.personal.title.toUpperCase();
-                document.getElementById('hero-tagline').innerHTML = data.tagline;
+  /* ---- square to square base: exact ---- */
 
-                // Populate contact links
-                const contactLinks = document.getElementById('contact-links');
-                contactLinks.innerHTML = `
-                    <a href="tel:${data.personal.phone.replace(/\D/g, '')}" class="contact-link">📞 ${data.personal.phone}</a>
-                    <a href="mailto:${data.personal.email}" class="contact-link">✉️ Email</a>
-                    <a href="https://linkedin.com/in/${data.personal.linkedin}" class="contact-link" target="_blank">💼 @${data.personal.linkedin}</a>
-                    <a class="contact-link">📍 ${data.personal.location}</a>
-                `;
+  const SQUARE = () => [{ p: [[-1, -1, 0], [1, -1, 0], [1, 1, 0], [-1, 1, 0]], uv: [[-1, -1], [1, -1], [1, 1], [-1, 1]], tag: {} }];
+  const RECT = () => [{ p: [[-1, -1.588, 0], [1, -1.588, 0], [1, 1, 0], [-1, 1, 0]], uv: [[-1, -1.588], [1, -1.588], [1, 1], [-1, 1]], tag: {} }];
+  const D1 = unit([1, -1, 0]), D2 = unit([1, 1, 0]);
+  const creased4 = () => split(split(SQUARE(), O3, D2), O3, D1);
+  const creased8 = memo(() => split(split(creased4(), O3, [1, 0, 0]), O3, [0, 1, 0]).map(f => (
+    { ...f, tag: { sec: f.uv.find(([u, v]) => Math.abs(u) > .99 && Math.abs(v) > .99).join() } })));
 
-                // Populate about
-                document.getElementById('about-text').textContent = data.about + ' Passionate about building scalable, cloud-native systems that drive real business value.';
+  const s1 = t => foldLine(SQUARE(), O3, D1, [-1, -1, 0], Z, (PI - E) * seg(t, 0, 1));
+  const r1 = t => foldLine(split(RECT(), [0, -1, 0], [0, 1, 0]), O3, D1, [1, 1, 0], Z, (PI - E) * seg(t, 0, 1));
+  const r2 = t => { const e = seg(t, .2, 1); return r1(1).map(f => centroid(f)[1] < -1 ? { ...f, a: 1 - e, p: f.p.map(q => add(q, [0, -.9 * e, 0])) } : f); };
+  function s2(t, side) {
+    const f = foldLine(creased4(), O3, D1, side, Z, (PI - E) * (1 - seg(t, 0, .3)));
+    return foldLine(f, O3, D2, [-1, 1, 0], Z, (PI - E) * bump(t, .38, 1));
+  }
+  function s3(t) {
+    const fl = PI * seg(t, 0, .3);
+    let f = turnAll(creased8(), O3, [0, 1, 0], fl, Math.sin(fl) * .9);
+    f = foldLine(f, O3, [1, 0, 0], [0, -1, 0], Z, (PI - E) * bump(t, .36, .66));
+    return foldLine(f, O3, [0, 1, 0], [-1, 0, 0], Z, (PI - E) * bump(t, .7, 1));
+  }
 
-                // Populate skills
-                const skillsGrid = document.getElementById('skills-grid');
-                skillsGrid.innerHTML = `
-                    <div class="skill-category">
-                        <h3>Technical Foundation</h3>
-                        <ul class="skill-list">
-                            ${data.skills.technical.map(skill => `<li>${skill}</li>`).join('')}
-                        </ul>
-                    </div>
-                    <div class="skill-category">
-                        <h3>Leadership</h3>
-                        <ul class="skill-list">
-                            ${data.skills.leadership.map(skill => `<li>${skill}</li>`).join('')}
-                        </ul>
-                    </div>
-                `;
+  // The collapse is rigid: every crease runs through the center, so each corner and edge midpoint
+  // keeps its direction and only rises. Corners rise by `a`; midpoints by whatever keeps the 45°
+  // between neighbours. Then the midpoints swing into two stacks (flat) and the base is laid down.
+  const A4 = 58 * PI / 180;
+  function midRise(a) {
+    const c = Math.SQRT1_2, R = Math.hypot(c * Math.cos(a), Math.sin(a));
+    return Math.atan2(Math.sin(a), c * Math.cos(a)) - Math.acos(Math.min(1, c / R));
+  }
+  // Pressed flat, the layers stack front to back instead of landing on top of each other.
+  const STACK = { 0: 2, 90: 178, 180: 182, '-90': -2 }, CORNER_STACK = { 45: .045, '-135': -.045 };
+  function collapse(a, flat = 0, lay = 0) {
+    const b = midRise(a);
+    return creased8().map(f => ({ ...f, p: f.uv.map(([u, v]) => {
+      const r = Math.hypot(u, v);
+      if (r < 1e-9) return [0, 0, 0];
+      let th = Math.atan2(v, -u);                         // paper was turned over: (u, v) sits at (-u, v)
+      const corner = r > 1.2, e = corner ? a : b;
+      const deg = Math.round(th * 180 / PI);
+      if (!corner) th += (STACK[deg] * PI / 180 - th) * flat;
+      let q = [r * Math.cos(e) * Math.cos(th), r * Math.cos(e) * Math.sin(th), r * Math.sin(e)];
+      if (corner && flat) { q[1] += (CORNER_STACK[deg] || 0) * flat; q = mul(unit(q), r); }
+      return rot(q, O3, [1, 0, 0], lay * PI / 2);
+    }) }));
+  }
+  const s4 = t => collapse(A4 * seg(t, 0, 1));
+  const s5 = t => collapse(A4 + (PI / 2 - A4) * seg(t, 0, .4), seg(t, .42, .7), seg(t, .72, 1));
 
-                // Populate experience
-                const timeline = document.getElementById('timeline');
-                let timelineHTML = '';
-                data.experience.forEach(company => {
-                    company.positions.forEach(position => {
-                        const companyClass = company.color === 'company1' ? 'company-slalom' :
-                                           company.color === 'company2' ? 'company-triblio' :
-                                           'company-accenture';
-                        timelineHTML += `
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <h3 class="company-name ${companyClass}">${company.company}</h3>
-                                    <p class="position-title">${position.title}</p>
-                                    <p class="date-range">${position.dateRange}</p>
-                                    <ul class="achievement-list">
-                                        ${position.achievements.map(achievement => `<li>${achievement}</li>`).join('')}
-                                    </ul>
-                                </div>
-                            </div>
-                        `;
-                    });
-                });
-                timeline.innerHTML = timelineHTML;
+  /* ---- square base to bird base ---- */
 
-                // Populate education
-                document.getElementById('edu-school').textContent = data.education.school;
-                document.getElementById('edu-degree').textContent = data.education.degree;
-                document.getElementById('edu-minor').textContent = `Minor: ${data.education.minor}`;
-                document.getElementById('edu-date').textContent = data.education.graduationDate;
+  const KDIR = s => unit([s * KK, R2 - KK, 0]);          // bottom point up to the kite point on each side
+  const base5 = memo(() => s5(1));
+  function kite(base, kA, tA, sec, up) {
+    const mine = f => f.tag.sec === sec;
+    let f = base;
+    for (const s of [1, -1]) f = foldLine(f, CB, KDIR(s), [s * .7, -.7, 0], up, kA, mine);
+    return foldLine(f, H0, [1, 0, 0], O3, up, tA, mine);
+  }
+  const base8 = memo(() => kite(base5(), 0, 0, FRONT, Z));
 
-            } catch (error) {
-                console.error('Error loading data:', error);
-            }
-        }
+  // Petal fold: the bottom of one layer lifts on the horizontal crease while its sides fold in on the
+  // kite creases. The side points pull the inner flaps in with them, which is what makes the legs.
+  function petal(base, t, sec, up) {
+    const a = (PI - E) * seg(t, 0, 1), mine = f => f.tag.sec === sec;
+    const mids = new Set(base.filter(mine).flatMap(f => f.uv)
+      .filter(([u, v]) => Math.abs(Math.hypot(u, v) - 1) < 1e-6 && (u === 0 || v === 0)).map(q => q.join()));
+    const holdsMid = f => !mine(f) && f.uv.some(q => mids.has(q.join()));
+    const nK = s => { let n = cross(KDIR(s), up); if (n[0] * s < 0) n = mul(n, -1); return unit(n); };
+    let f = base;
+    for (const s of [1, -1]) f = split(f, CB, nK(s), g => mine(g) || holdsMid(g));
+    f = split(f, H0, [0, 1, 0], mine);
+    const hk = hinge(f, CB, up, g => mine(g) || holdsMid(g)), hl = hinge(f, H0, up, mine);
+    const outSide = c => dot(sub(c, CB), nK(1)) > 1e-6 ? 1 : dot(sub(c, CB), nK(-1)) > 1e-6 ? -1 : 0;
+    const sgK = s => swing(CB, KDIR(s), [s * .7, -.7, 0], up), sgL = swing(H0, [1, 0, 0], [0, -1, 0], up);
+    return f.map(g => {
+      const c = centroid(g), s = outSide(c);
+      if (mine(g)) {
+        if (c[1] > -KK) return g;
+        let p = g.p;
+        if (s) p = p.map(q => rot(q, add(CB, [0, 0, hk[2]]), KDIR(s), sgK(s) * a));
+        return { ...g, p: p.map(q => rot(q, hl, [1, 0, 0], sgL * a)) };
+      }
+      if (s && holdsMid(g)) return { ...g, p: g.p.map(q => rot(q, add(CB, [0, 0, hk[2]]), KDIR(s), sgK(s) * a)) };
+      return g;
+    });
+  }
+  const base9 = memo(() => petal(base8(), 1, FRONT, Z));
+  const flipOver = (f, a) => turnAll(f, [0, -.7, 0], [0, 1, 0], a, Math.sin(a) * .5);
+  const s10 = t => flipOver(petal(base9(), seg(t, .32, 1), BACK, NZ), PI * seg(t, 0, .28));
+  const base10 = memo(() => s10(1));
 
-        // Create particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const particleCount = 50;
+  /* ---- bird base to crane ---- */
 
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particle.style.animationDelay = Math.random() * 5 + 's';
-                container.appendChild(particle);
-            }
-        }
+  const NDIR = s => unit([s * .195, .981, 0]);
+  function narrow(base, a) {
+    let f = base;
+    for (const s of [1, -1]) {
+      const leg = g => { const c = centroid(g); return c[1] < -KK - .02 && c[0] * s > 0 && c[2] > -.002; };
+      f = foldLine(f, CB, NDIR(s), [s * .4, -.9, 0], Z, a, leg);
+    }
+    return f;
+  }
+  const s11 = t => narrow(flipOver(narrow(base10(), (PI - E) * seg(t, 0, .4)), PI * seg(t, .44, .6)), (PI - E) * seg(t, .62, 1));
+  const base11 = memo(() => s11(1));
 
-        // Intersection Observer for scroll animations
-        // More aggressive settings for mobile to ensure sections appear
-        const isMobile = window.innerWidth <= 768;
-        const observerOptions = {
-            threshold: isMobile ? 0.01 : 0.05,
-            rootMargin: isMobile ? '0px 0px 0px 0px' : '0px 0px -50px 0px'
-        };
+  // Reverse folds, shown as each leg swinging up inside the layers.
+  const PIV = s => [s * .1, -.62, 0];
+  function legsUp(base, e) {
+    let f = base;
+    for (const s of [1, -1]) {
+      const leg = g => { const c = centroid(g); return !g.tag.leg && c[1] < -KK - .02 && c[0] * s > 0; };
+      let n = cross(Z, [-s * .94, .34, 0]);
+      if (n[1] < 0) n = mul(n, -1);
+      n = unit(n);
+      f = split(f, PIV(s), n, leg);
+      f = f.map(g => leg(g) && dot(sub(centroid(g), PIV(s)), n) < 0
+        ? { ...g, tag: { ...g.tag, leg: s }, p: g.p.map(q => { const r = rot(q, PIV(s), Z, s * 145 * PI / 180 * e); r[2] *= 1 - .75 * e; return r; }) } : g);
+    }
+    return f;
+  }
+  const base12 = memo(() => legsUp(base11(), 1));
+  function s13(t) {
+    const f = base12(), piv = PIV(1);
+    let tip = piv, far = 0;
+    for (const g of f) if (g.tag.leg === 1) for (const q of g.p) {
+      const d = Math.hypot(q[0] - piv[0], q[1] - piv[1]);
+      if (d > far) { far = d; tip = q; }
+    }
+    const nd = unit([tip[0] - piv[0], tip[1] - piv[1], 0]), Q = add(piv, mul(nd, far * .76));
+    return split(f, Q, nd, g => g.tag.leg === 1).map(g => g.tag.leg === 1 && dot(sub(centroid(g), Q), nd) > 0
+      ? { ...g, p: g.p.map(q => rot(q, Q, Z, -100 * PI / 180 * seg(t, 0, 1))) } : g);
+  }
+  const base13 = memo(() => s13(1));
+  function s14(t) {
+    const w = seg(t, 0, .55), st = seg(t, .5, 1);
+    const f = base13().map(g => ({ ...g, p: g.p.map(q => [q[0], q[1], q[2] * (1 - .6 * w)]) })).map(g => {   // press the layers together
+      const c = centroid(g);
+      if (g.tag.leg || c[1] <= -KK + .02) return g;
+      return { ...g, p: g.p.map(q => rot(q, H0, [1, 0, 0], (c[2] >= 0 ? 1 : -1) * 95 * PI / 180 * w)) };
+    });
+    return turnAll(f, H0, [1, 0, 0], PI / 2 * st);         // stand it up
+  }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+  const LATER = [
+    { at: s3, dur: 3.6 }, { at: s4, dur: 2.2 }, { at: s5, dur: 3.4 },
+    { at: t => kite(base5(), (PI - E) * seg(t, 0, 1), 0, FRONT, Z), dur: 1.8 },
+    { at: t => kite(base5(), PI - E, (PI - E) * seg(t, 0, 1), FRONT, Z), dur: 1.6 },
+    { at: t => kite(base5(), (PI - E) * (1 - seg(t, .45, 1)), (PI - E) * (1 - seg(t, 0, .45)), FRONT, Z), dur: 2.4 },
+    { at: t => petal(base8(), t, FRONT, Z), dur: 2.4 },
+    { at: s10, dur: 3.4 }, { at: s11, dur: 4 },
+    { at: t => legsUp(base11(), seg(t, 0, 1)), dur: 2.2 },
+    { at: s13, dur: 1.6 }, { at: s14, dur: 3 },
+  ];
+  const PLANS = {
+    square: [{ at: s1, dur: 1.6 }, { at: t => s2(t, [-1, -1, 0]), dur: 3 }, ...LATER],
+    rect: [{ at: r1, dur: 1.8 }, { at: r2, dur: 1.8 }, { at: t => s2(t, [1, 1, 0]), dur: 3 }, ...LATER],
+  };
 
-        // Initialize
-        window.addEventListener('load', async () => {
-            // Load data first
-            await loadData();
+  /* ---- drawing ---- */
 
-            // Hide loading screen
-            setTimeout(() => {
-                document.getElementById('loading').classList.add('hidden');
-            }, 1000);
+  const cv = document.getElementById('model'), g = cv.getContext('2d');
+  const LIGHT = unit([-.4, .5, .8]), PAPER_COLOR = [226, 104, 52];
+  let yaw = -.45, pitch = .95, lastDrag = -1e9, plan = PLANS.square, texts = [], cur = 0, start = 0, fit = null, drag = null, raf = 0, shown = false;
 
-            // Create particles
-            createParticles();
+  function frameFor(step) {
+    const pts = [0, .25, .5, .75, 1].flatMap(t => step.at(t).flatMap(f => f.p));
+    const lo = [0, 1, 2].map(i => Math.min(...pts.map(q => q[i]))), hi = [0, 1, 2].map(i => Math.max(...pts.map(q => q[i])));
+    const c = lo.map((v, i) => (v + hi[i]) / 2);
+    return { c, r: Math.max(...pts.map(q => Math.hypot(q[0] - c[0], q[1] - c[1], q[2] - c[2]))) };
+  }
 
-            // Observe sections
-            document.querySelectorAll('section').forEach(section => {
-                observer.observe(section);
-            });
+  // Painter's order that works for stacked paper: wherever two faces overlap on screen, compare their
+  // depth at that spot (average depth breaks down when layers meet at a shared point).
+  function inside(v, x, y) {
+    let hit = false;
+    for (let i = 0, j = v.length - 1; i < v.length; j = i++) {
+      if ((v[i][1] > y) !== (v[j][1] > y) && x < (v[j][0] - v[i][0]) * (y - v[i][1]) / (v[j][1] - v[i][1]) + v[i][0]) hit = !hit;
+    }
+    return hit;
+  }
+  function depthAt(p, x, y) {
+    const v = p.v, a = v[0];
+    let best = null, area = 0;
+    for (let i = 1; i < v.length - 1; i++) {
+      const u = sub(v[i], a), w = sub(v[i + 1], a), n = cross(u, w);
+      if (Math.abs(n[2]) > area) { area = Math.abs(n[2]); best = n; }
+    }
+    if (!best || area < 1e-6) return null;
+    return a[2] - (best[0] * (x - a[0]) + best[1] * (y - a[1])) / best[2];
+  }
+  function compare(A, B) {
+    if (A.box[2] < B.box[0] || B.box[2] < A.box[0] || A.box[3] < B.box[1] || B.box[3] < A.box[1]) return 0;
+    const probes = [A.cen, B.cen, ...A.v.map(q => [q[0] + (A.cen[0] - q[0]) * .08, q[1] + (A.cen[1] - q[1]) * .08]),
+      ...B.v.map(q => [q[0] + (B.cen[0] - q[0]) * .08, q[1] + (B.cen[1] - q[1]) * .08])];
+    for (const [x, y] of probes) {
+      if (!inside(A.v, x, y) || !inside(B.v, x, y)) continue;
+      const da = depthAt(A, x, y), db = depthAt(B, x, y);
+      if (da === null || db === null || Math.abs(da - db) < 1e-4) continue;
+      return da < db ? -1 : 1;
+    }
+    return 0;
+  }
+  function paintOrder(polys) {
+    for (const p of polys) {
+      const xs = p.v.map(q => q[0]), ys = p.v.map(q => q[1]);
+      p.box = [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)];
+      p.cen = [xs.reduce((a, b) => a + b) / xs.length, ys.reduce((a, b) => a + b) / ys.length];
+    }
+    const n = polys.length, after = polys.map(() => []), deg = new Array(n).fill(0);
+    for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+      const r = compare(polys[i], polys[j]);
+      if (r < 0) { after[i].push(j); deg[j]++; } else if (r > 0) { after[j].push(i); deg[i]++; }
+    }
+    const out = [], left = new Set(polys.keys());
+    while (left.size) {
+      let pick = -1;
+      for (const i of left) if (!deg[i] && (pick < 0 || polys[i].depth < polys[pick].depth)) pick = i;
+      if (pick < 0) for (const i of left) if (pick < 0 || polys[i].depth < polys[pick].depth) pick = i;   // cycle: farthest first
+      left.delete(pick); out.push(polys[pick]);
+      for (const j of after[pick]) deg[j]--;
+    }
+    return out;
+  }
 
-            // Smooth scroll for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
+  function draw(fs) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2), w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.clearRect(0, 0, w, h);
+    const light = document.documentElement.dataset.theme === 'light';
+    const white = light ? [253, 252, 249] : [236, 232, 223];
+    const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    const scale = Math.min(w, h) * .44 / fit.r;
+    const view = q => {
+      const x = q[0] - fit.c[0], y = q[1] - fit.c[1], z = q[2] - fit.c[2];
+      const x1 = x * cy - y * sy, y1 = x * sy + y * cy, d = -y1 * cp + z * sp;
+      const k = scale / (1 - d / (fit.r * 7));
+      return [w / 2 + x1 * k, h / 2 - (y1 * sp + z * cp) * k, d];
+    };
+    const cam = [-cp * sy, -cp * cy, sp];
 
-            // Parallax effect on scroll
-            let ticking = false;
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        const scrolled = window.pageYOffset;
-                        const hero = document.querySelector('.hero-content');
-                        if (hero) {
-                            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-                            hero.style.opacity = 1 - (scrolled / 600);
-                        }
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            });
+    // soft shadow on the desk
+    const zmin = Math.min(...fs.flatMap(f => f.p.map(q => q[2])));
+    const [sx, sy2] = view([fit.c[0], fit.c[1], zmin]), rx = fit.r * scale * .8;
+    const grad = g.createRadialGradient(sx, sy2, 0, sx, sy2, rx);
+    grad.addColorStop(0, light ? 'rgba(60,50,30,.16)' : 'rgba(0,0,0,.45)');
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    g.save(); g.translate(sx, sy2); g.scale(1, Math.max(.2, sp)); g.translate(-sx, -sy2);
+    g.fillStyle = grad; g.beginPath(); g.arc(sx, sy2, rx, 0, PI * 2); g.fill(); g.restore();
 
-            // Add stagger animation to timeline items
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            timelineItems.forEach((item, index) => {
-                item.style.animationDelay = `${index * 0.1}s`;
-            });
+    const polys = fs.map(f => {
+      const v = f.p.map(view);
+      let n = [0, 0, 0];                                  // Newell normal: points out of the colored side
+      for (let i = 0; i < f.p.length; i++) {
+        const a = f.p[i], b = f.p[(i + 1) % f.p.length];
+        n = add(n, [(a[1] - b[1]) * (a[2] + b[2]), (a[2] - b[2]) * (a[0] + b[0]), (a[0] - b[0]) * (a[1] + b[1])]);
+      }
+      const len = Math.hypot(...n) || 1;
+      n = mul(n, 1 / len);
+      return { v, depth: v.reduce((s, q) => s + q[2], 0) / v.length, n, a: f.a ?? 1 };
+    });
 
-            // Add click handlers to skill items
-            const skillItems = document.querySelectorAll('.skill-list li');
-            skillItems.forEach(item => {
-                // Add hover effect
-                item.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateX(10px)';
-                });
-                item.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateX(0)';
-                });
+    g.lineJoin = 'round';
+    for (const p of paintOrder(polys)) {
+      const base = dot(p.n, cam) > 0 ? white : PAPER_COLOR;   // starts colored side down
+      const k = .62 + .38 * Math.abs(dot(p.n, LIGHT));
+      g.globalAlpha = p.a;
+      g.fillStyle = `rgb(${base[0] * k | 0},${base[1] * k | 0},${base[2] * k | 0})`;
+      g.strokeStyle = light ? 'rgba(60,55,45,.5)' : 'rgba(30,28,25,.55)';
+      g.lineWidth = .8;
+      g.beginPath();
+      p.v.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y));
+      g.closePath(); g.fill(); g.stroke();
+    }
+    g.globalAlpha = 1;
+  }
 
-                // Add click handler to open modal
-                item.addEventListener('click', function() {
-                    const skillName = this.textContent.trim();
-                    openSkillModal(skillName);
-                });
-            });
+  function tick(now) {
+    raf = 0;
+    if (!shown) return;
+    const step = plan[cur], dur = step.dur * 1000, cycle = 500 + dur + 1600;
+    const t = reduced ? 1 : clamp(((now - start) % cycle - 500) / dur, 0, 1);
+    if (!drag && !reduced && now - lastDrag > 3500) yaw += .0045;
+    draw(step.at(t));
+    raf = requestAnimationFrame(tick);
+  }
+  const wake = () => { if (!raf && shown) raf = requestAnimationFrame(tick); };
 
-            // Modal close handlers
-            document.getElementById('modal-close').addEventListener('click', closeSkillModal);
+  function go(i) {
+    cur = (i + plan.length) % plan.length;
+    start = performance.now();
+    fit = frameFor(plan[cur]);
+    document.getElementById('vstep').textContent = `step ${cur + 1} of ${plan.length}`;
+    document.getElementById('vtext').textContent = texts[cur] || '';
+    document.querySelectorAll('#steps li').forEach((li, j) => li.classList.toggle('on', j === cur));
+    if (reduced) { draw(plan[cur].at(1)); }
+    wake();
+  }
 
-            // Close modal when clicking outside content
-            document.getElementById('skill-modal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeSkillModal();
-                }
-            });
+  cv.addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY, yaw, pitch }; cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener('pointermove', e => {
+    if (!drag) return;
+    yaw = drag.yaw - (e.clientX - drag.x) * .01;
+    pitch = clamp(drag.pitch + (e.clientY - drag.y) * .01, .12, 1.5);
+    if (reduced) draw(plan[cur].at(1));
+  });
+  const release = () => { drag = null; lastDrag = performance.now(); };
+  cv.addEventListener('pointerup', release);
+  cv.addEventListener('pointercancel', release);
+  document.getElementById('vprev').addEventListener('click', () => go(cur - 1));
+  document.getElementById('vnext').addEventListener('click', () => go(cur + 1));
+  document.getElementById('steps').addEventListener('click', e => {
+    const li = e.target.closest('li');
+    if (li) go([...li.parentNode.children].indexOf(li));
+  });
+  new IntersectionObserver(([en]) => { shown = en.isIntersecting; wake(); }).observe(cv);
 
-            // Close modal on Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeSkillModal();
-                }
-            });
-        });
+  return {
+    load(paper, stepTexts) { plan = PLANS[paper]; texts = stepTexts; go(0); },
+  };
+})();
 
-        // Easter egg: Konami code
-        let konamiCode = [];
-        const konamiPattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+/* ---------- boot ---------- */
 
-        document.addEventListener('keydown', (e) => {
-            konamiCode.push(e.key);
-            konamiCode = konamiCode.slice(-10);
-
-            if (konamiCode.join(',') === konamiPattern.join(',')) {
-                document.body.style.animation = 'rainbow 2s linear infinite';
-                setTimeout(() => {
-                    document.body.style.animation = '';
-                }, 5000);
-            }
-        });
-
-        // Add rainbow animation for easter egg
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes rainbow {
-                0% { filter: hue-rotate(0deg); }
-                100% { filter: hue-rotate(360deg); }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+setTimeout(rotateQuotes, 1400);
+renderSteps(savedPaper());
+fetch('data.json')
+  .then(r => r.json())
+  .then(render)
+  .catch(() => { document.getElementById('bio').innerHTML += '<p>Resume data failed to load — <a class="u" href="resume.pdf">grab the PDF</a>.</p>'; });
+document.fonts && document.fonts.ready.then(measureObstacles);
+</script>
 </body>
 </html>
