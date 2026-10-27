@@ -2,74 +2,67 @@
   "personal": {
     "firstName": "Christian",
     "lastName": "Okada",
-    "title": "Software Architect",
+    "title": "Lead Go-to-Market Engineer",
     "phone": "571.527.9694",
     "email": "christian.okada@gmail.com",
     "linkedin": "OkadaChristian",
-    "location": "San Diego, CA",
+    "location": "Washington, DC",
     "websiteUrl": "https://0k4da.github.io"
   },
-  "about": "Eight years architecting AI-driven solutions where simplicity meets innovation. Leading Slalom's AI Value Platform—transforming how organizations measure, prioritize, and deploy generative AI.",
-  "tagline": "Eight years architecting AI-driven solutions where simplicity meets innovation.<br>Leading Slalom's AI Value Platform—transforming how organizations measure, prioritize, and deploy generative AI.",
+  "about": "Eight years building software: DevOps for a large federal client, cloud architecture, then leading Slalom's AI Value Platform. Now I lead go-to-market engineering at Parloa, where I built and run the go-to-market engine and the context engine, along with the pricing framework and ROI business cases behind every deal.",
+  "intro": "I'm a builder who accelerates GTM teams.",
+  "tagline": "Eight years building software, from federal DevOps to leading Slalom's AI Value Platform.<br>Now leading go-to-market engineering at Parloa: the go-to-market engine, the context engine, pricing, and ROI business cases.",
   "skills": {
     "technical": [
-      "AWS Solution Architect",
-      "GenAI & RAG Architecture",
-      "Cloud-Native Systems",
-      "Python / Node.js / TypeScript",
-      "Angular / React / Ionic",
-      "Docker / Kubernetes",
-      "CI/CD & IaC (Terraform/CDK)",
-      "API Design (REST/GraphQL)",
-      "SQL / NoSQL Databases",
-      "Event-Driven Architecture",
-      "Security & IAM Best Practices",
-      "Bash / Linux",
-      "Agile / Test-Driven Development",
-      "System Architecture"
+      "LLM Applications & RAG",
+      "GTM Systems & Deal Intelligence",
+      "AWS & Cloud Architecture",
+      "Python / TypeScript / Node.js",
+      "React / Angular",
+      "APIs & Databases",
+      "DevOps, CI/CD & IaC",
+      "Security & IAM"
     ],
     "leadership": [
       "Technical Direction & Team Leadership",
-      "Engineering Mentorship & Career Development",
-      "Strategic Planning & ROI Analysis",
-      "Solution Architecture",
-      "Client Partnership",
-      "Innovation & Vision"
+      "Engineering Mentorship",
+      "Pricing, ROI & Business Cases",
+      "Client Partnership"
     ]
   },
   "skillDescriptions": {
-    "AWS Solution Architect": {
-      "title": "AWS Solution Architect",
-      "summary": "Designing and deploying scalable, secure cloud infrastructure across diverse use cases",
-      "examples": [
-        "Built performant RAG architecture for utilities using Textract, ECS, Bedrock, OpenSearch, and RDS Postgres with pgvector for regulatory document analysis",
-        "Architected AI Value Platform serverless infrastructure with DynamoDB, Lambda, API Gateway, and S3 for hundreds of internal users and external clients",
-        "Developed PSPS mobile application infrastructure using CDK and CloudFormation for wildfire prevention outage warnings",
-        "Created monitoring systems with CloudWatch and Grafana dashboards at Triblio to increase deployment stability and observability"
-      ]
-    },
-    "GenAI & RAG Architecture": {
-      "title": "GenAI & RAG Architecture",
-      "summary": "Expert in retrieval-augmented generation systems, embeddings, and multimodal LLM applications",
+    "LLM Applications & RAG": {
+      "title": "LLM Applications & RAG",
+      "summary": "Retrieval-augmented generation, LLM pipelines, and multimodal AI applications",
       "examples": [
         "Built multimodal RAG application for utilities using OCR, document chunking strategies, and vector search with pgvector and OpenSearch",
         "Architected EnhanceIQ's event-driven task analysis service processing hundreds to thousands of tasks through Step Function pipelines running 12 different analytical prompts per task",
-        "Developed AI Capability Assessment and internal use case library to establish thought leadership in GenAI investment strategy",
+        "Developed AI Capability Assessment and internal use case library to establish thought leadership in AI investment strategy",
         "Leveraged multiple embedding models and vector databases to optimize semantic search and retrieval accuracy across different document types"
       ]
     },
-    "Cloud-Native Systems": {
-      "title": "Cloud-Native Systems",
-      "summary": "Building scalable, resilient serverless and containerized applications",
+    "GTM Systems & Deal Intelligence": {
+      "title": "GTM Systems & Deal Intelligence",
+      "summary": "Internal systems and knowledge layers for go-to-market teams",
       "examples": [
-        "Led development of AI Value Platform using serverless architecture with Lambda, API Gateway, and DynamoDB serving hundreds of users",
-        "Configured Kubernetes and Docker Swarm orchestration with zero-downtime deployment strategies at Accenture Federal Services",
-        "Developed full-stack applications with automated S3 static site deployments and security-first architecture patterns",
-        "Managed Ansible Tower workflows for 200+ automated operations at federal scale"
+        "Build and maintain internal systems for all go-to-market teams at Parloa across pre-sales and post-sales",
+        "Built and maintain the company deal brain, bringing in context from all sorts of company sources as the knowledge layer for active motions and sales pipeline",
+        "Built a best-in-class research platform for customer-specific data"
       ]
     },
-    "Python / Node.js / TypeScript": {
-      "title": "Python / Node.js / TypeScript",
+    "AWS & Cloud Architecture": {
+      "title": "AWS & Cloud Architecture",
+      "summary": "Serverless, event-driven, and containerized systems on AWS",
+      "examples": [
+        "Built performant RAG architecture for utilities using Textract, ECS, Bedrock, OpenSearch, and RDS Postgres with pgvector for regulatory document analysis",
+        "Led development of AI Value Platform using serverless architecture with Lambda, API Gateway, and DynamoDB serving hundreds of users",
+        "Architected EnhanceIQ as event-driven service using SQS, Lambda, and Step Functions to orchestrate complex LLM inference workflows",
+        "Architected AI Value Platform as full-stack serverless microservices with React, TypeScript, Lambda, and DynamoDB",
+        "Architected AI Value Platform serverless infrastructure with DynamoDB, Lambda, API Gateway, and S3 for hundreds of internal users and external clients"
+      ]
+    },
+    "Python / TypeScript / Node.js": {
+      "title": "Python / TypeScript / Node.js",
       "summary": "Full-stack development with modern languages across frontend, backend, and infrastructure",
       "examples": [
         "Built React frontend and TypeScript Node.js backend for AI Value Platform with test-driven development practices",
@@ -78,106 +71,46 @@
         "Contributed as full-stack engineer at Triblio building end-to-end features integrating with third-party services"
       ]
     },
-    "Angular / React / Ionic": {
-      "title": "Angular / React / Ionic",
+    "React / Angular": {
+      "title": "React / Angular",
       "summary": "Modern frontend development for web and mobile applications",
       "examples": [
         "Built React frontend for AI Value Platform with complex state management and real-time data visualization",
-        "Developed Angular/Python full-stack solution for GenAI applications with reusable framework patterns",
+        "Developed Angular/Python full-stack solution for AI applications with reusable framework patterns",
         "Created mobile application using Node.js/TypeScript and Angular for Public Safety Power Shutoff system",
         "Built responsive interfaces handling hundreds of users with smooth interactions and accessibility standards"
       ]
     },
-    "Docker / Kubernetes": {
-      "title": "Docker / Kubernetes",
-      "summary": "Container orchestration and deployment automation at scale",
-      "examples": [
-        "Configured Kubernetes orchestration with zero-downtime deployment strategies for federal client at Accenture",
-        "Managed Docker Swarm environments supporting 200+ automated operations via Ansible Tower",
-        "Built containerized deployment pipelines for GenAI applications with security-first configurations",
-        "Developed CLI deployment automation from scratch at Triblio to increase deployment velocity and stability"
-      ]
-    },
-    "CI/CD & IaC (Terraform/CDK)": {
-      "title": "CI/CD & IaC (Terraform/CDK)",
-      "summary": "Infrastructure as code and automated deployment pipelines",
-      "examples": [
-        "Developed custom IaC with CDK and CloudFormation for PSPS mobile application infrastructure",
-        "Built Terraform modules for Apollo GraphQL federated architecture for national pet retailer's API infrastructure",
-        "Created custom CI/CD deployment automation with GitLab for multi-environment workflows",
-        "Designed DevOps pipelines and infrastructure for deploying code at scale for large federal client",
-        "Built CLI deployment automation from scratch at Triblio with comprehensive monitoring and rollback capabilities"
-      ]
-    },
-    "API Design (REST/GraphQL)": {
-      "title": "API Design (REST/GraphQL)",
-      "summary": "Scalable API architecture for complex data requirements",
+    "APIs & Databases": {
+      "title": "APIs & Databases",
+      "summary": "REST/GraphQL APIs and SQL/NoSQL data design",
       "examples": [
         "Architected API Gateway-backed REST APIs for AI Value Platform handling complex ROI calculations and user management",
-        "Built Terraform modules for Apollo GraphQL federated architecture enabling microservices communication",
-        "Designed RESTful APIs for GenAI applications with security best practices and rate limiting",
-        "Developed full-stack features with backend APIs integrating third-party services at Triblio"
-      ]
-    },
-    "SQL / NoSQL Databases": {
-      "title": "SQL / NoSQL Databases",
-      "summary": "Database design, scaling, and optimization for diverse data patterns",
-      "examples": [
         "Designed DynamoDB schemas for AI Value Platform supporting complex querying patterns and high-volume data access",
+        "Built Terraform modules for Apollo GraphQL federated architecture enabling microservices communication",
         "Implemented RDS Postgres with pgvector for semantic search and vector embeddings in RAG architecture",
-        "Optimized NoSQL database scaling strategies for serverless microservices handling variable loads",
-        "Developed schema designs balancing normalization, performance, and cost across SQL and NoSQL databases"
+        "Designed RESTful APIs for AI applications with security best practices and rate limiting"
       ]
     },
-    "Event-Driven Architecture": {
-      "title": "Event-Driven Architecture",
-      "summary": "Asynchronous systems using message queues and event orchestration",
+    "DevOps, CI/CD & IaC": {
+      "title": "DevOps, CI/CD & IaC",
+      "summary": "Docker, Kubernetes, Terraform/CDK, and deployment automation",
       "examples": [
-        "Architected EnhanceIQ as event-driven service using SQS, Lambda, and Step Functions to orchestrate complex LLM inference workflows",
-        "Built systems processing hundreds to thousands of tasks asynchronously through GenAI Step Function pipelines",
-        "Designed event-driven pipelines for file drop processing at utilities, managing ingestion and transformation workflows",
-        "Created PSPS notification system responding to real-time events for wildfire prevention outage warnings"
+        "Developed custom IaC with CDK and CloudFormation for PSPS mobile application infrastructure",
+        "Configured Kubernetes orchestration with zero-downtime deployment strategies for federal client at Accenture",
+        "Built CLI deployment automation from scratch using Bash scripting at Triblio",
+        "Championed test-driven development for AI Value Platform achieving high team velocity while maintaining quality",
+        "Built Terraform modules for Apollo GraphQL federated architecture for national pet retailer's API infrastructure"
       ]
     },
-    "Security & IAM Best Practices": {
-      "title": "Security & IAM Best Practices",
+    "Security & IAM": {
+      "title": "Security & IAM",
       "summary": "Enterprise security standards with least privilege IAM policies",
       "examples": [
         "Implemented IAM best practices and test-driven security for AI Value Platform maintaining enterprise security standards",
         "Built security-first architecture with IAM policies for compliance-sensitive utilities regulatory environment",
         "Developed least privilege access patterns for serverless applications using AWS IAM roles and policies",
-        "Established reusable security framework for client GenAI applications with audit logging and access controls"
-      ]
-    },
-    "Bash / Linux": {
-      "title": "Bash / Linux",
-      "summary": "Systems administration and automation scripting",
-      "examples": [
-        "Built CLI deployment automation from scratch using Bash scripting at Triblio",
-        "Developed custom automation scripts for CI/CD pipelines and infrastructure management",
-        "Managed Linux-based deployment environments and troubleshooting at federal scale",
-        "Created monitoring and observability scripts for CloudWatch and Grafana integration"
-      ]
-    },
-    "Agile / Test-Driven Development": {
-      "title": "Agile / Test-Driven Development",
-      "summary": "Iterative development with comprehensive testing strategies",
-      "examples": [
-        "Championed test-driven development for AI Value Platform achieving high team velocity while maintaining quality",
-        "Implemented TDD practices across React frontend and TypeScript Node.js backend with comprehensive test coverage",
-        "Led agile ceremonies and sprint planning for team of 6 engineers with continuous delivery practices",
-        "Built reusable testing frameworks ensuring reliability across GenAI application deployments"
-      ]
-    },
-    "System Architecture": {
-      "title": "System Architecture",
-      "summary": "Microservices, serverless, and scalable system design",
-      "examples": [
-        "Architected AI Value Platform as full-stack serverless microservices with React, TypeScript, Lambda, and DynamoDB",
-        "Designed scalable RAG architecture handling multimodal document processing for compliance-sensitive environments",
-        "Built event-driven microservices architecture for EnhanceIQ processing complex LLM workflows asynchronously",
-        "Developed Apollo GraphQL federated architecture enabling independent microservices deployment and scaling",
-        "Served on technical architecture team designing DevOps pipelines and infrastructure for large-scale federal systems"
+        "Established reusable security framework for client AI applications with audit logging and access controls"
       ]
     },
     "Technical Direction & Team Leadership": {
@@ -185,43 +118,32 @@
       "summary": "Leading engineering teams with clear vision and technical excellence",
       "examples": [
         "Lead development team of 6 engineers building AI Value Platform serving hundreds of users",
+        "Architected AI Value Platform as company's first external client-facing product with enterprise security standards",
         "Set technical direction for serverless architecture, test-driven development, and AI-assisted coding adoption",
-        "Served as primary architect and engineer building full-stack features with React and TypeScript Node.js",
-        "Guided team through complex technical decisions balancing velocity, security, and maintainability",
-        "Championed modern development practices resulting in high team velocity while maintaining enterprise standards"
+        "Designed performant RAG architecture for utilities combining multimodal OCR, vector search, and compliance controls",
+        "Served as primary architect and engineer building full-stack features with React and TypeScript Node.js"
       ]
     },
-    "Engineering Mentorship & Career Development": {
-      "title": "Engineering Mentorship & Career Development",
+    "Engineering Mentorship": {
+      "title": "Engineering Mentorship",
       "summary": "Building trust and pulling developers forward in AI-assisted engineering",
       "examples": [
         "Developed strong trust and relationships with team members, joining with them in adopting AI-assisted development",
+        "Championed AI-assisted coding adoption across Slalom, demonstrating practical value and building internal momentum",
         "Championed AI-assisted coding adoption across the team, demonstrating practical applications and best practices",
-        "Held regular knowledge transfer sessions and syncs to share learnings and architectural patterns",
-        "Maintained open availability to guide developers through technical challenges and listen to their concerns",
-        "Created safe environment for experimentation and learning in the rapidly evolving AI engineering landscape"
+        "Built AI Capability Assessment and use case library to establish thought leadership in AI investment strategy",
+        "Held regular knowledge transfer sessions and syncs to share learnings and architectural patterns"
       ]
     },
-    "Strategic Planning & ROI Analysis": {
-      "title": "Strategic Planning & ROI Analysis",
-      "summary": "Data-driven technical decisions aligned with business value",
+    "Pricing, ROI & Business Cases": {
+      "title": "Pricing, ROI & Business Cases",
+      "summary": "Pricing frameworks, ROI models, and business cases for every persona",
       "examples": [
+        "Built a robust pricing framework used for every deal at Parloa",
         "Built proprietary AI Value Calculator with complex ROI forecasting models analyzing implementation time, adoption rates, and KPI impact",
-        "Developed methodology for GenAI/ML use case prioritization incorporating forecasted ROI, risk, effort, and value",
-        "Created AI Capability Assessment to evaluate organizational readiness for AI use case execution",
-        "Provided directional TCO estimates and value quantification enabling data-driven AI investment decisions",
-        "Established thought leadership in GenAI investment strategy through internal use case library and delivery pattern tracking"
-      ]
-    },
-    "Solution Architecture": {
-      "title": "Solution Architecture",
-      "summary": "End-to-end technical solutions aligned with business requirements",
-      "examples": [
-        "Architected AI Value Platform as company's first external client-facing product with enterprise security standards",
-        "Designed performant RAG architecture for utilities combining multimodal OCR, vector search, and compliance controls",
-        "Built EnhanceIQ event-driven architecture processing complex LLM workflows with high throughput and reliability",
-        "Developed reusable framework patterns for client GenAI applications with security-first design principles",
-        "Created Apollo GraphQL federated architecture enabling independent team development and deployment"
+        "Building out use case modeling and financial ROI metrics for business cases—not just for the CFO, but for all sorts of personas",
+        "Developed methodology for AI/ML use case prioritization incorporating forecasted ROI, risk, effort, and value",
+        "Built proprietary AI Value Calculator at Slalom with complex ROI forecasting models analyzing implementation time, adoption rates, and KPI impact"
       ]
     },
     "Client Partnership": {
@@ -234,52 +156,61 @@
         "Built utilities RAG application through close partnership in compliance-sensitive regulatory environment",
         "Enabled AI Value Platform's first external client access through careful requirements gathering and trust-building"
       ]
-    },
-    "Innovation & Vision": {
-      "title": "Innovation & Vision",
-      "summary": "Forward-thinking leadership and knowledge sharing across the organization",
-      "examples": [
-        "Championed AI-assisted coding adoption across Slalom, demonstrating practical value and building internal momentum",
-        "Built AI Capability Assessment and use case library to establish thought leadership in GenAI investment strategy",
-        "Encouraged knowledge sharing across company, being visionary while giving back as much as receiving",
-        "Developed innovative AI Value Calculator methodology for GenAI/ML use case prioritization",
-        "Led development of company's first external client-facing AI product, pushing boundaries of internal capabilities"
-      ]
     }
   },
   "experience": [
+    {
+      "company": "Parloa",
+      "tagline": "Conversational AI agents for customer experience",
+      "color": "company4",
+      "positions": [
+        {
+          "title": "Lead Go-to-Market Engineer",
+          "dateRange": "Feb 2026 – Present",
+          "achievements": [
+            "Built and run Parloa's go-to-market engine: the internal systems every GTM team works in, from BDR outreach and sales to partners and professional services scoping, all connected to our CRM",
+            "Built and maintain the context engine, which pulls context from all sorts of internal sources into one knowledge layer for active deals and the sales pipeline",
+            "Work closely with value engineering on go-to-market strategy: build the use case and ROI models behind our business cases, made for every persona in a deal and not just the CFO, and run enablement so the field can use them",
+            "Built the pricing framework used on every deal at the company",
+            "Built slide automation that turns value models into designed business case decks",
+            "Built prospecting automation in Clay for BDR outreach campaigns, and a research platform for customer-specific data"
+          ]
+        }
+      ]
+    },
     {
       "company": "Slalom",
       "positions": [
         {
           "title": "Technical Lead - AI Value Platform",
-          "dateRange": "2023 – Present",
+          "dateRange": "2023 – Jan 2026",
           "achievements": [
-            "Lead development team of 6 engineers building Slalom's AI Value Platform serving hundreds of internal users and company's first external client access, enabling organizations to make data-driven decisions around AI investments with methodical approach prioritizing forecasted ROI while incorporating risk, effort, and value",
-            "Built proprietary AI Value Calculator with complex ROI forecasting models analyzing implementation time, time to benefit yield, adoption rates, and KPI impact—providing directional TCO estimates and value quantification for GenAI/ML use case prioritization",
-            "Developed AI Capability Assessment to evaluate organizational readiness for AI use case execution, and built internal use case library to track Slalom's GenAI delivery patterns—establishing thought leadership in GenAI investment strategy",
-            "Architected and built EnhanceIQ, an event-driven task analysis service evaluating GenAI opportunities from process and role perspectives—processing hundreds to thousands of tasks through GenAI Step Function pipelines running 12 different analytical prompts per task, using SQS, Lambda, and Step Functions to orchestrate complex LLM inference workflows",
-            "Served as primary architect and engineer building full-stack features with React frontend, TypeScript Node.js backend, serverless architecture with DynamoDB and Lambda behind API Gateway—implemented IAM best practices and test-driven development while championing AI-assisted coding adoption, achieving high team velocity while maintaining enterprise security standards"
+            "Led a team of 6 engineers building the AI Value Platform, which helps companies decide where to invest in AI; it served hundreds of internal users and was Slalom's first product opened to outside clients",
+            "Built the AI Value Calculator, which forecasts the ROI of an AI use case from implementation time, time to benefit, adoption rate, and KPI impact",
+            "Built the AI Capability Assessment, which checks whether an organization is ready to take on an AI use case, and an internal library that tracks the AI work Slalom has delivered",
+            "Designed and built EnhanceIQ, an event-driven service that runs hundreds to thousands of tasks through an LLM pipeline on Step Functions, with 12 analysis prompts per task",
+            "Architected the platform and wrote much of the code (React, TypeScript/Node.js, Lambda behind API Gateway, DynamoDB); set the team's standards for IAM, test-driven development, and AI-assisted coding"
           ]
         },
         {
           "title": "Senior Consultant - Solution Architect",
           "dateRange": "2022 – 2023",
           "achievements": [
-            "Built GenAI application for utilities to assist regulatory drafting using performant RAG architecture with AWS services (Textract, ECS, Bedrock, OpenSearch, RDS Postgres with pgvector) and multimodal LLM OCR, implementing security best practices and IAM policies for compliance-sensitive environment",
-            "Developed full-stack Angular/Python solution with automated S3 static site deployments—established reusable framework for client GenAI applications with security-first architecture"
+            "Built an LLM app that helps utilities draft regulatory documents, using RAG on AWS (Textract, ECS, Bedrock, OpenSearch, Postgres with pgvector) and multimodal LLM OCR",
+            "Built a reusable full-stack framework (Angular/Python) for client AI apps, with automated S3 deploys and security set up from the start"
           ]
         },
         {
           "title": "Cloud Architect / Full Stack Engineer",
           "dateRange": "2022",
           "achievements": [
-            "Developed mobile application for Public Safety Power Shutoff system to warn customers of planned outages for wildfire prevention using Node.js/TypeScript and Angular, including custom IaC with CDK and CloudFormation",
-            "Built Terraform modules for Apollo GraphQL federated architecture for national pet retailer's API infrastructure and developed custom CI/CD deployment automation with GitLab"
+            "Built a mobile app that warns customers before planned Public Safety Power Shutoffs (outages to prevent wildfires), using Node.js/TypeScript and Angular with infrastructure in CDK and CloudFormation",
+            "Built Terraform modules for a national pet retailer's federated Apollo GraphQL APIs, plus GitLab CI/CD to deploy them"
           ]
         }
       ],
-      "color": "company1"
+      "color": "company1",
+      "tagline": "Technology consulting"
     },
     {
       "company": "Triblio",
@@ -288,12 +219,13 @@
           "title": "Software/DevOps Engineer",
           "dateRange": "2021 – 2022",
           "achievements": [
-            "Built CLI deployment automation from scratch and developed monitoring systems with AWS CloudWatch and Grafana dashboards to increase deployment velocity, stability, and infrastructure observability",
-            "Contributed as full stack engineer building end-to-end features integrating with third-party services to manage account-based marketing workflows"
+            "Built a deployment CLI from scratch and set up CloudWatch and Grafana monitoring, which made deploys faster, more stable, and easier to watch",
+            "Worked as a full-stack engineer on end-to-end features, integrating third-party services into account-based marketing workflows"
           ]
         }
       ],
-      "color": "company2"
+      "color": "company2",
+      "tagline": "Account-based marketing SaaS"
     },
     {
       "company": "Accenture Federal Services",
@@ -302,12 +234,13 @@
           "title": "DevOps Engineer",
           "dateRange": "2018 – 2021",
           "achievements": [
-            "Designed DevOps pipelines and infrastructure for deploying code at scale for a large-scale federal client as part of the technical architecture team",
-            "Configured Kubernetes and Docker Swarm orchestration with zero-downtime deployment strategies, managing Ansible Tower workflows for 200+ automated operations"
+            "Designed deployment pipelines and infrastructure for a large federal client as part of its technical architecture team",
+            "Set up Kubernetes and Docker Swarm with zero-downtime deploys, and managed Ansible Tower workflows covering 200+ automated operations"
           ]
         }
       ],
-      "color": "company3"
+      "color": "company3",
+      "tagline": "Federal technology services"
     }
   ],
   "education": {

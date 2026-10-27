@@ -1,272 +1,101 @@
 #!/usr/bin/env python3
 """
-Generate LaTeX resume from data.json
+Generate resume.tex from data.json.
+
+Styling lives in resume.cls; this script only emits content. Standard library
+only. Run ./build.sh to generate and compile in one step.
 """
 
 import json
-import qrcode
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+
+LATEX_ESCAPES = {
+    '\\': r'\textbackslash{}',
+    '&': r'\&',
+    '%': r'\%',
+    '$': r'\$',
+    '#': r'\#',
+    '_': r'\_',
+    '{': r'\{',
+    '}': r'\}',
+    '~': r'\textasciitilde{}',
+    '^': r'\textasciicircum{}',
+}
 
 
 def escape_latex(text):
-    """Escape special LaTeX characters"""
-    replacements = {
-        '&': r'\&',
-        '%': r'\%',
-        '$': r'\$',
-        '#': r'\#',
-        '_': r'\_',
-        '{': r'\{',
-        '}': r'\}',
-        '~': r'\textasciitilde{}',
-        '^': r'\^{}',
-    }
-    for old, new in replacements.items():
-        text = text.replace(old, new)
-    return text
-
-
-def generate_qr_code(url, filename='qr_code.png'):
-    """Generate QR code for given URL"""
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=1,
-    )
-    qr.add_data(url)
-    qr.make(fit=True)
-
-    img = qr.make_image(fill_color="black", back_color="white")
-    img.save(filename)
-    print(f"✓ Generated QR code: {filename}")
+    """Escape special LaTeX characters (single pass, so escapes aren't re-escaped)"""
+    return ''.join(LATEX_ESCAPES.get(ch, ch) for ch in str(text))
 
 
 def generate_latex_resume(data):
-    """Generate LaTeX resume from JSON data"""
-
-    # Start with document preamble
-    latex = r"""\documentclass[10pt,letterpaper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[margin=0pt]{geometry}
-\usepackage{fontspec}
-\usepackage{xcolor}
-\usepackage{graphicx}
-
-% Sophisticated color palette
-\definecolor{primary}{RGB}{0,0,0}
-\definecolor{accent}{RGB}{204,147,100}
-\definecolor{sidebarBg}{RGB}{245,250,250}
-\definecolor{darkgray}{RGB}{40,40,40}
-\definecolor{mediumgray}{RGB}{100,100,100}
-\definecolor{lightgray}{RGB}{240,240,240}
-\definecolor{company1}{RGB}{70,130,180}
-\definecolor{company2}{RGB}{100,149,237}
-\definecolor{company3}{RGB}{205,92,92}
-
-% Modern fonts
-\setmainfont{Helvetica Neue}
-\newfontfamily\displayfont[LetterSpace=15.0]{Helvetica Neue}
-\newfontfamily\headingfont{Helvetica Neue}
-
-% Eliminate spacing
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0pt}
-\pagenumbering{gobble}
-\pagestyle{empty}
-
-% Custom commands
-\newcommand{\sidebarheader}[1]{%
-    \vspace{6pt}
-    {\headingfont\small\textcolor{accent}{\MakeUppercase{\textbf{#1}}}}
-    \vspace{1pt}
-    \par\noindent\textcolor{accent}{\rule{\linewidth}{1.5pt}}
-    \vspace{2pt}
-}
-
-\newcommand{\mainheader}[1]{%
-    \vspace{6pt}
-    {\displayfont\Large\textcolor{accent}{\MakeUppercase{#1}}}
-    \vspace{1pt}
-    \par\noindent\textcolor{accent}{\rule{5.0in}{2pt}}
-    \vspace{3pt}
-}
-
-\newcommand{\companyHeader}[2]{%
-    \vspace{3pt}
-    \noindent\textcolor{#2}{\rule{3pt}{10pt}}\hspace{6pt}{\headingfont\normalsize\textbf{\textcolor{darkgray}{#1}}}
-    \vspace{1pt}
-}
-
-\newcommand{\positionHeader}[2]{%
-    \noindent\textbf{\textcolor{darkgray}{#2}}\hspace{4pt}{\footnotesize\textcolor{mediumgray}{//}}\hspace{4pt}{\footnotesize\itshape\textcolor{mediumgray}{#1}}
-    \vspace{1pt}
-}
-
-% Minimalist bullets
-\renewcommand{\labelitemi}{\textcolor{accent}{—}}
-\setlength{\leftmargini}{10pt}
-
-\begin{document}
-
-% LEFT SIDEBAR WITH BACKGROUND COLOR
-\setlength{\voffset}{-.085in}
-\noindent\colorbox{sidebarBg}{%
-\begin{minipage}[t][10.885in][t]{2.7in}
-\vspace{0.3in}
-\hspace{0.3in}
-\begin{minipage}{2.1in}
-\raggedright
-
-"""
-
-    # Personal info
+    """Generate LaTeX resume content from JSON data"""
+    e = escape_latex
     personal = data['personal']
-    latex += f"""% IDENTITY
-{{\\displayfont\\fontsize{{24}}{{28}}\\selectfont\\textcolor{{primary}}{{\\textbf{{{personal['firstName'].upper()}}}}}}}\\\\[-2pt]
-{{\\displayfont\\fontsize{{24}}{{28}}\\selectfont\\textcolor{{accent}}{{\\textbf{{{personal['lastName'].upper()}}}}}}}
+    lines = [
+        r'\documentclass{resume}',
+        r'\hypersetup{pdftitle={%s %s - Resume}, pdfauthor={%s %s}}' % (
+            e(personal['firstName']), e(personal['lastName']),
+            e(personal['firstName']), e(personal['lastName'])),
+        r'\begin{document}',
+        '',
+        r'\begin{sidebar}',
+        r'\name{%s}{%s}' % (e(personal['firstName']), e(personal['lastName'])),
+        r'\jobtitle{%s}' % e(personal['title']),
+        r'\contact{T}{tel:%s}{%s}' % (
+            ''.join(ch for ch in personal['phone'] if ch.isdigit()), e(personal['phone'])),
+        r'\contact{E}{mailto:%s}{%s}' % (personal['email'], e(personal['email'])),
+        r'\contact{in}{https://linkedin.com/in/%s}{%s}' % (
+            personal['linkedin'], e(personal['linkedin'])),
+        r'\contact{L}{}{%s}' % e(personal['location']),
+        '',
+        r'\sidebarsection{About}',
+        r'\aboutblurb{%s}' % e(data['about']),
+        '',
+        r'\sidebarsection{Technical Foundation}',
+        *(r'\skill{%s}' % e(skill) for skill in data['skills']['technical']),
+        '',
+        r'\sidebarsection{Leadership}',
+        *(r'\skill{%s}' % e(skill) for skill in data['skills']['leadership']),
+        '',
+    ]
 
-\\vspace{{4pt}}
-\\noindent\\textcolor{{accent}}{{\\rule{{1.8in}}{{2.5pt}}}}
-\\vspace{{6pt}}
-
-{{\\headingfont\\small\\textcolor{{darkgray}}{{\\textbf{{{personal['title']}}}}}}}
-
-\\vspace{{6pt}}
-
-{{\\footnotesize\\textcolor{{mediumgray}}{{\\\\[-6pt]
-{personal['phone']}\\\\[3pt]
-{personal['email']}\\\\[3pt]
-@{personal['linkedin']}\\\\[3pt]
-{personal['location']}\\\\[3pt]
-}}}}
-
-"""
-
-    # About section
-    latex += f"""% ABOUT
-\\sidebarheader{{About}}
-{{\\footnotesize\\textcolor{{darkgray}}{{\\\\[-6pt]\\itshape {escape_latex(data['about'])}}}}}
-
-"""
-
-    # Technical skills
-    latex += """% TECHNICAL FOUNDATION
-\\sidebarheader{Technical Foundation}
-{\\scriptsize\\textcolor{darkgray}{\\\\[-6pt]
-"""
-    for skill in data['skills']['technical']:
-        latex += f"{escape_latex(skill)}\\\\[3pt]\n"
-    latex += "}}\n\n"
-
-    # Leadership skills
-    latex += """% LEADERSHIP
-\\sidebarheader{Leadership}
-{\\scriptsize\\textcolor{darkgray}{\\\\[-6pt]
-"""
-    for skill in data['skills']['leadership']:
-        latex += f"{escape_latex(skill)}\\\\[3pt]\n"
-    latex += "}}\n\n"
-
-    # Education
     edu = data['education']
-    latex += f"""% EDUCATION
-\\sidebarheader{{Education}}
-{{\\footnotesize\\\\[-6pt]
-\\textbf{{\\textcolor{{darkgray}}{{{edu['school']}}}}}\\\\[3pt]
-\\textcolor{{mediumgray}}{{{edu['graduationDate']}}}\\\\[3pt]
-\\textcolor{{darkgray}}{{Major: {edu['degree'].replace('BS ', '')}\\\\[3pt]
-Minor: {edu['minor']}\\\\[3pt]}}
-}}
+    lines += [
+        r'\sidebarsection{Education}',
+        r'\sidebartext{\textbf{%s}\\%s\\Minor in %s\\{\color{mediumgray}%s}}' % (
+            e(edu['school']), e(edu['degree']), e(edu['minor']), e(edu['graduationDate'])),
+        '',
+    ]
 
-\\vfill
+    if 'websiteUrl' in personal:
+        url = personal['websiteUrl']
+        lines.append(r'\websiteqr{%s}{%s}' % (url, e(url.split('://', 1)[-1])))
 
-% QR CODE
-\\vspace{{80pt}}
-\\raggedright
-\\includegraphics[width=0.8in]{{qr_code.png}}\\\\[3pt]
+    lines += [r'\end{sidebar}%', r'\begin{maincolumn}', r'\mainsection{Experience}', '']
 
-\\vspace{{10pt}}
+    for company in data['experience']:
+        lines.append(r'\company{%s}{%s}{%s}' % (
+            e(company['company']), company['color'], e(company.get('tagline', ''))))
+        for position in company['positions']:
+            lines.append(r'\position{%s}{%s}' % (e(position['title']), e(position['dateRange'])))
+            lines.append(r'\begin{itemize}')
+            lines += [r'    \achievement{%s}' % e(a) for a in position['achievements']]
+            lines.append(r'\end{itemize}')
+        lines.append('')
 
-"""
-
-    # Close sidebar
-    latex += r"""\end{minipage}
-\end{minipage}%
-}%
-% RIGHT MAIN CONTENT
-\hspace{0pt}%
-\begin{minipage}[t][10.5in][t]{5.6in}
-\vspace{0.3in}
-\hspace{0.3in}
-\begin{minipage}{5.0in}
-\raggedright
-
-% EXPERIENCE
-\mainheader{Experience}
-\vspace{-8pt}
-
-"""
-
-    # Experience section
-    for company_data in data['experience']:
-        company = company_data['company']
-        color = company_data['color']
-
-        # Add company header for first position
-        latex += f"\\companyHeader{{{escape_latex(company)}}}{{{color}}}\n\n"
-
-        for position in company_data['positions']:
-            latex += f"\\positionHeader{{{position['dateRange']}}}{{{escape_latex(position['title'])}}}\n"
-            latex += "\\begin{itemize}\n"
-            latex += "    \\setlength\\itemsep{0.25pt}\n"
-
-            for achievement in position['achievements']:
-                latex += f"    \\item\\small\\textcolor{{darkgray}}{{{escape_latex(achievement)}}}\n"
-
-            latex += "\\end{itemize}\n\n"
-
-            # Add spacing between positions except the last one
-            if position != company_data['positions'][-1]:
-                latex += "\\vspace{1pt}\n\n"
-
-    # Close document
-    latex += r"""\end{minipage}
-\end{minipage}
-
-\end{document}
-"""
-
-    return latex
+    lines += [r'\end{maincolumn}', r'\end{document}', '']
+    return '\n'.join(lines)
 
 
 def main():
-    import subprocess
-
-    # Load data from JSON
-    with open('data.json', 'r') as f:
-        data = json.load(f)
-
-    # Generate QR code for website
-    if 'websiteUrl' in data['personal']:
-        generate_qr_code(data['personal']['websiteUrl'], 'qr_code.png')
-
-    # Generate LaTeX
-    latex_content = generate_latex_resume(data)
-
-    # Write to file
-    with open('resume.tex', 'w') as f:
-        f.write(latex_content)
-
-    print("✓ Generated resume.tex from data.json")
-
-    # Build PDF using build.sh
-    print("Building PDF...")
-    try:
-        result = subprocess.run(['bash', 'build.sh'], capture_output=True, text=True, check=True)
-        print(result.stdout.strip())
-    except subprocess.CalledProcessError as e:
-        print(f"✗ PDF build failed: {e.stderr}")
+    data = json.loads((ROOT / 'data.json').read_text())
+    (ROOT / 'resume.tex').write_text(generate_latex_resume(data))
+    print('✓ Generated resume.tex from data.json')
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
