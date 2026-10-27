@@ -12,6 +12,7 @@ All content is stored in `data.json` with the following structure:
 - **personal**: Name, title, contact information (phone, email, LinkedIn, GitHub, location, websiteUrl)
 - **about**: Professional summary paragraph
 - **intro**: One line under the hero greeting
+- **approach**: How I work, in llms.txt
 - **agentNote**: The "hello, agent" note in llms.txt and resume.json
 - **tagline**: Extended tagline for the website hero section
 - **skills**:

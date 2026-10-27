@@ -221,7 +221,8 @@ def llms_txt(data):
     now = data['experience'][0]
     out = ['# %s' % name, '',
            '> %s at %s, based in %s. %s' % (p['title'], now['company'], p['location'], strip(data['intro'])), '',
-           strip(data['about']), '', '## Hello, agent', '', strip(data['agentNote']), '',
+           strip(data['about']), '', '## How I work', '', strip(data['approach']), '',
+           '## Hello, agent', '', strip(data['agentNote']), '',
            '- Email: %s' % p['email'], '- LinkedIn: %s' % url['linkedin'], '- GitHub: %s' % url['github'],
            '- Website: %s/' % url['site'], '', '## Experience', '']
     for e in data['experience']:
